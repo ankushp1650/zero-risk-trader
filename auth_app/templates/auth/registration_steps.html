@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Steps</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        h3 {
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-size: 16px;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        input[type="text"], input[type="email"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        .buttons {
+            text-align: center;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .step {
+            display: none;
+        }
+
+        .step.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Two-Step Registration</h2>
+
+    <!-- Step 1: Dashboard Registration -->
+    <div id="step-1" class="step active">
+        <h3>Step 1: Registration for Paper Trading Dashboard </h3>
+        <form id="dashboard-registration">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="buttons">
+                <button type="button" id="next-to-step-2">Next</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Step 2: Alpha Vintage API Registration -->
+    <div id="step-2" class="step">
+        <h3>Step 2: Registration for Alpha Vintage API Key</h3>
+        <form id="alpha-vintage-registration">
+            <div class="form-group">
+                <label for="api-key">API Key</label>
+                <input type="text" id="api-key" name="api-key" required>
+            </div>
+
+            <div class="buttons">
+                <button type="button" id="back-to-step-1">Back</button>
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    const step1 = document.getElementById('step-1');
+    const step2 = document.getElementById('step-2');
+    const nextToStep2 = document.getElementById('next-to-step-2');
+    const backToStep1 = document.getElementById('back-to-step-1');
+
+    // Handle "Next" button click
+    nextToStep2.addEventListener('click', function() {
+        step1.classList.remove('active');
+        step2.classList.add('active');
+    });
+
+    // Handle "Back" button click
+    backToStep1.addEventListener('click', function() {
+        step2.classList.remove('active');
+        step1.classList.add('active');
+    });
+</script>
+
+</body>
+</html>

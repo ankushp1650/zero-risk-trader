@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load humanize %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+/* General styles for font, background, and layout */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f7f9fc;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    color: #444;
+}
+
+/* Container for the entire page */
+.container {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    max-width: 1100px;
+    width: 90%;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+/* Hover effect for the container */
+.container:hover {
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.2);
+}
+
+/* Header styles */
+h2 {
+    color: #333;
+    font-size: 26px;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+h3 {
+    color: #666;
+    font-size: 18px;
+    margin-bottom: 20px;
+    font-weight: 400;
+}
+
+/* Blue horizontal line under the header */
+.header-line {
+    width: 100%;
+    height: 3px;
+    background-color: #007bff;
+    margin-top: 10px;
+    margin-bottom: 30px;
+    border-radius: 2px;
+}
+
+/* Cash balance section styling */
+.cash-balance-sec {
+    font-size: 20px;
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 12px;
+}
+
+/* Portfolio section styling */
+.portfolio-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 50px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+
+/* Portfolio info and holdings table container */
+.portfolio-info,
+.holdings-table {
+    flex: 1;
+}
+
+/* Table styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 16px;
+    background-color: #ffffff;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+/* Table header styling */
+table th {
+    background: linear-gradient(135deg, #7b8a98, #b0c1d4); /* Softer gradient using muted blue and gray tones */
+    color: #ffffff;
+    font-weight: 600;
+    text-align: left;
+    padding: 12px 14px;
+    border-bottom: 2px solid #9bb3c0; /* Lighter border for a more subtle appearance */
+}
+
+
+/* Table row styling */
+table tbody tr:nth-child(odd) {
+    background-color: #f8faff;
+}
+
+table tbody tr:hover {
+    background-color: #e1f0ff;
+    cursor: pointer;
+}
+
+/* Table cell styling */
+table td {
+    padding: 12px 14px;
+    border: 1px solid #e3e4e8;
+    text-align: left;
+    color: #555;
+    font-size: 16px;
+}
+
+/* Button container styles (top-right) */
+.top-right-buttons {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.top-right-buttons a {
+    padding: 10px 22px;
+    font-size: 15px;
+    font-weight: 500;
+    color: #ffffff;
+    background-color: #007bff;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.top-right-buttons a:hover {
+    background-color: #005bb5;
+}
+
+/* Graph section container */
+#graph-section {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 2px solid #e3e4e8;
+}
+
+/* Graph section styling */
+#graph-section h2 {
+    margin-bottom: 20px;
+}
+
+/* Flexbox styling for centered graph */
+.centered-graph {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+}
+
+/* Portfolio info grid */
+.portfolio-info {
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 20px 1px;
+    font-size: 20px;
+    color: #333;
+}
+
+.portfolio-info .row {
+    display: contents;
+}
+
+/* Label and value styling in the portfolio info section */
+.label {
+    font-weight: bold;
+    text-align: left;
+}
+
+.value {
+    color: blue;
+    text-align: left;
+    font-weight: bold;
+}
+
+/* PnL color styling */
+.text-red {
+    color: #d9534f;
+}
+
+.text-green {
+    color: #5cb85c;
+}
+
+.text-neutral {
+    color: #444;
+}
+
+/* Button hover effect */
+a.btn:hover {
+    background-color: #0056b3;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive styles for smaller screens */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+    }
+
+    h2 {
+        font-size: 22px;
+    }
+
+    table th,
+    table td {
+        padding: 10px;
+    }
+
+    .portfolio-section {
+        flex-direction: column;
+    }
+
+    .top-right-buttons {
+        position: static;
+        flex-direction: row;
+        gap: 15px;
+    }
+
+    #graph-section {
+        margin-top: 20px;
+        border-top: none;
+        padding-top: 10px;
+    }
+}
+
+/* Empty state message styling */
+.empty-state {
+    color: #999;
+    font-size: 18px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Focus effects for accessibility */
+a:focus,
+button:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #007bff;
+}
+
+/* New section for detailed card design (Optional) */
+.card {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+}
+
+.card h3 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 12px;
+}
+
+.card p {
+    font-size: 16px;
+    color: #555;
+}
+
+    </style>
+    <title>Portfolio</title>
+</head>
+
+<body>
+    <div class="top-right-buttons">
+        <a href="{% url 'logout' %}" class="btn">Logout</a>
+        <a href="{% url 'dashboard' %}" class="btn">Home</a>
+        <a href="{% url 'investment_view' %}" class="btn">Investment Portfolio</a>
+        <a href="{% url 'transaction_history' %}" class="btn">Transaction History</a>
+    </div>
+
+    <div class="container">
+        <div class="btn-container">
+            <h2>Portfolio</h2>
+            <h3>Your detailed portfolio overview, including holdings and transactions</h3>
+
+            <!-- Horizontal line under header -->
+            <div class="header-line"></div>
+
+            <div class="portfolio-section">
+                <div class="portfolio-info">
+    <div class="row">
+        <span class="value">Your Total Holdings</span>
+        <span class="value"></span>
+    </div>
+    <div class="row">
+        <span class="label">Opening Balance</span>
+        <span class="value">{{ portfolio.cash_balance|intcomma }}</span>
+    </div>
+    <div class="row">
+        <span class="label">Invested Value</span>
+        <span class="value">{{ total_investment_value|intcomma }}</span>
+    </div>
+    <div class="row">
+        <span class="label">Current Value</span>
+        <span class="value">{{ total_current_value|intcomma }}</span>
+    </div>
+    <div class="row">
+        <span class="label">Profit & Loss:</span>
+        <span class="value {% if total_pnl < 0 %}text-red{% elif total_pnl > 0 %}text-green{% else %}text-neutral{% endif %}">
+            {% if total_pnl > 0 %}+{% endif %}{{ total_pnl|intcomma }}
+        </span>
+    </div>
+    <div class="row">
+        <span class="label">Total Stock Quantity:</span>
+        <span class="value">{{ total_quantity }}</span>
+    </div>
+</div>
+
+
+                <div class="holdings-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Stock Symbol</th>
+                                <th>Quantity</th>
+                                <th>Invested Value</th>
+                                <th>Current Value</th>
+                                <th>Profit & Loss</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for holding in holdings %}
+                            <tr>
+                                <td>{{ holding.stock_symbol }}</td>
+                                <td>{{ holding.quantity }}</td>
+                                <td>{{ holding.investment_value|intcomma }}</td>
+                                <td>{{ holding.current_value|intcomma }}</td>
+                                <td class="{% if holding.pnl < 0 %}text-red{% elif holding.pnl > 0 %}text-green{% else %}text-neutral{% endif %}">
+                                    {% if holding.pnl > 0 %}+{% endif %}{{ holding.pnl|intcomma }}
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="5" class="empty-state">No holdings available.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="graph-section" class="table-container">
+
+                <h2>Invested vs Current Value by all Stock</h2>
+                {{ bar_graph_html|safe }}
+                <div class="header-line"></div>
+                <h2>Percentage Change for Each Stock</h2>
+                {{ line_graph_html|safe }}
+                <h2>Profit & Loss across all Stocks</h2>
+                {{ pnl_bar_chart_graph_html|safe }}
+                <div class="header-line"></div>
+                <h2>Portfolio Allocation across all Stocks</h2>
+                {{ invested_value_pie_graph_html|safe }}
+                {{ current_value_pie_graph_html|safe }}
+                {{ percentage_change_pie_graph_html|safe }}
+                <div class="header-line"></div>
+                <h2>Stock Quantity Distribution</h2>
+                <div class="centered-graph">{{ quantity_bar_graph_html|safe }}</div>
+                <div class="header-line"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

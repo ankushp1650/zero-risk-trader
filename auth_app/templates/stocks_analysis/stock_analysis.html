@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Analysis</title>
+    <style>
+        /* Basic reset and styling for the body */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f5f7fa;
+        }
+
+        /* Container styling for centering content */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Main heading styling */
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 36px;
+            color: #333333;
+        }
+
+        /* Subheading styling */
+        h2 {
+            margin: 20px 0 10px;
+            font-size: 24px;
+            color: #0056b3;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 5px;
+        }
+
+        /* Table container styling */
+        .table-container {
+            margin-bottom: 25px;
+            overflow-x: auto; /* Allow horizontal scrolling for small screens */
+            padding: 10px; /* Added padding for better spacing */
+            border-radius: 8px; /* Slightly round the corners */
+            background-color: #fafafa; /* Background color for the table container */
+            margin-top: 80px; /* Spacing from the top */
+        }
+
+        /* Table styling */
+        table {
+            width: 100%; /* Set to 100% to utilize full width */
+            border-collapse: collapse; /* Collapse borders for a cleaner look */
+            margin: 0 auto; /* Center the table */
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #e0e0e0; /* Border around cells */
+            font-size: 16px;
+            color: #333333;
+            overflow-wrap: break-word; /* Breaks long words for better fit */
+        }
+
+        th {
+            background-color: #007bff;
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        /* Styling for the buttons in the top-right corner */
+        .top-right-buttons {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px; /* Spacing between buttons */
+            z-index: 10;
+        }
+
+        .top-right-buttons a {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #ffffff;
+            background-color: #0056b3;
+            border-radius: 5px;
+            text-decoration: none;
+            text-align: center;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .top-right-buttons a:hover {
+            background-color: #004085;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .top-right-buttons {
+                top: 10px; /* Adjust for smaller screens */
+                right: 10px;
+            }
+
+            h1 {
+                font-size: 28px; /* Smaller heading on mobile */
+            }
+
+            h2 {
+                font-size: 20px; /* Smaller subheading on mobile */
+            }
+
+            th, td {
+                font-size: 14px; /* Smaller table text on mobile */
+                padding: 8px; /* Less padding on mobile */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Top-right buttons -->
+        <div class="top-right-buttons">
+            <a href="{% url 'logout' %}" class="btn">Logout</a>
+            <a href="{% url 'dashboard' %}" class="btn">Home</a>
+            <a href="{% url 'select_symbol' %}" class="btn">Select Symbol</a>
+        </div>
+
+        <h1>Stock Analysis</h1>
+
+        <!-- DataFrame 1 -->
+        <div class="table-container stock-info-container">
+            <h2>Stock Information</h2>
+            <div>
+                {{ df1_html|safe }} <!-- Rendered DataFrame -->
+            </div>
+        </div>
+
+        <!-- Graph Section -->
+        <div id="graph-section" class="table-container">
+            <h2>Graph for Stock</h2>
+            {{ graph_html|safe }}
+        </div>
+
+        <!-- DataFrame 2 -->
+        <div class="table-container">
+            <h2>Meta Data</h2>
+            <div>
+                {{ df2_html|safe }} <!-- Rendered DataFrame -->
+            </div>
+        </div>
+    </div>
+</body>
+</html>

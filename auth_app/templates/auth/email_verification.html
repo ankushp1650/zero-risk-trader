@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Verification</title>
+</head>
+<body>
+    <p>Hello {{ user.username }},</p>
+    <p>Please click the link below to verify your email address and complete your registration:</p>
+    <p>
+        <a href="{{ link }}">
+            Verify your email address
+        </a>
+    </p>
+     <p>Congratulations for registering! You will be credited 10 Lakhs once you verify your Email.</p>
+    <p>If you didn't sign up for an account, you can ignore this email.</p>
+</body>
+</html>
