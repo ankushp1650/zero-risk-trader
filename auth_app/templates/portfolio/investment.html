@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Portfolio</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column; /* Center everything in a column */
+        }
+
+        h1, h2 {
+            color: #333;
+            text-align: center;
+        }
+
+        p {
+            color: #666;
+            text-align: center;
+        }
+
+        /* Styling for the top-right buttons */
+        .top-right-buttons {
+            position: absolute;
+            top: 20px; /* Position from the top of the container */
+            right: 20px; /* Position from the right side of the container */
+            display: flex;
+            gap: 10px; /* Space between the buttons */
+        }
+
+        .top-right-buttons a {
+            padding: 10px 15px;
+            font-size: 16px;
+            color: white;
+            background-color: #007bff;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .top-right-buttons a:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+
+        /* Styling for the button containers */
+        .btn-container {
+            margin: 15px 0; /* Space between button containers */
+            text-align: center;
+        }
+
+        /* Styling for Sell Stock button (orange) */
+        .btn-sell {
+            background-color: #ff9800; /* Orange color */
+        }
+
+        .btn-sell:hover {
+            background-color: #e68900; /* Darker orange on hover */
+        }
+
+        /* Styling for Buy Stock button (green) */
+        .btn-buy {
+            background-color: #28a745; /* Green color */
+        }
+
+        .btn-buy:hover {
+            background-color: #218838; /* Darker green on hover */
+        }
+
+        /* Styling for Dashboard button (blue) */
+        .btn-dashboard {
+            background-color: #007bff; /* Blue color */
+        }
+
+        .btn-dashboard:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+
+        .btn-container a {
+            padding: 12px 20px;
+            font-size: 18px;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        ul li {
+            margin: 5px 0;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-right-buttons">
+        <a href="{% url 'logout' %}" class="btn">Logout</a>
+        <a href="{% url 'dashboard' %}" class="btn">Home</a>
+    </div>
+    <h1 class="page-title">Welcome {{ request.user.username }} to the Investment Portfolio</h1>
+
+    <div class="btn-container">
+        <a href="{% url 'sell_stock' %}" class="btn btn-sell btn-lg mb-3">Sell Stock</a>
+    </div>
+    <div class="btn-container">
+        <a href="{% url 'buy_stock' %}" class="btn btn-buy btn-lg mb-3">Buy Stock</a>
+    </div>
+
+</body>
+</html>

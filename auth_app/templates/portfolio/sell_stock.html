@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sell Stock</title>
+    <style>
+        /* Body styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Main container styling */
+        .container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            max-width: 450px;
+            width: 100%;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        /* Main title */
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 24px;
+        }
+
+        /* Form styling */
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Consistent input, dropdown, and button styling */
+        input[type="text"], input[type="number"], select, button {
+            padding: 12px;
+            font-size: 16px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+            margin-bottom: 20px; /* Space below each input */
+            box-sizing: border-box;
+            transition: border-color 0.3s ease;
+        }
+
+        /* Adjust spacing for specific form elements */
+        label {
+            margin-bottom: 5px; /* Space between label and input */
+            color: #555;
+            font-weight: bold; /* Make label text bold */
+        }
+
+        /* Input focus effect */
+        input[type="text"]:focus, input[type="number"]:focus, select:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        /* Button styling */
+        button {
+            background-color: #ff9800; /* Orange color */
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 10px; /* Space above button */
+            padding: 12px; /* Increase padding for the button */
+        }
+
+        /* Button hover effect */
+        button:hover {
+            background-color: #e68900; /* Darker orange on hover */
+        }
+
+        /* Top-right buttons styling */
+        .top-right-buttons {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .top-right-buttons a {
+            padding: 10px 15px;
+            font-size: 16px;
+            color: white;
+            background-color: #007bff;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+        /* Hover effect for the top-right buttons */
+        .top-right-buttons a:hover {
+            background-color: #0056b3;
+        }
+
+        /* Error message styling */
+        p.error {
+            color: red;
+            font-size: 14px;
+            margin-top: 10px;
+            background-color: #f8d7da;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-right-buttons">
+        <a href="{% url 'logout' %}" class="btn">Logout</a>
+        <a href="{% url 'investment_view' %}" class="btn">Back to Investment</a>
+    </div>
+
+    <div class="container">
+        <h1>Sell BSE Stock</h1>
+        <form method="post">
+            {% csrf_token %}
+            <label for="stock_symbol">Select Stock Symbol:</label>
+            <select id="stock_symbol" name="stock_symbol" class="dropdown" required>
+                <option value="">-- Select a stock --</option>
+                <option value="RELIANCE.BSE">RELIANCE.BSE</option>
+                <option value="HDFCBANK.BSE">HDFCBANK.BSE</option>
+                <option value="TCS.BSE">TCS.BSE</option>
+                <option value="BHARTIARTL.BSE">BHARTIARTL.BSE</option>
+                <option value="ICICIBANK.BSE">ICICIBANK.BSE</option>
+            </select>
+
+            <label for="quantity">Quantity:</label>
+            <input type="number" id="quantity" name="quantity" min="1" required>
+
+            <button type="submit">Sell</button>
+
+            {% if error %}
+                <p class="error">{{ error }}</p>
+            {% endif %}
+        </form>
+    </div>
+</body>
+</html>
