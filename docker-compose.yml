@@ -1,0 +1,26 @@
+services:
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      - DEBUG=1
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_USER=berlin
+      - DB_PASSWORD=berlin@123
+      - DB_NAME=user_platform_db
+    command: >
+      sh -c "python wait_for_db.py && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: 'user_platform_db'
+      MYSQL_USER: 'berlin'
+      MYSQL_PASSWORD: 'berlin@123'
+      MYSQL_ROOT_PASSWORD: 'root'
+    ports:
+      - "3306:3306"
