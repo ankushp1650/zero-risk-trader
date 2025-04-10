@@ -222,7 +222,7 @@ def save_api_key(request):
 
             messages.success(request, 'API key saved successfully and emailed to you!')
             # to get all the data
-            # jason_db(request)
+            jason_db(request)
             fetch_and_store_stock_data(request)
 
             return redirect('dashboard')  # Redirect to your dashboard
