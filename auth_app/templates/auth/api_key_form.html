@@ -1,0 +1,162 @@
+<head>
+    <style>
+        /* General styling for the body */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Styling for the form container */
+        .form-container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 450px;
+            text-align: left;
+        }
+
+        h2 {
+            margin-bottom: 25px;
+            font-size: 24px;
+            color: #333;
+            text-align: center;
+        }
+
+        /* Styling for form elements */
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            margin: 15px 0;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        input[type="text"]:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        /* Styling for the submit button */
+        button {
+            padding: 12px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Styling for the link */
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Style for the instructional text */
+        p {
+            font-size: 15px; /* Increased the font size */
+            color: #666;
+            margin: 5px 0 10px; /* Reduced margin above and below */
+            line-height: 1.6;
+        }
+
+        /* Style for messages */
+        .messages {
+            margin: 10px 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .messages li {
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+
+        .messages li.success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .messages li.error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        /* Align messages to the left */
+        .messages {
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="form-container">
+        <h2>Alpha Vintage API</h2>
+        <form method="POST" action="{% url 'save_api_key' %}">
+            {% csrf_token %}
+
+            <p style="margin: 20px 0;">
+                <!-- Link to Alpha Vantage for getting an API key -->
+                <label for="get-api-key">
+                    <a href="https://www.alphavantage.co/support/#api-key" target="_blank">
+                        Click here to get your API key
+                    </a>
+                </label>
+            </p>
+
+            <p>
+                <label for="api_key">Enter your API key</label>
+                <input type="text" id="api_key" name="api_key" placeholder="e.g. X336SWL7RFUYUZJP"
+                       pattern="[A-Z0-9]{16}" title="Your API key should be 16 uppercase letters or numbers" required>
+            </p>
+
+            <p>Your API key should be 16 uppercase letters or numbers.</p>
+
+            <!-- Display messages if any -->
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li class="{{ message.tags }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            <!-- Submit button for API key -->
+            <button type="submit">Submit API Key</button>
+
+        </form>
+    </div>
+</body>
