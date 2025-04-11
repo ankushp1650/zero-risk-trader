@@ -1,0 +1,8 @@
+pip install django
+python -m venv myenv
+pip freeze > requirements.txt
+pip install -r requirements.txt
+cd myenv/Scripts/activate
+django-admin startproject myproject
+cd myproject
+python manage.py startapp myapp

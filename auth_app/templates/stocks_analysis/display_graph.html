@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+
+{% extends "stocks_analysis/display_graph.html" %}
+
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Visualization</title>
+    <style>
+    /* Styling for the buttons in the top-right corner */
+        .top-right-buttons {
+            position: absolute;
+            top: 20px; /* Position from the top of the container */
+            right: 20px; /* Position from the right side of the container */
+<!--            display: flex;-->
+<!--            flex-direction: column; /* Stack the buttons vertically */-->
+            gap: 10px; /* Space between the buttons */
+        }
+
+        .top-right-buttons a {
+            padding: 10px 15px;
+            font-size: 16px;
+            color: white;
+            background-color: #007bff;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center; /* Center align text in the button */
+        }
+
+        .top-right-buttons a:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+    </style>
+</head>
+<body>
+    <h1>Stock Data Visualization</h1>
+<div class="container">
+        <!-- Top-right buttons -->
+        <div class="top-right-buttons">
+            <a href="{% url 'logout' %}" class="btn">Logout</a>
+            <a href="{% url 'dashboard' %}" class="btn">Home</a>
+            <a href="{% url 'stock_analysis' %}" class="btn">Back to Stock Analysis</a>
+        </div>
+    <div>
+        {{ graph_html|safe }}  <!-- Use the 'safe' filter to render the raw HTML -->
+    </div>
+</div>
+</body>
+</html>

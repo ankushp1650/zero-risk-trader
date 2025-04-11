@@ -1,0 +1,1947 @@
+{
+    "items": "50",
+    "sentiment_score_definition": "x <= -0.35: Bearish; -0.35 < x <= -0.15: Somewhat-Bearish; -0.15 < x < 0.15: Neutral; 0.15 <= x < 0.35: Somewhat_Bullish; x >= 0.35: Bullish",
+    "relevance_score_definition": "0 < x <= 1, with a higher score indicating higher relevance.",
+    "feed": [
+        {
+            "title": "iQIYI's 'The King of Stand-up Comedy' Wraps, Spotlighting Chinese Grassroots Comedy - iQIYI  ( NASDAQ:IQ ) ",
+            "url": "https://www.benzinga.com/pressreleases/24/10/n41485192/iqiyis-the-king-of-stand-up-comedy-wraps-spotlighting-chinese-grassroots-comedy",
+            "time_published": "20241023T115600",
+            "authors": [
+                "PRNewswire"
+            ],
+            "summary": "BEIJING, Oct. 23, 2024 /PRNewswire/ -- iQIYI, China's leading online entertainment platform, released the season finale of its hit original comedy variety show The King of Stand-up Comedy this week, with Fu Hang winning first place.",
+            "banner_image": "https://mma.prnewswire.com/media/2538227/A_original_show__The_King_Stand_up_Comedy.jpg",
+            "source": "Benzinga",
+            "category_within_source": "General",
+            "source_domain": "www.benzinga.com",
+            "topics": [
+                {
+                    "topic": "Technology",
+                    "relevance_score": "1.0"
+                }
+            ],
+            "overall_sentiment_score": 0.568802,
+            "overall_sentiment_label": "Bullish",
+            "ticker_sentiment": [
+                {
+                    "ticker": "IQ",
+                    "relevance_score": "0.138863",
+                    "ticker_sentiment_score": "0.473933",
+                    "ticker_sentiment_label": "Bullish"
+                },
+                {
+                    "ticker": "MAOFF",
+                    "relevance_score": "0.069697",
+                    "ticker_sentiment_score": "0.292165",
+                    "ticker_sentiment_label": "Somewhat-Bullish"
+                },
+                {
+                    "ticker": "WB",
+                    "relevance_score": "0.069697",
+                    "ticker_sentiment_score": "0.292165",
+                    "ticker_sentiment_label": "Somewhat-Bullish"
+                }
+            ]
+        },
+        {
+            "title": "Quest Diagnostics Awarded CDC Contracts for H5 Avian Influenza and Oropouche Virus Test Development - Quest Diagnostics  ( NYSE:DGX ) ",
+            "url": "https://www.benzinga.com/pressreleases/24/10/n41485075/quest-diagnostics-awarded-cdc-contracts-for-h5-avian-influenza-and-oropouche-virus-test-developmen",
+            "time_published": "20241023T115300",
+            "authors": [
+                "PRNewswire"
+            ],
+            "summary": "Quest to develop laboratory tests and support public health reporting and laboratory readiness for CDC's preparedness strategy; Company to introduce clinical testing for avian flu later this month based on one of the awards",
+            "banner_image": "https://mma.prnewswire.com/media/200883/quest_diagnostics_incorporated_logo_logo.jpg",
+            "source": "Benzinga",
+            "category_within_source": "News",
+            "source_domain": "www.benzinga.com",
+            "topics": [
+                {
+                    "topic": "Life Sciences",
+                    "relevance_score": "1.0"
+                }
+            ],
+            "overall_sentiment_score": 0.024491,
+            "overall_sentiment_label": "Neutral",
+            "ticker_sentiment": [
+                {
+                    "ticker": "DGX",
+                    "relevance_score": "0.272354",
+                    "ticker_sentiment_score": "0.223211",
+                    "ticker_sentiment_label": "Somewhat-Bullish"
+                },
+                {
+                    "ticker": "III",
+                    "relevance_score": "0.039679",
+                    "ticker_sentiment_score": "0.152082",
+                    "ticker_sentiment_label": "Somewhat-Bullish"
+                }
+            ]
+        },
+        {
+            "title": "GM Accelerates Its EV Ambitions After A Strong Q3 In US Powers It Past Ford, Aims For 200K Wholesales In 2024 - General Motors  ( NYSE:GM ) ",
+            "url": "https://www.benzinga.com/markets/equities/24/10/41485013/gm-accelerates-its-ev-ambitions-after-a-strong-q3-in-us-powers-it-past-ford-aims-for-200k-wholes",
+            "time_published": "20241023T115022",
+            "authors": [
+                "Anan Ashraf"
+            ],
+            "summary": "General Motors GM took over Ford Motor Co. F as the second biggest EV seller in the U.S. after Tesla Inc. in the third quarter and the company is optimistic about its EV portfolio going forward.",
+            "banner_image": "https://cdn.benzinga.com/files/images/story/2024/10/23/General-Motors-EV-lineup.jpeg?width=1200&height=800&fit=crop",
+            "source": "Benzinga",
+            "category_within_source": "Markets",
+            "source_domain": "www.benzinga.com",
+            "topics": [
+                {
+                    "topic": "Earnings",
+                    "relevance_score": "0.714479"
+                },
+                {
+                    "topic": "Financial Markets",
+                    "relevance_score": "0.161647"
+                },
+                {
+                    "topic": "Manufacturing",
+                    "relevance_score": "1.0"
+                }
+            ],
+            "overall_sentiment_score": 0.28139,
+            "overall_sentiment_label": "Somewhat-Bullish",
+            "ticker_sentiment": [
+                {
+                    "ticker": "F",
+                    "relevance_score": "0.229149",
+                    "ticker_sentiment_score": "0.066986",
+                    "ticker_sentiment_label": "Neutral"
+                },
+                {
+                    "ticker": "GM",
+                    "relevance_score": "0.50325",
+                    "ticker_sentiment_score": "0.189806",
+                    "ticker_sentiment_label": "Somewhat-Bullish"
+                },
+                {
+                    "ticker": "TSLA",
+                    "relevance_score": "0.153961",
+                    "ticker_sentiment_score": "0.059101",
+                    "ticker_sentiment_label": "Neutral"
+                }
+            ]
+        },
+        {
+            "title": "Warren Buffett - worried about impersonators - says he doesn't endorse candidates or investments",
+            "url": "https://www.cnbc.com/2024/10/23/warren-buffett-worried-about-impersonators-says-he-doesnt-endorse-candidates-or-investments.html",
+            "time_published": "20241023T115008",
+            "authors": [],
+            "summary": "Buffett's actions were triggered in part by a fake political endorsement alerted to him on Meta's Instagram.",
+            "banner_image": null,
+            "source": "CNBC",
+            "category_within_source": "Top News",
+            "source_domain": "www.cnbc.com",
+            "topics": [
+                {
+                    "topic": "Financial Markets",
+                    "relevance_score": "0.796627"
+                },
+                {
+                    "topic": "Manufacturing",
+                    "relevance_score": "0.5"
+                },
+                {
+                    "topic": "Finance",
+                    "relevance_score": "0.5"
+                },
+                {
+                    "topic": "Blockchain",
+                    "relevance_score": "0.158519"
+                }
+            ],
+            "overall_sentiment_score": 0.143005,
+            "overall_sentiment_label": "Neutral",
+            "ticker_sentiment": [
+                {
+                    "ticker": "NYT",
+                    "relevance_score": "0.103331",
+                    "ticker_sentiment_score": "0.008837",
+                    "ticker_sentiment_label": "Neutral"
+                },
+                {
+                    "ticker": "BRK-A",
+                    "relevance_score": "0.103331",
+                    "ticker_sentiment_score": "-0.022617",
+                    "ticker_sentiment_label": "Neutral"
+                },
+                {
+                    "ticker": "CRYPTO:BTC",
+                    "relevance_score": "0.103331",
+                    "ticker_sentiment_score": "0.141202",
+                    "ticker_sentiment_label": "Neutral"
+                }
+            ]
+        },
+        {
+            "title": "VANKYO's First Google TV\u2122 Projector Hits U.S. Brick-and-Mortar Retail Stores",
+            "url": "https://www.benzinga.com/pressreleases/24/10/n41484807/vankyos-first-google-tv-projector-hits-u-s-brick-and-mortar-retail-stores",
+            "time_published": "20241023T114500",
+            "authors": [
+                "PRNewswire"
+            ],
+            "summary": "VANKYO Unveils Performance V700G Google TV\u2122 Projector on October 23rd- Just in Time for the Holidays BELTSVILLE, Md., Oct. 23, 2024 /PRNewswire/ -- Just in time for the holiday shopping season, VANKYO, a leader in affordable projection technology, is set to revolutionize home entertainment with ...",
+            "banner_image": "https://mma.prnewswire.com/media/2538130/V700G.jpg",
+            "source": "Benzinga",
+            "category_within_source": "General",
+            "source_domain": "www.benzinga.com",
+            "topics": [
+                {
+                    "topic": "Technology",
+                    "relevance_score": "1.0"
+                }
+            ],
+            "overall_sentiment_score": 0.527069,
+            "overall_sentiment_label": "Bullish",
+            "ticker_sentiment": [
+                {
+                    "ticker": "NFLX",
+                    "relevance_score": "0.038906",
+                    "ticker_sentiment_score": "0.062903",
+                    "ticker_sentiment_label": "Neutral"
+                },
+                {
+                    "ticker": "GOOG",
+                    "relevance_score": "0.620083",
+                    "ticker_sentiment_score": "0.654047",
+                    "ticker_sentiment_label": "Bullish"
+                },
+                {
+                    "ticker": "META",
+                    "relevance_score": "0.038906",
+                    "ticker_sentiment_score": "0.228986",
+                    "ticker_sentiment_label": "Somewhat-Bullish"
+                }
+            ]
+        },
+        {
+            "title": "'If not self-custody, then why crypto?' - Ledger CEO",
+            "url": "https://cointelegraph.com/news/if-not-self-custody-then-why-crypto-ledger-ceo",
+            "time_published": "20241023T113144",
+            "authors": [
+                "Ezra Reguerra"
+            ],
+            "summary": "Ledger CEO Pascal Gauthier told Cointelegraph that hardware wallets need to evolve because \"crypto never sleeps.\" ...",
+            "banner_image": "https://images.cointelegraph.com/cdn-cgi/image/format=auto,onerror=redirect,quality=90,width=1200/https://s3.cointelegraph.com/uploads/2024-10/0192b8b8-9435-785f-a34b-e87140b330d3",
+            "source": "Cointelegraph",
+            "category_within_source": "n/a",
+            "source_domain": "cointelegraph.com",
+            "topics": [
+                {
+                    "topic": "Blockchain",
+                    "relevance_score": "0.769861"
+                },
+                {
+                    "topic": "Financial Markets",
+                    "relevance_score": "0.310843"
+                }
+            ],
+            "overall_sentiment_score": 0.08731,
+            "overall_sentiment_label": "Neutral",
+            "ticker_sentiment": [
+                {
+                    "ticker": "CRYPTO:BTC",
+                    "relevance_score": "0.100729",
+                    "ticker_sentiment_score": "0.050969",
+                    "ticker_sentiment_label": "Neutral"
+                },
+                {
+                    "ticker": "CRYPTO:RUNE",
+                    "relevance_score": "0.100729",
+                    "ticker_sentiment_score": "-0.235574",
+                    "ticker_sentiment_label": "Somewhat-Bearish"
+                }
+            ]
+        },
+        {
+            "title": "Analyses from Cognition's Positive Phase 2 'SHINE' Study of CT1812 in Mild-to-Moderate Alzheimer's Disease will be Presented in a Podium Presentation at CTAD - Cognition Therapeutics  ( NASDAQ:CGTX ) ",
+            "url": "https://www.benzinga.com/pressreleases/24/10/g41484587/analyses-from-cognitions-positive-phase-2-shine-study-of-ct1812-in-mild-to-moderate-alzheimers-dis",
+            "time_published": "20241023T113027",
+            "authors": [
+                "Globe Newswire"
+            ],
+            "summary": "Presenting prespecified analysis of cognitive impact on plasma p-Tau 217 subgroups in 'SHINE' Poster Presentation details baseline characteristics from the signal-finding 'SHIMMER' trial in DLB",
+            "banner_image": "https://www.benzinga.com/next-assets/images/schema-image-default.png",
+            "source": "Benzinga",
+            "category_within_source": "News",
+            "source_domain": "www.benzinga.com",
+            "topics": [
+                {
+                    "topic": "Technology",
+                    "relevance_score": "1.0"
+                }
+            ],
+            "overall_sentiment_score": -0.004836,
+            "overall_sentiment_label": "Neutral",
+            "ticker_sentiment": [
+                {
+                    "ticker": "CGTX",
+                    "relevance_score": "0.442339",
+                    "ticker_sentiment_score": "0.020465",
+                    "ticker_sentiment_label": "Neutral"
+                }
+            ]
+        },
+        {
+            "title": "Oppo enters tech pact with top EV maker BYD, acquires AI start-up",
+            "url": "https://www.scmp.com/tech/big-tech/article/3283554/chinese-smartphone-giant-oppo-enters-tech-pact-top-ev-maker-byd-acquires-ai-start",
+            "time_published": "20241023T113007",
+            "authors": [
+                "Ben Jiang"
+            ],
+            "summary": "The latest initiatives by Oppo show its ambition to diversify and expand its business beyond the smartphone industry.",
+            "banner_image": "https://img.i-scmp.com/cdn-cgi/image/fit=contain,width=1024,format=auto/sites/default/files/d8/images/canvas/2024/10/23/ed3b291f-680d-482e-8b0c-714784130321_5eaa1d99.jpg",
+            "source": "South China Morning Post",
+            "category_within_source": "Business",
+            "source_domain": "www.scmp.com",
+            "topics": [],
+            "overall_sentiment_score": 0.165003,
+            "overall_sentiment_label": "Somewhat-Bullish",
+            "ticker_sentiment": [
+                {
+                    "ticker": "SSNLF",
+                    "relevance_score": "0.081276",
+                    "ticker_sentiment_score": "-0.085545",
+                    "ticker_sentiment_label": "Neutral"
+                },
+                {
+                    "ticker": "XIACY",
+                    "relevance_score": "0.16171",
+                    "ticker_sentiment_score": "0.071909",
+                    "ticker_sentiment_label": "Neutral"
+                },
+                {
+                    "ticker": "SZIHF",
+                    "relevance_score": "0.081276",
+                    "ticker_sentiment_score": "0.291069",
+                    "ticker_sentiment_label": "Somewhat-Bullish"
+                }
+            ]
+        },
+        {
+            "title": "Operating Tables Market Set to Expand at 3.5% CAGR, Projected Value of $1.52 Billion by 2034 | Fact.MR Report",
+            "url": "https://www.benzinga.com/pressreleases/24/10/g41484543/operating-tables-market-set-to-expand-at-3-5-cagr-projected-value-of-1-52-billion-by-2034-fact-mr-",
+            "time_published": "20241023T113000",
+            "authors": [
+                "Globe Newswire"
+            ],
+            "summary": "Rockville, MD, Oct. 23, 2024 ( GLOBE NEWSWIRE ) -- A new report based on the operating tables market published by Fact.MR states that the global market is poised to reach a valuation of US$ 1.08 billion in 2024 and thereafter expand at a CAGR of 3.5% from 2024 to 2034.",
+            "banner_image": "https://ml.globenewswire.com/Resource/Download/f3bac439-7afc-49a6-8ba4-d1d2c974953f/operating-table-market.png",
+            "source": "Benzinga",
+            "category_within_source": "News",
+            "source_domain": "www.benzinga.com",
+            "topics": [
+                {
+                    "topic": "Life Sciences",
+                    "relevance_score": "1.0"
+                }
+            ],
+            "overall_sentiment_score": 0.298717,
+            "overall_sentiment_label": "Somewhat-Bullish",
+            "ticker_sentiment": [
+                {
+                    "ticker": "STE",
+                    "relevance_score": "0.039944",
+                    "ticker_sentiment_score": "-0.063742",
+                    "ticker_sentiment_label": "Neutral"
+                },
+                {
+                    "ticker": "GNGBY",
+                    "relevance_score": "0.039944",
+                    "ticker_sentiment_score": "-0.063742",
+                    "ticker_sentiment_label": "Neutral"
+                }
+            ]
+        },
+        {
+            "title": "Stock Yards Bancorp Reports Third Quarter Earnings of $29.4 Million or $1.00 Per Diluted Share",
+            "url": "https://www.globenewswire.com/news-release/2024/10/23/2967672/0/en/Stock-Yards-Bancorp-Reports-Third-Quarter-Earnings-of-29-4-Million-or-1-00-Per-Diluted-Share.html",
+            "time_published": "20241023T113000",
+            "authors": [
+                "Stock Yards Bancorp",
+                "Inc."
+            ],
+            "summary": "Record Third Quarter Results Highlighted by Linked Quarter Net Interest Margin Expansion and Robust Loan Growth Record Third Quarter Results Highlighted by Linked Quarter Net Interest Margin Expansion and Robust Loan Growth ...",
+            "banner_image": "https://ml.globenewswire.com/Resource/Download/95184702-c908-4d0f-a51b-62528a106227",
+            "source": "GlobeNewswire",
+            "category_within_source": "n/a",
+            "source_domain": "www.globenewswire.com",
+            "topics": [
+                {
+                    "topic": "Economy - Monetary",
+                    "relevance_score": "0.576289"
+                },
+                {
+                    "topic": "Financial Markets",
+                    "relevance_score": "1.0"
+                },
+                {
+                    "topic": "Earnings",
+                    "relevance_score": "0.905476"
+                },
+                {
+                    "topic": "Finance",
+                    "relevance_score": "1.0"
+                }
+            ],
+            "overall_sentiment_score": 0.381957,
+            "overall_sentiment_label": "Bullish",
+            "ticker_sentiment": [
+                {
+                    "ticker": "EIFZF",
+                    "relevance_score": "0.013997",
+                    "ticker_sentiment_score": "0.215184",
+                    "ticker_sentiment_label": "Somewhat-Bullish"
+                },
+                {
+                    "ticker": "SYBT",
+                    "relevance_score": "0.0699",
+                    "ticker_sentiment_score": "0.196315",
+                    "ticker_sentiment_label": "Somewhat-Bullish"
+                }
+            ]
+        },
+        {
+            "title": "Kura Oncology to Present New Data Supporting Combination of KO-2806 with KRAS G12C and Pan-RAS Inhibitors",
+            "url": "https://www.globenewswire.com/news-release/2024/10/23/2967673/35186/en/Kura-Oncology-to-Present-New-Data-Supporting-Combination-of-KO-2806-with-KRAS-G12C-and-Pan-RAS-Inhibitors.html",
+            "time_published": "20241023T113000",
+            "authors": [
+                "Inc.",
+                "Kura Oncology"
+            ],
+            "summary": "- New preclinical data to be presented at EORTC-NCI-AACR Symposium on Molecular Targets and Cancer Therapeutics - - New preclinical data to be presented at EORTC-NCI-AACR Symposium on Molecular Targets and Cancer Therapeutics ...",
+            "banner_image": "https://ml.globenewswire.com/Resource/Download/68d3bfe4-b4b0-4227-a950-2862930bd2cc",
+            "source": "GlobeNewswire",
+            "category_within_source": "n/a",
+            "source_domain": "www.globenewswire.com",
+            "topics": [
+                {
+                    "topic": "Life Sciences",
+                    "relevance_score": "1.0"
+                },
+                {
+                    "topic": "Financial Markets",
+                    "relevance_score": "0.158519"
+                }
+            ],
+            "overall_sentiment_score": -0.007292,
+            "overall_sentiment_label": "Neutral",
+            "ticker_sentiment": [
+                {
+                    "ticker": "KURA",
+                    "relevance_score": "0.170275",
+                    "ticker_sentiment_score": "0.052294",
+                    "ticker_sentiment_label": "Neutral"
+                }
+            ]
+        },
+        {
+            "title": "Arbutus to Report Third Quarter 2024 Financial Results and Provide Corporate Update",
+            "url": "https://www.globenewswire.com/news-release/2024/10/23/2967670/14025/en/Arbutus-to-Report-Third-Quarter-2024-Financial-Results-and-Provide-Corporate-Update.html",
+            "time_published": "20241023T113000",
+            "authors": [
+                "Arbutus Biopharma Corporation"
+            ],
+            "summary": "WARMINSTER, Pa., Oct. 23, 2024 ( GLOBE NEWSWIRE ) -- Arbutus Biopharma Corporation ( Nasdaq: ABUS ) , ( \"Arbutus\" or the \"Company\" ) a clinical-stage biopharmaceutical company leveraging its extensive virology expertise to develop a functional cure for people with chronic hepatitis B virus ( ...",
+            "banner_image": "https://ml.globenewswire.com/Resource/Download/be474abd-3f6d-4270-a58e-1e6ee5c80bb2",
+            "source": "GlobeNewswire",
+            "category_within_source": "n/a",
+            "source_domain": "www.globenewswire.com",
+            "topics": [
+                {
+                    "topic": "Life Sciences",
+                    "relevance_score": "1.0"
+                }
+            ],
+            "overall_sentiment_score": 0.033802,
+            "overall_sentiment_label": "Neutral",
+            "ticker_sentiment": [
+                {
+                    "ticker": "ABUS",
+                    "relevance_score": "0.52759",
+                    "ticker_sentiment_score": "-0.010046",
+                    "ticker_sentiment_label": "Neutral"
+                }
+            ]
+        },
+        {
+            "title": "Rakovina Therapeutics Announces Initial Drug Candidates from Deep Docking AI Molecule Discovery Platform",
+            "url": "https://www.globenewswire.com/news-release/2024/10/23/2967683/0/en/Rakovina-Therapeutics-Announces-Initial-Drug-Candidates-from-Deep-Docking-AI-Molecule-Discovery-Platform.html",
+            "time_published": "20241023T113000",
+            "authors": [
+                "Rakovina Therapeutics Inc"
+            ],
+            "summary": "Company to present initial results of this research at the Society for Neuro-Oncology Annual Meeting in November Company to present initial results of this research at the Society for Neuro-Oncology Annual Meeting in November ...",
+            "banner_image": "https://ml.globenewswire.com/Resource/Download/e94148e0-0631-403b-9597-c742d43dca13",
+            "source": "GlobeNewswire",
+            "category_within_source": "n/a",
+            "source_domain": "www.globenewswire.com",
+            "topics": [
+                {
+                    "topic": "Financial Markets",
+                    "relevance_score": "0.360215"
+                }
+            ],
+            "overall_sentiment_score": 0.083335,
+            "overall_sentiment_label": "Neutral",
+            "ticker_sentiment": []
+        },
+        {
+            "title": "Watsco Reports Record Sales, Enhanced Operating Efficiency, Strong Cash Flow and Improving Business Trends",
+            "url": "https://www.globenewswire.com/news-release/2024/10/23/2967678/0/en/Watsco-Reports-Record-Sales-Enhanced-Operating-Efficiency-Strong-Cash-Flow-and-Improving-Business-Trends.html",
+            "time_published": "20241023T113000",
+            "authors": [
+                "Watsco",
+                "Inc."
+            ],
+            "summary": "Entrepreneurial Culture, Debt-Free Balance Sheet, Leading Technologies and Upcoming Regulatory Change Support Long-Term Investment and Growth Entrepreneurial Culture, Debt-Free Balance Sheet, Leading Technologies and Upcoming Regulatory Change Support Long-Term Investment and Growth ...",
+            "banner_image": "https://ml.globenewswire.com/Resource/Download/2a8fdcea-1fe8-492e-b588-03fbba943e5a",
+            "source": "GlobeNewswire",
+            "category_within_source": "n/a",
+            "source_domain": "www.globenewswire.com",
+            "topics": [
+                {
+                    "topic": "Retail & Wholesale",
+                    "relevance_score": "1.0"
+                },
+                {
+                    "topic": "Financial Markets",
+                    "relevance_score": "0.98396"
+                },
+                {
+                    "topic": "Earnings",
+                    "relevance_score": "0.858979"
+                },
+                {
+                    "topic": "Mergers & Acquisitions",
+                    "relevance_score": "0.214378"
+                }
+            ],
+            "overall_sentiment_score": 0.338116,
+            "overall_sentiment_label": "Somewhat-Bullish",
+            "ticker_sentiment": [
+                {
+                    "ticker": "WSO",
+                    "relevance_score": "0.399416",
+                    "ticker_sentiment_score": "0.354115",
+                    "ticker_sentiment_label": "Bullish"
+                }
+            ]
+        },
+        {
+            "title": "Arbutus to Report Third Quarter 2024 Financial Results and Provide Corporate Update - Arbutus Biopharma  ( NASDAQ:ABUS ) ",
+            "url": "https://www.benzinga.com/pressreleases/24/10/g41484542/arbutus-to-report-third-quarter-2024-financial-results-and-provide-corporate-update",
+            "time_published": "20241023T113000",
+            "authors": [
+                "Globe Newswire"
+            ],
+            "summary": "WARMINSTER, Pa., Oct. 23, 2024 ( GLOBE NEWSWIRE ) -- Arbutus Biopharma Corporation ABUS, ( \"Arbutus\" or the \"Company\" ) a clinical-stage biopharmaceutical company leveraging its extensive virology expertise to develop a functional cure for people with chronic hepatitis B virus ( cHBV ) ...",
+            "banner_image": "https://www.benzinga.com/next-assets/images/schema-image-default.png",
+            "source": "Benzinga",
+            "category_within_source": "News",
+            "source_domain": "www.benzinga.com",
+            "topics": [
+                {
+                    "topic": "Life Sciences",
+                    "relevance_score": "1.0"
+                }
+            ],
+            "overall_sentiment_score": 0.060385,
+            "overall_sentiment_label": "Neutral",
+            "ticker_sentiment": [
+                {
+                    "ticker": "ABUS",
+                    "relevance_score": "0.459624",
+                    "ticker_sentiment_score": "-0.009217",
+                    "ticker_sentiment_label": "Neutral"
+                }
+            ]
+        },
+        {
+            "title": "Lilium, GE Aerospace partner to deliver eVTOL flight safety - Lilium  ( NASDAQ:LILM ) , GE Aero  ( NYSE:GE ) ",
+            "url": "https://www.benzinga.com/pressreleases/24/10/g41484550/lilium-ge-aerospace-partner-to-deliver-evtol-flight-safety",
+            "time_published": "20241023T113000",
+            "authors": [
+                "Globe Newswire"
+            ],
+            "summary": "Two companies combining their flight data and analytics platforms to inform eVTOL flight safety standards Lilium to deploy GE technology to all Lilium Jet operators, starting with Lilium's own flight test campaign",
+            "banner_image": "https://www.benzinga.com/next-assets/images/schema-image-default.png",
+            "source": "Benzinga",
+            "category_within_source": "General",
+            "source_domain": "www.benzinga.com",
+            "topics": [
+                {
+                    "topic": "Financial Markets",
+                    "relevance_score": "0.360215"
+                }
+            ],
+            "overall_sentiment_score": 0.304043,
+            "overall_sentiment_label": "Somewhat-Bullish",
+            "ticker_sentiment": []
+        },
+        {
+            "title": "United Community Banks, Inc. Reports Third Quarter Results",
+            "url": "https://www.globenewswire.com/news-release/2024/10/23/2967681/34434/en/United-Community-Banks-Inc-Reports-Third-Quarter-Results.html",
+            "time_published": "20241023T113000",
+            "authors": [
+                "Inc.",
+                "United Community Banks"
+            ],
+            "summary": "Strong Customer Deposit Growth Drives Third Quarter Results Strong Customer Deposit Growth Drives Third Quarter Results ...",
+            "banner_image": "https://ml.globenewswire.com/Resource/Download/b3c2b8db-5d17-4b09-8f40-5d9f51d8693f",
+            "source": "GlobeNewswire",
+            "category_within_source": "n/a",
+            "source_domain": "www.globenewswire.com",
+            "topics": [
+                {
+                    "topic": "Earnings",
+                    "relevance_score": "1.0"
+                },
+                {
+                    "topic": "Technology",
+                    "relevance_score": "1.0"
+                },
+                {
+                    "topic": "Financial Markets",
+                    "relevance_score": "1.0"
+                }
+            ],
+            "overall_sentiment_score": 0.289353,
+            "overall_sentiment_label": "Somewhat-Bullish",
+            "ticker_sentiment": [
+                {
+                    "ticker": "UCB",
+                    "relevance_score": "0.087888",
+                    "ticker_sentiment_score": "0.278243",
+                    "ticker_sentiment_label": "Somewhat-Bullish"
+                }
+            ]
+        },
+        {
+            "title": "TC Energy provides results of Series 9 Shares conversion elections",
+            "url": "https://www.globenewswire.com/news-release/2024/10/23/2967682/0/en/TC-Energy-provides-results-of-Series-9-Shares-conversion-elections.html",
+            "time_published": "20241023T113000",
+            "authors": [
+                "TC Energy Corporation"
+            ],
+            "summary": "CALGARY, Alberta, Oct. 23, 2024 ( GLOBE NEWSWIRE ) -- News Release - TC Energy Corporation ( TSX, NYSE: TRP ) ( TC Energy or the Company ) today announced that 1,297,203 of its 18,000,000 fixed rate Cumulative Redeemable First Preferred Shares, Series 9 ( Series 9 Shares ) have been elected for ...",
+            "banner_image": "https://ml.globenewswire.com/Resource/Download/c05c8c3b-12a9-4ce9-ba6f-0cb790d639b9",
+            "source": "GlobeNewswire",
+            "category_within_source": "n/a",
+            "source_domain": "www.globenewswire.com",
+            "topics": [
+                {
+                    "topic": "Energy & Transportation",
+                    "relevance_score": "1.0"
+                },
+                {
+                    "topic": "Financial Markets",
+                    "relevance_score": "0.744043"
+                }
+            ],
+            "overall_sentiment_score": 0.290027,
+            "overall_sentiment_label": "Somewhat-Bullish",
+            "ticker_sentiment": [
+                {
+                    "ticker": "TRP",
+                    "relevance_score": "0.568435",
+                    "ticker_sentiment_score": "0.30057",
+                    "ticker_sentiment_label": "Somewhat-Bullish"
+                }
+            ]
+        },
+        {
+            "title": "ZenaTech Announces a Software Company Acquisition Adding Significant Capabilities to Building AI Drones - ZenaTech  ( NASDAQ:ZENA ) ",
+            "url": "https://www.benzinga.com/pressreleases/24/10/g41484551/zenatech-announces-a-software-company-acquisition-adding-significant-capabilities-to-building-ai-d",
+            "time_published": "20241023T113000",
+            "authors": [
+                "Globe Newswire"
+            ],
+            "summary": "TORONTO, Oct. 23, 2024 ( GLOBE NEWSWIRE ) -- ZenaTech, Inc.",
+            "banner_image": "https://ml.globenewswire.com/media/bebf30b7-3060-4af4-bde8-3aa10e98b6f3/small/zena-png.png",
+            "source": "Benzinga",
+            "category_within_source": "General",
+            "source_domain": "www.benzinga.com",
+            "topics": [
+                {
+                    "topic": "Earnings",
+                    "relevance_score": "0.161647"
+                },
+                {
+                    "topic": "Financial Markets",
+                    "relevance_score": "0.87644"
+                }
+            ],
+            "overall_sentiment_score": 0.163955,
+            "overall_sentiment_label": "Somewhat-Bullish",
+            "ticker_sentiment": [
+                {
+                    "ticker": "ZENA",
+                    "relevance_score": "0.49894",
+                    "ticker_sentiment_score": "0.189702",
+                    "ticker_sentiment_label": "Somewhat-Bullish"
+                }
+            ]
+        },
+        {
+            "title": "Context Therapeutics to Participate in Upcoming Investor Conferences in November - Context Therapeutics  ( NASDAQ:CNTX ) ",
+            "url": "https://www.benzinga.com/pressreleases/24/10/g41484552/context-therapeutics-to-participate-in-upcoming-investor-conferences-in-november",
+            "time_published": "20241023T113000",
+            "authors": [
+                "Globe Newswire"
+            ],
+            "summary": "PHILADELPHIA, Oct. 23, 2024 ( GLOBE NEWSWIRE ) -- Context Therapeutics Inc. ( \"Context\" or \"Company\" ) CNTX, a biopharmaceutical company advancing T cell engagers for solid tumors, today announced that the Company will participate in the following investor conferences in November:",
+            "banner_image": "https://www.benzinga.com/next-assets/images/schema-image-default.png",
+            "source": "Benzinga",
+            "category_within_source": "News",
+            "source_domain": "www.benzinga.com",
+            "topics": [
+                {
+                    "topic": "Technology",
+                    "relevance_score": "1.0"
+                },
+                {
+                    "topic": "Financial Markets",
+                    "relevance_score": "0.495866"
+                }
+            ],
+            "overall_sentiment_score": 0.14076,
+            "overall_sentiment_label": "Neutral",
+            "ticker_sentiment": [
+                {
+                    "ticker": "CNTX",
+                    "relevance_score": "0.347614",
+                    "ticker_sentiment_score": "0.233183",
+                    "ticker_sentiment_label": "Somewhat-Bullish"
+                }
+            ]
+        },
+        {
+            "title": "Emergent BioSolutions to Release Third Quarter 2024 Financial Results and Conduct Conference Call on November 6, 2024",
+            "url": "https://www.globenewswire.com/news-release/2024/10/23/2967685/33240/en/Emergent-BioSolutions-to-Release-Third-Quarter-2024-Financial-Results-and-Conduct-Conference-Call-on-November-6-2024.html",
+            "time_published": "20241023T113000",
+            "authors": [
+                "Inc.",
+                "Emergent Biosolutions"
+            ],
+            "summary": "GAITHERSBURG, Md., Oct. 23, 2024 ( GLOBE NEWSWIRE ) -- Emergent BioSolutions Inc. ( NYSE: EBS ) will host a conference call on Wednesday, November 6, 2024, at 5:00 pm eastern time to discuss the financial results for the third quarter of 2024, recent business developments, and financial outlook ...",
+            "banner_image": "https://ml.globenewswire.com/Resource/Download/56a9097d-af91-4bcf-8c42-5905e1614ef1",
+            "source": "GlobeNewswire",
+            "category_within_source": "n/a",
+            "source_domain": "www.globenewswire.com",
+            "topics": [
+                {
+                    "topic": "Life Sciences",
+                    "relevance_score": "0.5"
+                },
+                {
+                    "topic": "Technology",
+                    "relevance_score": "0.5"
+                }
+            ],
+            "overall_sentiment_score": 0.258421,
+            "overall_sentiment_label": "Somewhat-Bullish",
+            "ticker_sentiment": [
+                {
+                    "ticker": "SPOT",
+                    "relevance_score": "0.205807",
+                    "ticker_sentiment_score": "0.24255",
+                    "ticker_sentiment_label": "Somewhat-Bullish"
+                },
+                {
+                    "ticker": "EBS",
+                    "relevance_score": "0.398148",
+                    "ticker_sentiment_score": "0.0",
+                    "ticker_sentiment_label": "Neutral"
+                }
+            ]
+        },
+        {
+            "title": "Streamline Health\u00ae Adds Quality Module to Existing eValuator Relationship",
+            "url": "https://www.globenewswire.com/news-release/2024/10/23/2967680/0/en/Streamline-Health-Adds-Quality-Module-to-Existing-eValuator-Relationship.html",
+            "time_published": "20241023T113000",
+            "authors": [
+                "Inc.",
+                "Streamline Health Solutions"
+            ],
+            "summary": "eValuator Quality Module provides real-time risk scoring and quality measurement impact eValuator Quality Module provides real-time risk scoring and quality measurement impact ...",
+            "banner_image": "https://ml.globenewswire.com/Resource/Download/49b3c5e9-8b0f-4d3e-94ef-a6304c655a82",
+            "source": "GlobeNewswire",
+            "category_within_source": "n/a",
+            "source_domain": "www.globenewswire.com",
+            "topics": [
+                {
+                    "topic": "Earnings",
+                    "relevance_score": "0.108179"
+                },
+                {
+                    "topic": "Technology",
+                    "relevance_score": "1.0"
+                }
+            ],
+            "overall_sentiment_score": 0.303,
+            "overall_sentiment_label": "Somewhat-Bullish",
+            "ticker_sentiment": [
+                {
+                    "ticker": "STRM",
+                    "relevance_score": "0.517168",
+                    "ticker_sentiment_score": "0.509876",
+                    "ticker_sentiment_label": "Bullish"
+                }
+            ]
+        },
+        {
+            "title": "Context Therapeutics to Participate in Upcoming Investor Conferences in November",
+            "url": "https://www.globenewswire.com/news-release/2024/10/23/2967677/0/en/Context-Therapeutics-to-Participate-in-Upcoming-Investor-Conferences-in-November.html",
+            "time_published": "20241023T113000",
+            "authors": [
+                "Context Therapeutics Inc."
+            ],
+            "summary": "PHILADELPHIA, Oct. 23, 2024 ( GLOBE NEWSWIRE ) -- Context Therapeutics Inc. ( \"Context\" or \"Company\" ) ( Nasdaq: CNTX ) , a biopharmaceutical company advancing T cell engagers for solid tumors, today announced that the Company will participate in the following investor conferences in ...",
+            "banner_image": "https://ml.globenewswire.com/Resource/Download/67b45666-397e-4c48-af45-ffd653bbfddf",
+            "source": "GlobeNewswire",
+            "category_within_source": "n/a",
+            "source_domain": "www.globenewswire.com",
+            "topics": [
+                {
+                    "topic": "Technology",
+                    "relevance_score": "1.0"
+                },
+                {
+                    "topic": "Financial Markets",
+                    "relevance_score": "0.310843"
+                }
+            ],
+            "overall_sentiment_score": 0.126813,
+            "overall_sentiment_label": "Neutral",
+            "ticker_sentiment": [
+                {
+                    "ticker": "CNTX",
+                    "relevance_score": "0.31482",
+                    "ticker_sentiment_score": "0.168429",
+                    "ticker_sentiment_label": "Somewhat-Bullish"
+                }
+            ]
+        },
+        {
+            "title": "Dimethyl Ether Market to Surpass Valuation of USD 10.02 Billion by 2031 | SkyQuest Technology",
+            "url": "https://www.benzinga.com/pressreleases/24/10/g41484549/dimethyl-ether-market-to-surpass-valuation-of-usd-10-02-billion-by-2031-skyquest-technology",
+            "time_published": "20241023T113000",
+            "authors": [
+                "Globe Newswire"
+            ],
+            "summary": "Westford, USA, Oct. 23, 2024 ( GLOBE NEWSWIRE ) -- SkyQuest projects that the Global Dimethyl Ether Market will reach a value of USD 10.02 Billion by 2031, with a CAGR of 9.4% during the forecast period ( 2024-2031 ) . As an alternative to petroleum diesel, dimethyl ether fuel is inexpensive, ...",
+            "banner_image": "https://www.benzinga.com/next-assets/images/schema-image-default.png",
+            "source": "Benzinga",
+            "category_within_source": "General",
+            "source_domain": "www.benzinga.com",
+            "topics": [
+                {
+                    "topic": "Life Sciences",
+                    "relevance_score": "0.5"
+                },
+                {
+                    "topic": "Energy & Transportation",
+                    "relevance_score": "0.5"
+                },
+                {
+                    "topic": "Financial Markets",
+                    "relevance_score": "0.108179"
+                }
+            ],
+            "overall_sentiment_score": 0.315512,
+            "overall_sentiment_label": "Somewhat-Bullish",
+            "ticker_sentiment": [
+                {
+                    "ticker": "CC",
+                    "relevance_score": "0.042723",
+                    "ticker_sentiment_score": "0.006921",
+                    "ticker_sentiment_label": "Neutral"
+                },
+                {
+                    "ticker": "CRGGF",
+                    "relevance_score": "0.042723",
+                    "ticker_sentiment_score": "0.006921",
+                    "ticker_sentiment_label": "Neutral"
+                },
+                {
+                    "ticker": "MSBHF",
+                    "relevance_score": "0.042723",
+                    "ticker_sentiment_score": "0.006921",
+                    "ticker_sentiment_label": "Neutral"
+                },
+                {
+                    "ticker": "WM",
+                    "relevance_score": "0.042723",
+                    "ticker_sentiment_score": "0.099741",
+                    "ticker_sentiment_label": "Neutral"
+                },
+                {
+                    "ticker": "CLNE",
+                    "relevance_score": "0.042723",
+                    "ticker_sentiment_score": "0.006921",
+                    "ticker_sentiment_label": "Neutral"
+                },
+                {
+                    "ticker": "RYDAF",
+                    "relevance_score": "0.042723",
+                    "ticker_sentiment_score": "0.006921",
+                    "ticker_sentiment_label": "Neutral"
+                },
+                {
+                    "ticker": "CRYPTO:ETH",
+                    "relevance_score": "0.479683",
+                    "ticker_sentiment_score": "0.402834",
+                    "ticker_sentiment_label": "Bullish"
+                }
+            ]
+        },
+        {
+            "title": "Lilium, GE Aerospace partner to deliver eVTOL flight safety",
+            "url": "https://www.globenewswire.com/news-release/2024/10/23/2967674/0/en/Lilium-GE-Aerospace-partner-to-deliver-eVTOL-flight-safety.html",
+            "time_published": "20241023T113000",
+            "authors": [
+                "Lilium GmbH"
+            ],
+            "summary": "LAS VEGAS, Oct. 23, 2024 ( GLOBE NEWSWIRE ) -- With eVTOLs on the cusp of taking off commercially in the coming years, GE Aerospace is partnering with Lilium, a leading electric aircraft manufacturer and pioneer in Regional Air Mobility ( RAM ) , to build a solid safety foundation for this ...",
+            "banner_image": "https://ml.globenewswire.com/Resource/Download/80f3d37a-2aff-4b6e-b3bc-2812511c3a96",
+            "source": "GlobeNewswire",
+            "category_within_source": "n/a",
+            "source_domain": "www.globenewswire.com",
+            "topics": [
+                {
+                    "topic": "Financial Markets",
+                    "relevance_score": "0.158519"
+                }
+            ],
+            "overall_sentiment_score": 0.308349,
+            "overall_sentiment_label": "Somewhat-Bullish",
+            "ticker_sentiment": []
+        },
+        {
+            "title": "Amesite Announces Customization for Paid NurseMagic\u2122 Enterprise Licensees - Amesite  ( NASDAQ:AMST ) ",
+            "url": "https://www.benzinga.com/pressreleases/24/10/g41484546/amesite-announces-customization-for-paid-nursemagic-enterprise-licensees",
+            "time_published": "20241023T113000",
+            "authors": [
+                "Globe Newswire"
+            ],
+            "summary": "DETROIT, Oct. 23, 2024 ( GLOBE NEWSWIRE ) -- Amesite Inc. AMST, a pioneering technology company specializing in the development and marketing of B2C and B2B AI-driven solutions, announced today the company's app, NurseMagic, enables multiple professions to use the app with customized features for ...",
+            "banner_image": "https://www.benzinga.com/next-assets/images/schema-image-default.png",
+            "source": "Benzinga",
+            "category_within_source": "General",
+            "source_domain": "www.benzinga.com",
+            "topics": [
+                {
+                    "topic": "Technology",
+                    "relevance_score": "1.0"
+                },
+                {
+                    "topic": "Financial Markets",
+                    "relevance_score": "0.495866"
+                }
+            ],
+            "overall_sentiment_score": 0.188404,
+            "overall_sentiment_label": "Somewhat-Bullish",
+            "ticker_sentiment": [
+                {
+                    "ticker": "AMST",
+                    "relevance_score": "0.411176",
+                    "ticker_sentiment_score": "0.404629",
+                    "ticker_sentiment_label": "Bullish"
+                },
+                {
+                    "ticker": "PTEFF",
+                    "relevance_score": "0.08609",
+                    "ticker_sentiment_score": "0.153006",
+                    "ticker_sentiment_label": "Somewhat-Bullish"
+                }
+            ]
+        },
+        {
+            "title": "Amesite Announces Customization for Paid NurseMagic\u2122 Enterprise Licensees",
+            "url": "https://www.globenewswire.com/news-release/2024/10/23/2967671/0/en/Amesite-Announces-Customization-for-Paid-NurseMagic-Enterprise-Licensees.html",
+            "time_published": "20241023T113000",
+            "authors": [
+                "Amesite Inc."
+            ],
+            "summary": "Dramatically Increases the Number of Workers and Professions Who Can Benefit from NurseMagic\u2122 Dramatically Increases the Number of Workers and Professions Who Can Benefit from ...",
+            "banner_image": "https://ml.globenewswire.com/Resource/Download/507502b7-5e91-4acb-9944-4c8913b2b1a4",
+            "source": "GlobeNewswire",
+            "category_within_source": "n/a",
+            "source_domain": "www.globenewswire.com",
+            "topics": [
+                {
+                    "topic": "Technology",
+                    "relevance_score": "1.0"
+                },
+                {
+                    "topic": "Financial Markets",
+                    "relevance_score": "0.310843"
+                }
+            ],
+            "overall_sentiment_score": 0.165257,
+            "overall_sentiment_label": "Somewhat-Bullish",
+            "ticker_sentiment": [
+                {
+                    "ticker": "AMST",
+                    "relevance_score": "0.431554",
+                    "ticker_sentiment_score": "0.397312",
+                    "ticker_sentiment_label": "Bullish"
+                },
+                {
+                    "ticker": "PTEFF",
+                    "relevance_score": "0.090816",
+                    "ticker_sentiment_score": "0.159948",
+                    "ticker_sentiment_label": "Somewhat-Bullish"
+                }
+            ]
+        },
+        {
+            "title": "ZenaTech Announces a Software Company Acquisition Adding Significant Capabilities to Building AI Drones",
+            "url": "https://www.globenewswire.com/news-release/2024/10/23/2967679/0/en/ZenaTech-Announces-a-Software-Company-Acquisition-Adding-Significant-Capabilities-to-Building-AI-Drones.html",
+            "time_published": "20241023T113000",
+            "authors": [
+                "ZenaTech Inc."
+            ],
+            "summary": "TORONTO, Oct. 23, 2024 ( GLOBE NEWSWIRE ) -- ZenaTech, Inc. ( Nasdaq: ZENA ) ( \"ZenaTech\" ) , a technology company specializing in AI ( Artificial Intelligence ) drone solutions and enterprise SaaS ( Software-as-a-Service ) solutions, today announced that it has entered into an agreement to ...",
+            "banner_image": "https://ml.globenewswire.com/Resource/Download/bebf30b7-3060-4af4-bde8-3aa10e98b6f3",
+            "source": "GlobeNewswire",
+            "category_within_source": "n/a",
+            "source_domain": "www.globenewswire.com",
+            "topics": [
+                {
+                    "topic": "Earnings",
+                    "relevance_score": "0.161647"
+                },
+                {
+                    "topic": "Financial Markets",
+                    "relevance_score": "0.796627"
+                }
+            ],
+            "overall_sentiment_score": 0.156983,
+            "overall_sentiment_label": "Somewhat-Bullish",
+            "ticker_sentiment": [
+                {
+                    "ticker": "ZENA",
+                    "relevance_score": "0.448842",
+                    "ticker_sentiment_score": "0.183565",
+                    "ticker_sentiment_label": "Somewhat-Bullish"
+                }
+            ]
+        },
+        {
+            "title": "Hilton Worldwide Q3 Earnings Beats Estimates On Higher Occupancy, Stock Dips On Lackluster Outlook - Hilton Worldwide Holdings  ( NYSE:HLT ) ",
+            "url": "https://www.benzinga.com/news/earnings/24/10/41484529/hilton-worldwide-q3-earnings-beats-estimates-on-higher-occupancy-stock-dips-on-lackluster-outlook",
+            "time_published": "20241023T112901",
+            "authors": [
+                "Nabaparna Bhattacharya"
+            ],
+            "summary": "Hilton Worldwide Holdings Inc. HLT shares are trading lower after the company reported third-quarter results. The company reported adjusted earnings per share of $1.92, beating the analyst consensus estimate of $1.85. Quarterly revenues of $2.867 billion missed the street view of $2.905 billion.",
+            "banner_image": "https://cdn.benzinga.com/files/images/story/2024/10/23/Hundreds-Of-Hilton-Hotel-Workers-Strike-.jpeg?width=1200&height=800&fit=crop",
+            "source": "Benzinga",
+            "category_within_source": "General",
+            "source_domain": "www.benzinga.com",
+            "topics": [
+                {
+                    "topic": "Economy - Monetary",
+                    "relevance_score": "0.158519"
+                },
+                {
+                    "topic": "Financial Markets",
+                    "relevance_score": "0.161647"
+                },
+                {
+                    "topic": "Earnings",
+                    "relevance_score": "0.995015"
+                },
+                {
+                    "topic": "Real Estate & Construction",
+                    "relevance_score": "1.0"
+                }
+            ],
+            "overall_sentiment_score": 0.113622,
+            "overall_sentiment_label": "Neutral",
+            "ticker_sentiment": [
+                {
+                    "ticker": "HLT",
+                    "relevance_score": "0.737032",
+                    "ticker_sentiment_score": "0.135153",
+                    "ticker_sentiment_label": "Neutral"
+                }
+            ]
+        },
+        {
+            "title": "Palo Alto May Open Streets To Tesla Robotaxis, But California Regulators Will Decide Fate - Tesla  ( NASDAQ:TSLA ) ",
+            "url": "https://www.benzinga.com/news/24/10/41484511/palo-alto-may-open-streets-to-tesla-robotaxis-but-california-regulators-will-decide-fate",
+            "time_published": "20241023T112759",
+            "authors": [
+                "Anan Ashraf"
+            ],
+            "summary": "Palo Alto city leaders are reportedly exploring a deal with EV giant Tesla Inc. TSLA where the company tests its robotaxis on the city's streets. What Happened: The city recently held a preliminary discussion with Tesla, Palo Alto Online reported, citing city spokesperson Meghan Horrigan-Taylor.",
+            "banner_image": "https://cdn.benzinga.com/files/images/story/2024/10/23/Tesla-Cybercab-robotaxi.jpeg?width=1200&height=800&fit=crop",
+            "source": "Benzinga",
+            "category_within_source": "News",
+            "source_domain": "www.benzinga.com",
+            "topics": [
+                {
+                    "topic": "Manufacturing",
+                    "relevance_score": "1.0"
+                }
+            ],
+            "overall_sentiment_score": 0.24856,
+            "overall_sentiment_label": "Somewhat-Bullish",
+            "ticker_sentiment": [
+                {
+                    "ticker": "TSLA",
+                    "relevance_score": "0.722944",
+                    "ticker_sentiment_score": "0.412189",
+                    "ticker_sentiment_label": "Bullish"
+                }
+            ]
+        },
+        {
+            "title": "Why Nasdaq, S&P 500 Futures Are Trading Lower Wednesday - Apple  ( NASDAQ:AAPL ) , ARM Holdings  ( NASDAQ:ARM ) ",
+            "url": "https://www.benzinga.com/news/earnings/24/10/41484445/us-stocks-expected-to-open-in-red-as-investors-eye-tesla-earnings-gold-surges-crude-slips-as-analys",
+            "time_published": "20241023T112533",
+            "authors": [
+                "Rounak Jain"
+            ],
+            "summary": "A risk-off mood persists on Wall Street as the index futures point to a marginally lower start on Wednesday after the tech-led rebound witnessed in the previous session. Nvidia Corp. NVDA fell in premarket, followed by Apple Inc. AAPL and Tesla Inc. TSLA. Chipmakers and chip designers will also ...",
+            "banner_image": "https://cdn.benzinga.com/files/images/story/2024/10/23/Wall-Street.jpeg?width=1200&height=800&fit=crop",
+            "source": "Benzinga",
+            "category_within_source": "Trading",
+            "source_domain": "www.benzinga.com",
+            "topics": [
+                {
+                    "topic": "Energy & Transportation",
+                    "relevance_score": "0.2"
+                },
+                {
+                    "topic": "Technology",
+                    "relevance_score": "0.2"
+                },
+                {
+                    "topic": "Finance",
+                    "relevance_score": "0.2"
+                },
+                {
+                    "topic": "Economy - Monetary",
+                    "relevance_score": "0.838487"
+                },
+                {
+                    "topic": "Retail & Wholesale",
+                    "relevance_score": "0.2"
+                },
+                {
+                    "topic": "Financial Markets",
+                    "relevance_score": "0.967645"
+                },
+                {
+                    "topic": "Manufacturing",
+                    "relevance_score": "0.2"
+                },
+                {
+                    "topic": "Earnings",
+                    "relevance_score": "0.495866"
+                }
+            ],
+            "overall_sentiment_score": 0.038694,
+            "overall_sentiment_label": "Neutral",
+            "ticker_sentiment": [
+                {
+                    "ticker": "NVDA",
+                    "relevance_score": "0.110717",
+                    "ticker_sentiment_score": "-0.125225",
+                    "ticker_sentiment_label": "Neutral"
+                },
+                {
+                    "ticker": "AAPL",
+                    "relevance_score": "0.110717",
+                    "ticker_sentiment_score": "-0.125225",
+                    "ticker_sentiment_label": "Neutral"
+                },
+                {
+                    "ticker": "MDNDF",
+                    "relevance_score": "0.110717",
+                    "ticker_sentiment_score": "-0.073387",
+                    "ticker_sentiment_label": "Neutral"
+                },
+                {
+                    "ticker": "IVZ",
+                    "relevance_score": "0.055492",
+                    "ticker_sentiment_score": "-0.01912",
+                    "ticker_sentiment_label": "Neutral"
+                },
+                {
+                    "ticker": "MCD",
+                    "relevance_score": "0.110717",
+                    "ticker_sentiment_score": "0.0",
+                    "ticker_sentiment_label": "Neutral"
+                },
+                {
+                    "ticker": "TSM",
+                    "relevance_score": "0.110717",
+                    "ticker_sentiment_score": "-0.162863",
+                    "ticker_sentiment_label": "Somewhat-Bearish"
+                },
+                {
+                    "ticker": "ULCC",
+                    "relevance_score": "0.110717",
+                    "ticker_sentiment_score": "0.183932",
+                    "ticker_sentiment_label": "Somewhat-Bullish"
+                },
+                {
+                    "ticker": "BCS",
+                    "relevance_score": "0.055492",
+                    "ticker_sentiment_score": "-0.018028",
+                    "ticker_sentiment_label": "Neutral"
+                },
+                {
+                    "ticker": "TSLA",
+                    "relevance_score": "0.219312",
+                    "ticker_sentiment_score": "-0.142744",
+                    "ticker_sentiment_label": "Neutral"
+                },
+                {
+                    "ticker": "SBUX",
+                    "relevance_score": "0.165409",
+                    "ticker_sentiment_score": "-0.143966",
+                    "ticker_sentiment_label": "Neutral"
+                },
+                {
+                    "ticker": "T",
+                    "relevance_score": "0.110717",
+                    "ticker_sentiment_score": "0.0",
+                    "ticker_sentiment_label": "Neutral"
+                },
+                {
+                    "ticker": "QCOM",
+                    "relevance_score": "0.110717",
+                    "ticker_sentiment_score": "-0.162863",
+                    "ticker_sentiment_label": "Somewhat-Bearish"
+                },
+                {
+                    "ticker": "SAVE",
+                    "relevance_score": "0.165409",
+                    "ticker_sentiment_score": "0.083521",
+                    "ticker_sentiment_label": "Neutral"
+                },
+                {
+                    "ticker": "ARM",
+                    "relevance_score": "0.110717",
+                    "ticker_sentiment_score": "-0.162863",
+                    "ticker_sentiment_label": "Somewhat-Bearish"
+                },
+                {
+                    "ticker": "BA",
+                    "relevance_score": "0.110717",
+                    "ticker_sentiment_score": "0.0",
+                    "ticker_sentiment_label": "Neutral"
+                }
+            ]
+        },
+        {
+            "title": "Chainlink co-founder unveils blockchain payments for TradFi",
+            "url": "https://cointelegraph.com/news/chainlink-cofounder-unveils-blockchain-payments-tradfi",
+            "time_published": "20241023T112211",
+            "authors": [
+                "Josh O'Sullivan"
+            ],
+            "summary": "Chainlink and Swift will introduce a new blockchain integration, simplifying digital asset settlement for financial institutions using existing infrastructure.",
+            "banner_image": "https://images.cointelegraph.com/cdn-cgi/image/format=auto,onerror=redirect,quality=90,width=1200/https://s3.cointelegraph.com/uploads/2024-10/0192b8ab-fc6f-7d56-9863-87785d7caa33",
+            "source": "Cointelegraph",
+            "category_within_source": "n/a",
+            "source_domain": "cointelegraph.com",
+            "topics": [
+                {
+                    "topic": "Blockchain",
+                    "relevance_score": "0.769861"
+                }
+            ],
+            "overall_sentiment_score": 0.073892,
+            "overall_sentiment_label": "Neutral",
+            "ticker_sentiment": [
+                {
+                    "ticker": "CRYPTO:LINK",
+                    "relevance_score": "0.483888",
+                    "ticker_sentiment_score": "0.251519",
+                    "ticker_sentiment_label": "Somewhat-Bullish"
+                }
+            ]
+        },
+        {
+            "title": "Jianzhi Education Technology Strengthens its EdTech Capabilities with AI - Jianzhi Education Tech  ( NASDAQ:JZ ) ",
+            "url": "https://www.benzinga.com/pressreleases/24/10/g41484312/jianzhi-education-technology-strengthens-its-edtech-capabilities-with-ai",
+            "time_published": "20241023T112200",
+            "authors": [
+                "Globe Newswire"
+            ],
+            "summary": "BEIJING, Oct. 23, 2024 ( GLOBE NEWSWIRE ) -- Jianzhi Education Technology Group Company Limited ( the \"Company\" or \"Jianzhi\" ) JZ, a leading EdTech company in China, announced today its new Artificial Intelligence ( AI ) initiatives.",
+            "banner_image": "https://www.benzinga.com/next-assets/images/schema-image-default.png",
+            "source": "Benzinga",
+            "category_within_source": "General",
+            "source_domain": "www.benzinga.com",
+            "topics": [
+                {
+                    "topic": "Technology",
+                    "relevance_score": "1.0"
+                },
+                {
+                    "topic": "Financial Markets",
+                    "relevance_score": "0.360215"
+                }
+            ],
+            "overall_sentiment_score": 0.268826,
+            "overall_sentiment_label": "Somewhat-Bullish",
+            "ticker_sentiment": [
+                {
+                    "ticker": "JZ",
+                    "relevance_score": "0.147818",
+                    "ticker_sentiment_score": "0.109091",
+                    "ticker_sentiment_label": "Neutral"
+                }
+            ]
+        },
+        {
+            "title": "Jianzhi Education Technology Strengthens its EdTech Capabilities with AI",
+            "url": "https://www.globenewswire.com/news-release/2024/10/23/2967665/0/en/Jianzhi-Education-Technology-Strengthens-its-EdTech-Capabilities-with-AI.html",
+            "time_published": "20241023T112200",
+            "authors": [
+                "Jianzhi Education Technology Group Company Limited"
+            ],
+            "summary": "BEIJING, Oct. 23, 2024 ( GLOBE NEWSWIRE ) -- Jianzhi Education Technology Group Company Limited ( the \"Company\" or \"Jianzhi\" ) ( NASDAQ: JZ ) , a leading EdTech company in China, announced today its new Artificial Intelligence ( AI ) initiatives.",
+            "banner_image": "https://ml.globenewswire.com/Resource/Download/065a9957-55ca-4a1d-99dd-031611cce203",
+            "source": "GlobeNewswire",
+            "category_within_source": "n/a",
+            "source_domain": "www.globenewswire.com",
+            "topics": [
+                {
+                    "topic": "Technology",
+                    "relevance_score": "1.0"
+                },
+                {
+                    "topic": "Financial Markets",
+                    "relevance_score": "0.158519"
+                }
+            ],
+            "overall_sentiment_score": 0.264131,
+            "overall_sentiment_label": "Somewhat-Bullish",
+            "ticker_sentiment": [
+                {
+                    "ticker": "JZ",
+                    "relevance_score": "0.155451",
+                    "ticker_sentiment_score": "0.130719",
+                    "ticker_sentiment_label": "Neutral"
+                }
+            ]
+        },
+        {
+            "title": "Lloyds Bank PLC: 2024 Q3 Interim Management Statement",
+            "url": "https://www.globenewswire.com/news-release/2024/10/23/2967664/0/en/Lloyds-Bank-PLC-2024-Q3-Interim-Management-Statement.html",
+            "time_published": "20241023T112100",
+            "authors": [
+                "Lloyds Bank PLC"
+            ],
+            "summary": "LONDON, Oct. 23, 2024 ( GLOBE NEWSWIRE ) -- Lloyds Bank plcQ3 2024 Interim Management Statement23 October ...",
+            "banner_image": "",
+            "source": "GlobeNewswire",
+            "category_within_source": "n/a",
+            "source_domain": "www.globenewswire.com",
+            "topics": [
+                {
+                    "topic": "Economy - Monetary",
+                    "relevance_score": "0.9545"
+                },
+                {
+                    "topic": "Financial Markets",
+                    "relevance_score": "0.996718"
+                },
+                {
+                    "topic": "Earnings",
+                    "relevance_score": "0.158519"
+                },
+                {
+                    "topic": "Finance",
+                    "relevance_score": "1.0"
+                }
+            ],
+            "overall_sentiment_score": 0.079765,
+            "overall_sentiment_label": "Neutral",
+            "ticker_sentiment": [
+                {
+                    "ticker": "LDNXF",
+                    "relevance_score": "0.015216",
+                    "ticker_sentiment_score": "0.140291",
+                    "ticker_sentiment_label": "Neutral"
+                },
+                {
+                    "ticker": "LYG",
+                    "relevance_score": "0.07597",
+                    "ticker_sentiment_score": "0.004133",
+                    "ticker_sentiment_label": "Neutral"
+                }
+            ]
+        },
+        {
+            "title": "EBC Financial Group and the University of Oxford's Department of Economics Announce WERD Episode on Macroeconomics and Climate",
+            "url": "https://www.benzinga.com/pressreleases/24/10/g41484269/ebc-financial-group-and-the-university-of-oxfords-department-of-economics-announce-werd-episode-on",
+            "time_published": "20241023T112004",
+            "authors": [
+                "Globe Newswire"
+            ],
+            "summary": "OXFORD, United Kingdom, Oct. 23, 2024 ( GLOBE NEWSWIRE ) -- EBC Financial Group ( EBC ) is proud to announce its continued collaboration with the University of Oxford's Department of Economics for the 2024-2025 edition of the acclaimed \"What Economists Really Do\" ( WERD ) webinar series.",
+            "banner_image": "https://ml.globenewswire.com/Resource/Download/aaaa905a-4c02-44a0-bf7d-b8be3dec4b36/oxford-pr-19.jpg",
+            "source": "Benzinga",
+            "category_within_source": "News",
+            "source_domain": "www.benzinga.com",
+            "topics": [
+                {
+                    "topic": "Economy - Monetary",
+                    "relevance_score": "0.158519"
+                },
+                {
+                    "topic": "Financial Markets",
+                    "relevance_score": "0.77141"
+                }
+            ],
+            "overall_sentiment_score": 0.41544,
+            "overall_sentiment_label": "Bullish",
+            "ticker_sentiment": [
+                {
+                    "ticker": "FOREX:CHF",
+                    "relevance_score": "0.031446",
+                    "ticker_sentiment_score": "0.245672",
+                    "ticker_sentiment_label": "Somewhat-Bullish"
+                }
+            ]
+        },
+        {
+            "title": "UP Fintech Announces Pricing of Follow-on Public Offering of American Depositary Shares",
+            "url": "https://www.globenewswire.com/news-release/2024/10/23/2967661/0/en/UP-Fintech-Announces-Pricing-of-Follow-on-Public-Offering-of-American-Depositary-Shares.html",
+            "time_published": "20241023T111900",
+            "authors": [
+                "UP Fintech Holding Limited"
+            ],
+            "summary": "SINGAPORE, Oct. 23, 2024 ( GLOBE NEWSWIRE ) -- UP Fintech Holding Limited ( Nasdaq: TIGR ) ( \"UP Fintech\" or the \"Company\" ) , a leading online brokerage firm focusing on global investors, today announced the pricing of a public offering of 15,000,000 American Depositary Shares ( \"ADSs\" ) , each ...",
+            "banner_image": "",
+            "source": "GlobeNewswire",
+            "category_within_source": "n/a",
+            "source_domain": "www.globenewswire.com",
+            "topics": [
+                {
+                    "topic": "IPO",
+                    "relevance_score": "0.769861"
+                },
+                {
+                    "topic": "Financial Markets",
+                    "relevance_score": "0.947132"
+                },
+                {
+                    "topic": "Earnings",
+                    "relevance_score": "0.158519"
+                },
+                {
+                    "topic": "Finance",
+                    "relevance_score": "1.0"
+                }
+            ],
+            "overall_sentiment_score": 0.186616,
+            "overall_sentiment_label": "Somewhat-Bullish",
+            "ticker_sentiment": [
+                {
+                    "ticker": "CNICF",
+                    "relevance_score": "0.084275",
+                    "ticker_sentiment_score": "0.106074",
+                    "ticker_sentiment_label": "Neutral"
+                },
+                {
+                    "ticker": "DB",
+                    "relevance_score": "0.084275",
+                    "ticker_sentiment_score": "0.106074",
+                    "ticker_sentiment_label": "Neutral"
+                },
+                {
+                    "ticker": "TIGR",
+                    "relevance_score": "0.167612",
+                    "ticker_sentiment_score": "0.147515",
+                    "ticker_sentiment_label": "Neutral"
+                }
+            ]
+        },
+        {
+            "title": "Landsbankinn hf.: Financial results of Landsbankinn for the first nine months of 2024",
+            "url": "https://www.globenewswire.com/news-release/2024/10/23/2967662/0/en/Landsbankinn-hf-Financial-results-of-Landsbankinn-for-the-first-nine-months-of-2024.html",
+            "time_published": "20241023T111900",
+            "authors": [
+                "Landsbankinn hf."
+            ],
+            "summary": "Lilja Bj\u00f6rk Einarsd\u00f3ttir, CEO of ...",
+            "banner_image": "https://ml-eu.globenewswire.com/Resource/Download/28f4fd90-2b32-4eb1-a220-4c197063b43b",
+            "source": "GlobeNewswire",
+            "category_within_source": "n/a",
+            "source_domain": "www.globenewswire.com",
+            "topics": [
+                {
+                    "topic": "Economy - Monetary",
+                    "relevance_score": "0.576289"
+                },
+                {
+                    "topic": "Financial Markets",
+                    "relevance_score": "0.744043"
+                }
+            ],
+            "overall_sentiment_score": 0.291616,
+            "overall_sentiment_label": "Somewhat-Bullish",
+            "ticker_sentiment": []
+        },
+        {
+            "title": "EXCLUSIVE: Virax Biolabs Inks Distribution Pact To Commercialize ImmuneSelect Profiling Solutions In UK And Ireland - Virax Biolabs Group  ( NASDAQ:VRAX ) ",
+            "url": "https://www.benzinga.com/news/24/10/41484229/exclusive-virax-biolabs-inks-distribution-pact-to-commercialize-immuneselect-profiling-solutions-in",
+            "time_published": "20241023T111546",
+            "authors": [
+                "Vandana Singh"
+            ],
+            "summary": "On Wednesday, Virax Biolabs Group Limited VRAX entered into a distribution agreement with Europa Biosite to commercialize the company's ImmuneSelect Research Use portfolio in the U.K. and Ireland through its wholly-owned subsidiary Cambridge Bioscience.",
+            "banner_image": "https://cdn.benzinga.com/files/images/story/2024/10/23/VRAX.png?width=1200&height=800&fit=crop",
+            "source": "Benzinga",
+            "category_within_source": "General",
+            "source_domain": "www.benzinga.com",
+            "topics": [
+                {
+                    "topic": "Financial Markets",
+                    "relevance_score": "0.108179"
+                }
+            ],
+            "overall_sentiment_score": 0.19648,
+            "overall_sentiment_label": "Somewhat-Bullish",
+            "ticker_sentiment": [
+                {
+                    "ticker": "VRAX",
+                    "relevance_score": "0.620083",
+                    "ticker_sentiment_score": "0.232311",
+                    "ticker_sentiment_label": "Somewhat-Bullish"
+                }
+            ]
+        },
+        {
+            "title": "Kymera Therapeutics to Report Third Quarter 2024 Financial Results on October 31",
+            "url": "https://www.globenewswire.com/news-release/2024/10/23/2967658/0/en/Kymera-Therapeutics-to-Report-Third-Quarter-2024-Financial-Results-on-October-31.html",
+            "time_published": "20241023T111500",
+            "authors": [
+                "Inc.",
+                "Kymera Therapeutics"
+            ],
+            "summary": "WATERTOWN, Mass., Oct. 23, 2024 ( GLOBE NEWSWIRE ) -- Kymera Therapeutics, Inc. ( NASDAQ: KYMR ) , a clinical-stage biopharmaceutical company advancing a new class of small molecule medicines using targeted protein degradation ( TPD ) , will report third quarter 2024 financial results on October ...",
+            "banner_image": "https://ml.globenewswire.com/Resource/Download/4d3d3283-c57d-401e-9e1b-53f17e22d76b",
+            "source": "GlobeNewswire",
+            "category_within_source": "n/a",
+            "source_domain": "www.globenewswire.com",
+            "topics": [
+                {
+                    "topic": "Life Sciences",
+                    "relevance_score": "1.0"
+                }
+            ],
+            "overall_sentiment_score": -0.02924,
+            "overall_sentiment_label": "Neutral",
+            "ticker_sentiment": [
+                {
+                    "ticker": "KYMR",
+                    "relevance_score": "0.426225",
+                    "ticker_sentiment_score": "0.118809",
+                    "ticker_sentiment_label": "Neutral"
+                }
+            ]
+        },
+        {
+            "title": "5 Monster Stocks to Hold for the Next 5 to 25 Years",
+            "url": "https://www.fool.com/investing/2024/10/23/5-monster-stocks-to-hold-for-the-next-5-to-25-year/",
+            "time_published": "20241023T111500",
+            "authors": [
+                "Selena Maranjian"
+            ],
+            "summary": "Each has an impressive history of share price performance and great prospects for further growth.",
+            "banner_image": "https://g.foolcdn.com/image/?url=https%3A%2F%2Fg.foolcdn.com%2Feditorial%2Fimages%2F794528%2Fgetty-family-with-one-kid-in-park.jpg&op=resize&w=700",
+            "source": "Motley Fool",
+            "category_within_source": "n/a",
+            "source_domain": "www.fool.com",
+            "topics": [
+                {
+                    "topic": "Life Sciences",
+                    "relevance_score": "0.25"
+                },
+                {
+                    "topic": "Retail & Wholesale",
+                    "relevance_score": "0.25"
+                },
+                {
+                    "topic": "Financial Markets",
+                    "relevance_score": "0.995973"
+                },
+                {
+                    "topic": "Manufacturing",
+                    "relevance_score": "0.25"
+                },
+                {
+                    "topic": "Earnings",
+                    "relevance_score": "0.796627"
+                },
+                {
+                    "topic": "Technology",
+                    "relevance_score": "0.25"
+                }
+            ],
+            "overall_sentiment_score": 0.254379,
+            "overall_sentiment_label": "Somewhat-Bullish",
+            "ticker_sentiment": [
+                {
+                    "ticker": "MSFT",
+                    "relevance_score": "0.056943",
+                    "ticker_sentiment_score": "0.074",
+                    "ticker_sentiment_label": "Neutral"
+                },
+                {
+                    "ticker": "NVDA",
+                    "relevance_score": "0.056943",
+                    "ticker_sentiment_score": "0.074",
+                    "ticker_sentiment_label": "Neutral"
+                },
+                {
+                    "ticker": "COST",
+                    "relevance_score": "0.056943",
+                    "ticker_sentiment_score": "-0.036011",
+                    "ticker_sentiment_label": "Neutral"
+                },
+                {
+                    "ticker": "ISRG",
+                    "relevance_score": "0.056943",
+                    "ticker_sentiment_score": "0.043941",
+                    "ticker_sentiment_label": "Neutral"
+                },
+                {
+                    "ticker": "AMZN",
+                    "relevance_score": "0.169676",
+                    "ticker_sentiment_score": "0.124986",
+                    "ticker_sentiment_label": "Neutral"
+                }
+            ]
+        },
+        {
+            "title": "Opera launches Opera One R2 - the Best Opera Browser yet - Opera  ( NASDAQ:OPRA ) ",
+            "url": "https://www.benzinga.com/pressreleases/24/10/n41484111/opera-launches-opera-one-r2-the-best-opera-browser-yet",
+            "time_published": "20241023T111400",
+            "authors": [
+                "PRNewswire"
+            ],
+            "summary": "OSLO, Norway, Oct. 23, 2024 /PRNewswire/ -- Opera OPRA, the Norwegian browser company, is releasing Opera One R2, the new major version of its AI-powered browser.",
+            "banner_image": "https://mma.prnewswire.com/media/2537248/R2_Hero_Aurora__1.jpg",
+            "source": "Benzinga",
+            "category_within_source": "General",
+            "source_domain": "www.benzinga.com",
+            "topics": [
+                {
+                    "topic": "Technology",
+                    "relevance_score": "1.0"
+                },
+                {
+                    "topic": "Financial Markets",
+                    "relevance_score": "0.538269"
+                }
+            ],
+            "overall_sentiment_score": 0.253153,
+            "overall_sentiment_label": "Somewhat-Bullish",
+            "ticker_sentiment": [
+                {
+                    "ticker": "GOOG",
+                    "relevance_score": "0.034984",
+                    "ticker_sentiment_score": "0.138116",
+                    "ticker_sentiment_label": "Neutral"
+                },
+                {
+                    "ticker": "OPRA",
+                    "relevance_score": "0.839535",
+                    "ticker_sentiment_score": "0.403108",
+                    "ticker_sentiment_label": "Bullish"
+                }
+            ]
+        },
+        {
+            "title": "Nigeria Drops Charges, Releases Detained Binance Exec",
+            "url": "https://decrypt.co/287862/nigeria-releases-detained-binance-exec",
+            "time_published": "20241023T111224",
+            "authors": [
+                "Stacy Elliott"
+            ],
+            "summary": "Nigeria has withdrawn its charges against Tigran Gambarayan and will release him, citing his poor health.",
+            "banner_image": "https://cdn.decrypt.co/resize/1024/height/512/wp-content/uploads/2024/09/tigran-gambaryan-nigeria-gID_7.jpg",
+            "source": "Decrypt.co",
+            "category_within_source": "n/a",
+            "source_domain": "decrypt.co",
+            "topics": [
+                {
+                    "topic": "Blockchain",
+                    "relevance_score": "0.158519"
+                }
+            ],
+            "overall_sentiment_score": -0.395081,
+            "overall_sentiment_label": "Bearish",
+            "ticker_sentiment": []
+        },
+        {
+            "title": "DIOS to pursue exploration of Heberto Gold discovery, Quebec",
+            "url": "https://www.globenewswire.com/news-release/2024/10/23/2967656/0/en/DIOS-to-pursue-exploration-of-Heberto-Gold-discovery-Quebec.html",
+            "time_published": "20241023T111200",
+            "authors": [
+                "Dios Exploration Inc"
+            ],
+            "summary": "MONTREAL, Oct. 23, 2024 ( GLOBE NEWSWIRE ) -- Dios Exploration ( \"Dios\" ) ( TSX-V: DOS ) management reports with enthusiasm pursuing exploration of its Heberto Gold discovery & extents, James Bay Eeyou Istchee, Quebec. Gold prices are at a rare high.",
+            "banner_image": "https://ml.globenewswire.com/Resource/Download/e6205d56-fb7c-4154-9a41-1c13ad991017",
+            "source": "GlobeNewswire",
+            "category_within_source": "n/a",
+            "source_domain": "www.globenewswire.com",
+            "topics": [
+                {
+                    "topic": "Energy & Transportation",
+                    "relevance_score": "1.0"
+                }
+            ],
+            "overall_sentiment_score": 0.256537,
+            "overall_sentiment_label": "Somewhat-Bullish",
+            "ticker_sentiment": [
+                {
+                    "ticker": "DIOSF",
+                    "relevance_score": "0.122894",
+                    "ticker_sentiment_score": "0.254081",
+                    "ticker_sentiment_label": "Somewhat-Bullish"
+                },
+                {
+                    "ticker": "NEM",
+                    "relevance_score": "0.122894",
+                    "ticker_sentiment_score": "0.105935",
+                    "ticker_sentiment_label": "Neutral"
+                }
+            ]
+        },
+        {
+            "title": "MGA Entertainment Introduces Fraggle Rock: Back to the Rock Plush Line Under Little Tikes\u00ae Brand",
+            "url": "https://www.benzinga.com/pressreleases/24/10/g41483965/mga-entertainment-introduces-fraggle-rock-back-to-the-rock-plush-line-under-little-tikes-brand",
+            "time_published": "20241023T111200",
+            "authors": [
+                "Globe Newswire"
+            ],
+            "summary": "LOS ANGELES, Oct. 23, 2024 ( GLOBE NEWSWIRE ) -- MGA Entertainment, a global leader in children's toys and entertainment, proudly announces the launch of a new line of plush toys inspired by Fraggle Rock: Back to the Rock under its beloved Little Tikes\u00ae brand.",
+            "banner_image": "https://www.benzinga.com/next-assets/images/schema-image-default.png",
+            "source": "Benzinga",
+            "category_within_source": "General",
+            "source_domain": "www.benzinga.com",
+            "topics": [
+                {
+                    "topic": "Retail & Wholesale",
+                    "relevance_score": "0.5"
+                },
+                {
+                    "topic": "Technology",
+                    "relevance_score": "0.5"
+                }
+            ],
+            "overall_sentiment_score": 0.57946,
+            "overall_sentiment_label": "Bullish",
+            "ticker_sentiment": [
+                {
+                    "ticker": "META",
+                    "relevance_score": "0.056674",
+                    "ticker_sentiment_score": "0.194004",
+                    "ticker_sentiment_label": "Somewhat-Bullish"
+                },
+                {
+                    "ticker": "TRMNF",
+                    "relevance_score": "0.056674",
+                    "ticker_sentiment_score": "0.252",
+                    "ticker_sentiment_label": "Somewhat-Bullish"
+                },
+                {
+                    "ticker": "WNBD",
+                    "relevance_score": "0.056674",
+                    "ticker_sentiment_score": "0.194004",
+                    "ticker_sentiment_label": "Somewhat-Bullish"
+                },
+                {
+                    "ticker": "WMT",
+                    "relevance_score": "0.056674",
+                    "ticker_sentiment_score": "0.212995",
+                    "ticker_sentiment_label": "Somewhat-Bullish"
+                }
+            ]
+        },
+        {
+            "title": "Modifi Biosciences Acquired by Merck",
+            "url": "https://www.benzinga.com/pressreleases/24/10/g41483792/modifi-biosciences-acquired-by-merck",
+            "time_published": "20241023T110500",
+            "authors": [
+                "Globe Newswire"
+            ],
+            "summary": "NEW HAVEN, Conn., Oct. 23, 2024 ( GLOBE NEWSWIRE ) -- Modifi Biosciences, Inc. ( \"Modifi Biosciences\" ) , a leader in the development of direct DNA modification enabled cancer therapeutics, today announced that the company has been acquired by Merck, known as MSD outside of the United States and ...",
+            "banner_image": "https://ml.globenewswire.com/media/38ba823e-e587-4b8c-8664-8cf332bd0d02/small/modifi-bio-logo-2022-07-25-png.png",
+            "source": "Benzinga",
+            "category_within_source": "Mergers",
+            "source_domain": "www.benzinga.com",
+            "topics": [
+                {
+                    "topic": "Mergers & Acquisitions",
+                    "relevance_score": "0.538269"
+                },
+                {
+                    "topic": "Financial Markets",
+                    "relevance_score": "0.214378"
+                }
+            ],
+            "overall_sentiment_score": -0.03899,
+            "overall_sentiment_label": "Neutral",
+            "ticker_sentiment": []
+        },
+        {
+            "title": "Manhattan Bridge Capital, Inc. Reports Third Quarter 2024 Results",
+            "url": "https://www.globenewswire.com/news-release/2024/10/23/2967653/8691/en/Manhattan-Bridge-Capital-Inc-Reports-Third-Quarter-2024-Results.html",
+            "time_published": "20241023T110500",
+            "authors": [
+                "Inc.",
+                "Manhattan Bridge Capital"
+            ],
+            "summary": "GREAT NECK, N.Y., Oct. 23, 2024 ( GLOBE NEWSWIRE ) -- Manhattan Bridge Capital, Inc. ( Nasdaq: LOAN ) ( the \"Company\" ) announced today that its net income for the three months ended September 30, 2024 was approximately $1,399,000, or $0.12 per basic and diluted share ( based on approximately ...",
+            "banner_image": "https://ml.globenewswire.com/Resource/Download/f37c6d5d-bd56-4666-b90b-1cfdde669883",
+            "source": "GlobeNewswire",
+            "category_within_source": "n/a",
+            "source_domain": "www.globenewswire.com",
+            "topics": [
+                {
+                    "topic": "Economy - Monetary",
+                    "relevance_score": "0.158519"
+                },
+                {
+                    "topic": "Financial Markets",
+                    "relevance_score": "0.962106"
+                },
+                {
+                    "topic": "Earnings",
+                    "relevance_score": "0.77141"
+                },
+                {
+                    "topic": "Real Estate & Construction",
+                    "relevance_score": "1.0"
+                }
+            ],
+            "overall_sentiment_score": 0.219606,
+            "overall_sentiment_label": "Somewhat-Bullish",
+            "ticker_sentiment": [
+                {
+                    "ticker": "LOAN",
+                    "relevance_score": "0.1871",
+                    "ticker_sentiment_score": "0.271276",
+                    "ticker_sentiment_label": "Somewhat-Bullish"
+                }
+            ]
+        },
+        {
+            "title": "Cosmos ecosystem rocked by North Korean developer allegations",
+            "url": "https://cointelegraph.com/news/cosmos-lsm-built-north-korean-developers-security-concerns",
+            "time_published": "20241023T110409",
+            "authors": [
+                "Zoltan Vardai"
+            ],
+            "summary": "Cosmos' co-founder and core contributors were unaware of a possible North Korean link, which may lead to the removal of the Liquid Staking Module.",
+            "banner_image": "https://images.cointelegraph.com/cdn-cgi/image/format=auto,onerror=redirect,quality=90,width=1200/https://s3.cointelegraph.com/uploads/2024-10/0192b8c9-9767-71d1-ba6d-adce6c41ac61",
+            "source": "Cointelegraph",
+            "category_within_source": "n/a",
+            "source_domain": "cointelegraph.com",
+            "topics": [
+                {
+                    "topic": "Blockchain",
+                    "relevance_score": "0.310843"
+                }
+            ],
+            "overall_sentiment_score": -0.102389,
+            "overall_sentiment_label": "Neutral",
+            "ticker_sentiment": []
+        },
+        {
+            "title": "Chicago Atlantic Real Estate Finance Closes on $50 Million Unsecured Term Loan to Fund Deployment of New Investments - Chicago Atlantic Real  ( NASDAQ:REFI ) ",
+            "url": "https://www.benzinga.com/pressreleases/24/10/g41483741/chicago-atlantic-real-estate-finance-closes-on-50-million-unsecured-term-loan-to-fund-deployment-o",
+            "time_published": "20241023T110053",
+            "authors": [
+                "Globe Newswire"
+            ],
+            "summary": "CHICAGO, Oct. 23, 2024 ( GLOBE NEWSWIRE ) -- Chicago Atlantic Real Estate Finance, Inc.",
+            "banner_image": "https://ml.globenewswire.com/media/0e3ec218-c206-4417-937f-f0100947127f/small/caref-jpg.jpg",
+            "source": "Benzinga",
+            "category_within_source": "General",
+            "source_domain": "www.benzinga.com",
+            "topics": [
+                {
+                    "topic": "Economy - Monetary",
+                    "relevance_score": "0.158519"
+                },
+                {
+                    "topic": "Technology",
+                    "relevance_score": "1.0"
+                },
+                {
+                    "topic": "Financial Markets",
+                    "relevance_score": "0.99793"
+                }
+            ],
+            "overall_sentiment_score": 0.265922,
+            "overall_sentiment_label": "Somewhat-Bullish",
+            "ticker_sentiment": [
+                {
+                    "ticker": "REFI",
+                    "relevance_score": "0.624759",
+                    "ticker_sentiment_score": "0.346676",
+                    "ticker_sentiment_label": "Somewhat-Bullish"
+                }
+            ]
+        },
+        {
+            "title": "Boeing is set to report earnings for first time under CEO Ortberg. Here's what Wall Street expects to hear",
+            "url": "https://www.cnbc.com/2024/10/23/boeing-ba-3q-2024-earnings.html",
+            "time_published": "20241023T110027",
+            "authors": [],
+            "summary": "Boeing had released preliminary results earlier this month showing a big loss and $5 billion in charges across its defense and commercial units.",
+            "banner_image": null,
+            "source": "CNBC",
+            "category_within_source": "Earnings",
+            "source_domain": "www.cnbc.com",
+            "topics": [
+                {
+                    "topic": "Earnings",
+                    "relevance_score": "0.538269"
+                },
+                {
+                    "topic": "Manufacturing",
+                    "relevance_score": "1.0"
+                }
+            ],
+            "overall_sentiment_score": 0.104781,
+            "overall_sentiment_label": "Neutral",
+            "ticker_sentiment": [
+                {
+                    "ticker": "SPGI",
+                    "relevance_score": "0.121037",
+                    "ticker_sentiment_score": "-0.016636",
+                    "ticker_sentiment_label": "Neutral"
+                },
+                {
+                    "ticker": "BA",
+                    "relevance_score": "0.553595",
+                    "ticker_sentiment_score": "0.067915",
+                    "ticker_sentiment_label": "Neutral"
+                }
+            ]
+        }
+    ]
+}

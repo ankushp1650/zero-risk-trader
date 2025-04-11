@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Body Styling */
+        body {
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Form Container */
+        .form-container {
+            background-color: #fff;
+            padding: 50px 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width:500px;
+        }
+
+        /* Heading Styling */
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        /* Flexbox Container for Side-by-Side Fields */
+        .flex-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px; /* Increased gap for more space between fields */
+            margin-bottom: 20px; /* Added bottom margin for more space */
+        }
+
+        /* Input Fields Styling */
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+            color: #555;
+        }
+
+        input[type="text"], input[type="email"], input[type="password"] {
+            width: 100%;
+            padding: 15px; /* Increased padding for larger fields */
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px; /* Increased font size */
+            color: #333;
+        }
+
+        input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+
+        /* Button Styling */
+        button {
+            width: 100%;
+            padding: 15px; /* Increased padding for the button */
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Message Styling */
+        .messages {
+            list-style-type: none;
+            padding: 0;
+            margin-bottom: 15px;
+        }
+
+        .messages li {
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .messages li.success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .messages li.error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        /* Login Link Styling */
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* CSRF Token Styling */
+        input[name="csrfmiddlewaretoken"] {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Registration Form</h2>
+        <form method="post" action="{% url 'register' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+<!--            <p style="margin: 20px 0;">-->
+<!--                &lt;!&ndash; Link to Alpha Vantage for getting an API key &ndash;&gt;-->
+<!--                <label for="get-api-key">-->
+<!--                    <a href="https://www.alphavantage.co/support/#api-key" target="_blank">-->
+<!--                        Click here to get your API key-->
+<!--                    </a>-->
+<!--                </label>-->
+<!--            </p>-->
+
+            <!-- Submit button for registration -->
+            <button type="submit">Register</button>
+
+            <!-- Link to Login -->
+            <a href="{% url 'login' %}">Already have an account? Login here</a>
+        </form>
+    </div>
+</body>
+
+
+
+</html>

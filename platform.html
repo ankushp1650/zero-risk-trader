@@ -1,0 +1,17 @@
+<div class="btn-container">
+    <form action="{% url 'buy_stock' %}" method="POST">
+        {% csrf_token %}
+        <input type="text" name="symbol" placeholder="Stock Symbol">
+        <input type="number" name="quantity" placeholder="Quantity">
+        <button type="submit" class="btn btn-secondary btn-lg mb-3">Buy Stock</button>
+    </form>
+</div>
+
+<div class="btn-container">
+    <form action="{% url 'sell_stock' %}" method="POST">
+        {% csrf_token %}
+        <input type="text" name="symbol" placeholder="Stock Symbol">
+        <input type="number" name="quantity" placeholder="Quantity">
+        <button type="submit" class="btn btn-secondary btn-lg mb-3">Sell Stock</button>
+    </form>
+</div>
