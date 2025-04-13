@@ -50,6 +50,9 @@ jobs:
       with:
         username: ${{ secrets.DOCKER_USERNAME }}  # Docker Hub username from secrets
         password: ${{ secrets.DOCKER_PASSWORD }}  # Docker Hub password or token from secrets
+    - name: Verify Docker Login
+      run: |
+        docker info  # Check Docker login details
 
     - name: Build Docker Image
       run: |
