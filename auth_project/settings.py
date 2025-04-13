@@ -148,7 +148,6 @@ WSGI_APPLICATION = 'auth_project.wsgi.application'
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
-import os
 
 # DATABASES = {
 #     'default': {
