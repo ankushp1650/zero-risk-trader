@@ -69,12 +69,20 @@ jobs:
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
 
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}  # Docker Hub username from secrets
+        password: ${{ secrets.DOCKER_PASSWORD }}  # Docker Hub password or token from secrets
+
     - name: Build Docker Image
       run: |
-        docker build -t <your-docker-image-name> .
-        docker tag <your-docker-image-name> <your-dockerhub-username>/<your-image>:latest
+        docker build -t ankushp1650/zerorisktrader-python-app:latest .  # Replace with your image name
+        docker tag ankushp1650/zerorisktrader-python-app:latest ankushp1650/zerorisktrader-python-app:latest  # Same tag for consistency
 
     - name: Push Docker Image to Docker Hub
       run: |
-        echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
-        docker push <your-dockerhub-username>/<your-image>:latest
+        docker push ankushp1650/zerorisktrader-python-app:latest  # Push image to Docker Hub
+
+
+
