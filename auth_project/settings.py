@@ -46,7 +46,6 @@ USE_TZ = True  # Keep this True to use time zones properly
 # DEFAULT_FROM_EMAIL = 'learnpapertrading@gmail.com'
 
 
-
 # Initialize environment variables
 env = environ.Env(
     DEBUG=(bool, False)
@@ -73,7 +72,8 @@ DATABASES = {
         'HOST': env('DB_HOST'),
         'PORT': '3306',
         'OPTIONS': {
-            'ssl': {'ca': os.path.join(BASE_DIR, 'certificate', 'DigiCertGlobalRootCA.crt.pem')},
+            # 'ssl': {'ca': os.path.join(BASE_DIR, 'certificate', 'DigiCertGlobalRootCA.crt.pem')},
+            'ssl': {'ssl_disabled': True},
         },
     }
 }
@@ -90,7 +90,6 @@ DEFAULT_FROM_EMAIL = env('EMAIL_HOST_USER')
 # Auth redirects
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'dashboard'
-
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -218,15 +217,17 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Redirect all HTTP to HTTPS
-SECURE_SSL_REDIRECT = True
-
 # Prevents the browser from guessing the content type
 SECURE_CONTENT_TYPE_NOSNIFF = True
 
 # Protects against clickjacking
 X_FRAME_OPTIONS = 'DENY'
 
-# Make cookies more secure
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
+# Redirect all HTTP to HTTPS
+# SECURE_SSL_REDIRECT = False
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
+
+SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = False
+SECURE_SSL_REDIRECT = False

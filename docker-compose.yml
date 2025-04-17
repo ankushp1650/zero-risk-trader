@@ -1,26 +1,43 @@
+#version: "3.9"  # optional but good to have
+
 services:
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_DATABASE: user_platform_db
+      MYSQL_USER: berlin
+      MYSQL_PASSWORD: berlin@123
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_data:/var/lib/mysql  # <-- Persistent MySQL data storage
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      retries: 5
+
   web:
     build: .
+    restart: always
     ports:
       - "8000:8000"
     depends_on:
       - db
     environment:
-      - DEBUG=1
-      - DB_HOST=db
-      - DB_PORT=3306
-      - DB_USER=berlin
-      - DB_PASSWORD=berlin@123
-      - DB_NAME=user_platform_db
+      DEBUG: 1
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_USER: berlin
+      DB_PASSWORD: berlin@123
+      DB_NAME: user_platform_db
     command: >
-      sh -c "python wait_for_db.py && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+      sh -c "
+        python wait_for_db.py &&
+        python manage.py migrate &&
+        python manage.py runserver 0.0.0.0:8000
+      "
 
-  db:
-    image: mysql:8.0
-    environment:
-      MYSQL_DATABASE: 'user_platform_db'
-      MYSQL_USER: 'berlin'
-      MYSQL_PASSWORD: 'berlin@123'
-      MYSQL_ROOT_PASSWORD: 'root'
-    ports:
-      - "3306:3306"
+volumes:
+  db_data:

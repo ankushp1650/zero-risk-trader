@@ -1,7 +1,7 @@
 {% extends 'layouts/app.html' %}
+{% load form_tags %}
 
 {% block content %}
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -23,7 +23,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, #a8edea, #fed6e3); /* Soft pastel gradient */
+            background: linear-gradient(135deg, #a8edea, #fed6e3);
         }
 
         .login-container {
@@ -36,8 +36,6 @@
             flex-direction: column;
             align-items: center;
         }
-
-
 
         .login-container form {
             width: 100%;
@@ -84,26 +82,52 @@
         .login-container a:hover {
             text-decoration: underline;
         }
+
+        .errors {
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: red;
+            list-style: none;
+            padding-left: 0;
+            text-align: left;
+            width: 100%;
+        }
     </style>
 </head>
 <body>
-    <h2 class="page-title">Your Virtual Platform for </h2>
+    <h2 class="page-title">Your Virtual Platform for</h2>
     <h2 class="page-title">Real-Time Trading Practice</h2>
     <div class="login-container">
 
         <form method="POST">
             {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <ul class="errors">
+                    {% for error in form.non_field_errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
             <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required>
+            <input type="text" id="username" name="username" value="{{ form.username.value|default:'' }}" required>
+            {% if form.username.errors %}
+                <p class="errors">{{ form.username.errors.0 }}</p>
+            {% endif %}
 
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required>
+            {% if form.password.errors %}
+                <p class="errors">{{ form.password.errors.0 }}</p>
+            {% endif %}
 
             <button type="submit">Login</button>
         </form>
-        <a href="{% url 'register' %}" class="btn btn-default">Create New Account</a>
 
-        <a href="{% url 'password_reset' %}" class="btn btn-default">Forget Password ?</a>
+        <a href="{% url 'register' %}" class="btn btn-default">Create New Account</a>
+        <a href="{% url 'password_reset' %}" class="btn btn-default">Forget Password?</a>
+
     </div>
 </body>
 </html>
