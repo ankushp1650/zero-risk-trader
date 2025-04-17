@@ -49,10 +49,22 @@ def login_view(request):
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
             user = form.get_user()
+            print(f"✅ User '{user.username}' logged in")
+            print("Errors:", form.errors)  # Log the actual form errors
+            print("POST username:", request.POST.get('username'))
+            print("POST password:", request.POST.get('password'))
+
             login(request, user)
-            return redirect('api_key_form')
+            # return redirect('api_key_form')
+            return redirect('save_api_key')
+        else:
+            print("❌ Invalid credentials")
+            print(form.errors)
+            messages.error(request, "Invalid username or password.")
+
     else:
         form = AuthenticationForm()
+        print("Authentication failed")
     return render(request, 'auth/login.html', {'form': form})
 
 
