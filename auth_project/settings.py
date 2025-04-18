@@ -220,6 +220,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Prevents the browser from guessing the content type
 SECURE_CONTENT_TYPE_NOSNIFF = True
 
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 # Protects against clickjacking
 X_FRAME_OPTIONS = 'DENY'
 
