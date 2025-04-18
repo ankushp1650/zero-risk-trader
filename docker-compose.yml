@@ -40,5 +40,14 @@ services:
         python manage.py runserver 0.0.0.0:8000
       "
 
+  nginx:
+      image: ankushp1650/zerorisktrader-nginx:latest
+      ports:
+        - "80:80"
+      depends_on:
+        - web
+      volumes:
+        - ./nginx.conf:/etc/nginx/nginx.conf
+
 volumes:
   db_data:
