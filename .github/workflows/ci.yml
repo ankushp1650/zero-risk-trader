@@ -63,7 +63,14 @@ jobs:
       run: |
         docker push ankushp1650/zerorisktrader-python-app:latest  # Push image to Docker Hub
         
-        
+    - name: Build Nginx Docker Image
+      run: |
+        docker build -t ankushp1650/zerorisktrader-nginx:latest -f nginx/Dockerfile.nginx .
+        docker tag ankushp1650/zerorisktrader-nginx:latest ankushp1650/zerorisktrader-nginx:latest
+
+    - name: Push Nginx Image
+      run: |
+        docker push ankushp1650/zerorisktrader-nginx:latest
 
   deploy:
     runs-on: ubuntu-latest
