@@ -43,13 +43,9 @@ jobs:
         username: ${{ secrets.ACR_USERNAME }}
         password: ${{ secrets.ACR_PASSWORD }}
 
-    - name: Build Docker Image for ACR
+    - name: Build Docker Image
       run: |
-        docker build -t ankushp1650/zerorisktrader-python-app:latest .
-
-    - name: Tag Docker Image for ACR
-      run: |
-        docker tag ankushp1650/zerorisktrader-python-app:latest zerorisktradercontaner.azurecr.io/zerorisktrader-python-app:latest
+        docker build -t zerorisktradercontaner.azurecr.io/zerorisktrader-python-app:latest .
 
     - name: Push Docker Image to ACR
       run: |
