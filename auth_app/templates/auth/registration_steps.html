@@ -11,51 +11,68 @@
             background-color: #f4f4f4;
             margin: 0;
             padding: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .container {
-            max-width: 600px;
-            margin: 50px auto;
-            padding: 20px;
+            max-width: 500px;
+            width: 90%;
+            padding: 25px;
             background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            transition: all 0.3s ease;
         }
 
         h2 {
             text-align: center;
             color: #333;
+            margin-bottom: 30px;
+            font-size: 24px;
         }
 
         h3 {
             color: #555;
             margin-bottom: 20px;
+            font-size: 20px;
         }
 
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
         label {
             display: block;
-            font-size: 16px;
-            margin-bottom: 5px;
+            font-size: 15px;
+            margin-bottom: 6px;
             color: #333;
         }
 
-        input[type="text"], input[type="email"], input[type="password"] {
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
             width: 100%;
-            padding: 10px;
+            padding: 10px 12px;
             margin-top: 5px;
-            margin-bottom: 15px;
             border: 1px solid #ddd;
-            border-radius: 4px;
-            box-sizing: border-box;
+            border-radius: 5px;
             font-size: 16px;
+            box-sizing: border-box;
+            background: #f9f9f9;
+        }
+
+        input:focus {
+            border-color: #007bff;
+            outline: none;
+            background: #fff;
         }
 
         .buttons {
             text-align: center;
+            margin-top: 20px;
         }
 
         button {
@@ -64,8 +81,10 @@
             background-color: #28a745;
             color: #fff;
             border: none;
-            border-radius: 5px;
+            border-radius: 6px;
             cursor: pointer;
+            transition: background-color 0.3s;
+            margin: 5px;
         }
 
         button:hover {
@@ -74,10 +93,30 @@
 
         .step {
             display: none;
+            animation: fadeIn 0.5s ease forwards;
         }
 
         .step.active {
             display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Progress bar */
+        .progress {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .progress span.active {
+            font-weight: bold;
+            color: #28a745;
         }
     </style>
 </head>
@@ -86,9 +125,14 @@
 <div class="container">
     <h2>Two-Step Registration</h2>
 
+    <div class="progress">
+        <span id="progress-step-1" class="active">Step 1</span>
+        <span id="progress-step-2">Step 2</span>
+    </div>
+
     <!-- Step 1: Dashboard Registration -->
     <div id="step-1" class="step active">
-        <h3>Step 1: Registration for Paper Trading Dashboard </h3>
+        <h3>Step 1: Paper Trading Dashboard</h3>
         <form id="dashboard-registration">
             <div class="form-group">
                 <label for="username">Username</label>
@@ -105,9 +149,9 @@
         </form>
     </div>
 
-    <!-- Step 2: Alpha Vintage API Registration -->
+    <!-- Step 2: Alpha Vantage API Registration -->
     <div id="step-2" class="step">
-        <h3>Step 2: Registration for Alpha Vintage API Key</h3>
+        <h3>Step 2: Alpha Vantage API Key</h3>
         <form id="alpha-vintage-registration">
             <div class="form-group">
                 <label for="api-key">API Key</label>
@@ -127,17 +171,21 @@
     const step2 = document.getElementById('step-2');
     const nextToStep2 = document.getElementById('next-to-step-2');
     const backToStep1 = document.getElementById('back-to-step-1');
+    const progressStep1 = document.getElementById('progress-step-1');
+    const progressStep2 = document.getElementById('progress-step-2');
 
-    // Handle "Next" button click
     nextToStep2.addEventListener('click', function() {
         step1.classList.remove('active');
         step2.classList.add('active');
+        progressStep1.classList.remove('active');
+        progressStep2.classList.add('active');
     });
 
-    // Handle "Back" button click
     backToStep1.addEventListener('click', function() {
         step2.classList.remove('active');
         step1.classList.add('active');
+        progressStep2.classList.remove('active');
+        progressStep1.classList.add('active');
     });
 </script>
 
