@@ -3,66 +3,86 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
     <meta name="referrer" content="origin">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Register for Alpha Vantage API</title>
     <style>
-        /* Add basic styling here */
+        /* General Styling */
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
+            padding: 20px;
         }
+
         .form-container {
             background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            width: 300px;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
         }
+
         h1 {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            font-size: 22px;
+            color: #333;
         }
+
         label {
             font-weight: bold;
             margin-bottom: 5px;
             display: block;
+            font-size: 15px;
+            color: #555;
         }
-        input[type="text"], input[type="email"], select {
+
+        select, input[type="text"], input[type="email"] {
             width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 5px;
+            padding: 12px;
+            margin: 10px 0 20px;
             border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 15px;
         }
-        button {
+
+        button, input[type="submit"] {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             background-color: #007bff;
-            color: white;
+            color: #fff;
             border: none;
-            border-radius: 5px;
+            border-radius: 6px;
+            font-size: 16px;
             cursor: pointer;
+            transition: background-color 0.3s ease;
         }
-        button:hover {
+
+        button:hover, input[type="submit"]:hover {
             background-color: #0056b3;
         }
+
+        /* Styling for messages */
         .messages {
-            list-style-type: none;
+            list-style: none;
             padding: 0;
+            margin-top: 20px;
         }
+
         .messages li {
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 5px;
             background-color: #d4edda;
             color: #155724;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            font-size: 14px;
         }
     </style>
 </head>
@@ -71,28 +91,25 @@
         <h1>Register for Alpha Vantage API Key</h1>
 
         <form method="POST" id="post-form">
-    {% csrf_token %} <!-- This should dynamically insert the CSRF token -->
-    <div class="fieldWrapper" id="post-details">
-        <p class="form-label">Which of the following best describes you?</p>
-        <p class="choice-field">
-            <select name="occupation" id="occupation-text">
+            {% csrf_token %}
+
+            <label for="occupation-text">Which of the following best describes you?</label>
+            <select name="occupation" id="occupation-text" required>
                 <option value="Investor">Investor</option>
                 <option value="Software Developer">Software Developer</option>
                 <option value="Educator">Educator</option>
                 <option value="Student">Student</option>
                 <option value="Other">Other</option>
             </select>
-        </p>
-        <p class="form-label">Organization (e.g. company, university, etc.):</p>
-        <p class="form-field"><input type="text" name="organization" id="organization-text" required></p>
-        <p class="form-label">Email:</p>
-        <p class="form-field"><input type="email" name="email" id="email-text" required maxlength="254"></p>
-    </div>
-    <div id="results"></div>
-    <br>
-    <input id="submit-btn" type="submit" value="Get Free API Key" class="btn btn-default btn-lg" onClick="gtag('event','get_key');">
-</form>
 
+            <label for="organization-text">Organization (e.g., company, university, etc.):</label>
+            <input type="text" name="organization" id="organization-text" required>
+
+            <label for="email-text">Email:</label>
+            <input type="email" name="email" id="email-text" required maxlength="254">
+
+            <input id="submit-btn" type="submit" value="Get Free API Key" onClick="gtag('event', 'get_key');">
+        </form>
 
         {% if messages %}
             <ul class="messages">

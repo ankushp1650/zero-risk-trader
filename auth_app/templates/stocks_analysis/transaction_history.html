@@ -122,33 +122,63 @@
                 padding: 10px;
             }
 
-            .portfolio-section {
-                flex-direction: column;
+            .top-right-buttons {
+                top: 10px;
+                right: 10px;
+                gap: 8px; /* Reduce space between buttons */
+            }
+
+            .top-right-buttons a {
+                font-size: 14px;
+                padding: 10px 20px;
             }
         }
 
-        .empty-state {
-            color: #999;
-            font-size: 18px;
-            text-align: center;
-            margin-top: 20px;
+        /* Mobile-specific styling for very small screens (max-width: 480px) */
+        @media (max-width: 480px) {
+            h2 {
+                font-size: 20px; /* Further reduce heading size */
+            }
+
+            table th,
+            table td {
+                font-size: 14px; /* Reduce font size further for small screens */
+                padding: 8px 10px; /* Smaller padding */
+            }
+
+            .top-right-buttons {
+                top: 10px;
+                right: 10px;
+                gap: 6px;
+            }
+
+            .top-right-buttons a {
+                font-size: 12px;
+                padding: 8px 16px; /* Adjust button size */
+            }
+
+            table {
+                font-size: 14px; /* Adjust table text for small screens */
+            }
         }
-                /* Styling for Buy and Sell Rows */
-table tbody tr.transaction-buy {
-    background-color: #d4edda !important; /* Light green for Buy */
-    color: #155724 !important; /* Dark green text */
-}
 
-table tbody tr.transaction-sell {
-    background-color: #f8d7da !important; /* Light red for Sell */
-    color: #721c24 !important; /* Dark red text */
-}
+        /* Styling for Buy and Sell Rows */
+        table tbody tr.transaction-buy {
+            background-color: #d4edda !important; /* Light green for Buy */
+            color: #155724 !important; /* Dark green text */
+        }
 
-/* Remove hover effect for transaction-buy and transaction-sell */
-table tbody tr.transaction-buy:hover,
-table tbody tr.transaction-sell:hover {
-    background-color: inherit !important; /* Prevent hover effect overriding the color */
-}
+        table tbody tr.transaction-sell {
+            background-color: #f8d7da !important; /* Light red for Sell */
+            color: #721c24 !important; /* Dark red text */
+        }
+
+        /* Remove hover effect for transaction-buy and transaction-sell */
+        table tbody tr.transaction-buy:hover,
+        table tbody tr.transaction-sell:hover {
+            background-color: inherit !important; /* Prevent hover effect overriding the color */
+        }
+
     </style>
 </head>
 

@@ -4,16 +4,71 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Email Verification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            color: #333;
+            text-align: center;
+        }
+
+        p {
+            font-size: 16px;
+            line-height: 1.5;
+            color: #555;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .cta-button {
+            display: block;
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            text-align: center;
+            border-radius: 6px;
+            margin: 20px 0;
+            text-decoration: none;
+        }
+
+        .cta-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
-    <p>Hello {{ user.username }},</p>
-    <p>Please click the link below to verify your email address and complete your registration:</p>
-    <p>
-        <a href="{{ link }}">
-            Verify your email address
-        </a>
-    </p>
-     <p>Congratulations for registering! You will be credited 10 Lakhs once you verify your Email.</p>
-    <p>If you didn't sign up for an account, you can ignore this email.</p>
+    <div class="container">
+        <h2>Email Verification</h2>
+        <p>Hello {{ user.username }},</p>
+        <p>Please click the link below to verify your email address and complete your registration:</p>
+        <p>
+            <a href="{{ link }}" class="cta-button">Verify your email address</a>
+        </p>
+        <p>Congratulations for registering! You will be credited 10 Lakhs once you verify your email.</p>
+        <p>If you didn't sign up for an account, you can ignore this email.</p>
+    </div>
 </body>
 </html>

@@ -5,7 +5,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
+    <title>Portfolio</title>
+
+<style>
 /* General styles for font, background, and layout */
 body {
     font-family: 'Poppins', sans-serif;
@@ -287,11 +289,12 @@ button:focus {
     color: #555;
 }
 
+
     </style>
-    <title>Portfolio</title>
 </head>
 
 <body>
+    <!-- Top right buttons for Logout, Home, Investment Portfolio, Transaction History -->
     <div class="top-right-buttons">
         <a href="{% url 'logout' %}" class="btn">Logout</a>
         <a href="{% url 'dashboard' %}" class="btn">Home</a>
@@ -304,40 +307,40 @@ button:focus {
             <h2>Portfolio</h2>
             <h3>Your detailed portfolio overview, including holdings and transactions</h3>
 
-            <!-- Horizontal line under header -->
             <div class="header-line"></div>
 
             <div class="portfolio-section">
+                <!-- Portfolio Info -->
                 <div class="portfolio-info">
-    <div class="row">
-        <span class="value">Your Total Holdings</span>
-        <span class="value"></span>
-    </div>
-    <div class="row">
-        <span class="label">Opening Balance</span>
-        <span class="value">{{ portfolio.cash_balance|intcomma }}</span>
-    </div>
-    <div class="row">
-        <span class="label">Invested Value</span>
-        <span class="value">{{ total_investment_value|intcomma }}</span>
-    </div>
-    <div class="row">
-        <span class="label">Current Value</span>
-        <span class="value">{{ total_current_value|intcomma }}</span>
-    </div>
-    <div class="row">
-        <span class="label">Profit & Loss:</span>
-        <span class="value {% if total_pnl < 0 %}text-red{% elif total_pnl > 0 %}text-green{% else %}text-neutral{% endif %}">
-            {% if total_pnl > 0 %}+{% endif %}{{ total_pnl|intcomma }}
-        </span>
-    </div>
-    <div class="row">
-        <span class="label">Total Stock Quantity:</span>
-        <span class="value">{{ total_quantity }}</span>
-    </div>
-</div>
+                    <div class="row">
+                        <span class="value">Your Total Holdings</span>
+                        <span class="value"></span>
+                    </div>
+                    <div class="row">
+                        <span class="label">Opening Balance</span>
+                        <span class="value">{{ portfolio.cash_balance|intcomma }}</span>
+                    </div>
+                    <div class="row">
+                        <span class="label">Invested Value</span>
+                        <span class="value">{{ total_investment_value|intcomma }}</span>
+                    </div>
+                    <div class="row">
+                        <span class="label">Current Value</span>
+                        <span class="value">{{ total_current_value|intcomma }}</span>
+                    </div>
+                    <div class="row">
+                        <span class="label">Profit & Loss:</span>
+                        <span class="value {% if total_pnl < 0 %}text-red{% elif total_pnl > 0 %}text-green{% else %}text-neutral{% endif %}">
+                            {% if total_pnl > 0 %}+{% endif %}{{ total_pnl|intcomma }}
+                        </span>
+                    </div>
+                    <div class="row">
+                        <span class="label">Total Stock Quantity:</span>
+                        <span class="value">{{ total_quantity }}</span>
+                    </div>
+                </div>
 
-
+                <!-- Holdings Table -->
                 <div class="holdings-table">
                     <table>
                         <thead>
@@ -370,25 +373,36 @@ button:focus {
                 </div>
             </div>
 
+            <!-- Graphs Section -->
             <div id="graph-section" class="table-container">
-
                 <h2>Invested vs Current Value by all Stock</h2>
                 {{ bar_graph_html|safe }}
+
                 <div class="header-line"></div>
+
                 <h2>Percentage Change for Each Stock</h2>
                 {{ line_graph_html|safe }}
+
                 <h2>Profit & Loss across all Stocks</h2>
                 {{ pnl_bar_chart_graph_html|safe }}
+
                 <div class="header-line"></div>
+
                 <h2>Portfolio Allocation across all Stocks</h2>
                 {{ invested_value_pie_graph_html|safe }}
                 {{ current_value_pie_graph_html|safe }}
                 {{ percentage_change_pie_graph_html|safe }}
+
                 <div class="header-line"></div>
+
                 <h2>Stock Quantity Distribution</h2>
-                <div class="centered-graph">{{ quantity_bar_graph_html|safe }}</div>
+                <div class="centered-graph">
+                    {{ quantity_bar_graph_html|safe }}
+                </div>
+
                 <div class="header-line"></div>
             </div>
+
         </div>
     </div>
 </body>
