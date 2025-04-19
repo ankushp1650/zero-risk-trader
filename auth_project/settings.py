@@ -12,8 +12,9 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 import os
 import environ
-
 from pathlib import Path
+import pymysql
+pymysql.install_as_MySQLdb()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -72,9 +73,9 @@ DATABASES = {
         'HOST': env('DB_HOST'),
         'PORT': '3306',
         'OPTIONS': {
-            'ssl': {'ssl_disabled': False}
+            # 'ssl': {'ssl_disabled': False}
             # 'ssl': {'ca': os.path.join(BASE_DIR, 'certificate', 'DigiCertGlobalRootCA.crt.pem')},
-              # 'ssl': {'ca': '/home/site/wwwroot/certificate/DigiCertGlobalRootCA.crt.pem'},
+              'ssl': {'ca': '/home/site/wwwroot/certificate/DigiCertGlobalRootCA.crt.pem'},
             
         },
     }
