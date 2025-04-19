@@ -50,47 +50,43 @@
             border: 2px solid #ccc;
             border-radius: 5px;
             width: 100%;
-            margin-bottom: 20px; /* Space below each input */
+            margin-bottom: 20px;
             box-sizing: border-box;
             transition: border-color 0.3s ease;
         }
 
-        /* Adjust spacing for specific form elements */
         label {
-            margin-bottom: 5px; /* Space between label and input */
+            margin-bottom: 5px;
             color: #555;
-            font-weight: bold; /* Make label text bold */
+            font-weight: bold;
         }
 
-        /* Input focus effect */
         input[type="text"]:focus, input[type="number"]:focus, select:focus {
             border-color: #007bff;
             outline: none;
         }
 
-        /* Button styling */
         button {
-            background-color: #28a745; /* Green color */
+            background-color: #28a745;
             color: white;
             border: none;
             cursor: pointer;
             transition: background-color 0.3s ease;
-            margin-top: 10px; /* Space above button */
-            padding: 12px; /* Increase padding for the button */
+            margin-top: 10px;
+            padding: 12px;
         }
 
-        /* Button hover effect */
         button:hover {
-            background-color: #218838; /* Darker green on hover */
+            background-color: #218838;
         }
 
-        /* Top-right buttons styling */
         .top-right-buttons {
             position: absolute;
             top: 10px;
             right: 10px;
             display: flex;
             gap: 10px;
+            flex-wrap: wrap;
         }
 
         .top-right-buttons a {
@@ -100,9 +96,9 @@
             background-color: #007bff;
             border-radius: 5px;
             text-decoration: none;
+            white-space: nowrap;
         }
 
-        /* Hover effect for the top-right buttons */
         .top-right-buttons a:hover {
             background-color: #0056b3;
         }
@@ -116,6 +112,31 @@
             padding: 10px;
             border-radius: 5px;
             border: 1px solid #f5c6cb;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 500px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            .top-right-buttons {
+                top: 5px;
+                right: 5px;
+                flex-direction: column;
+                align-items: flex-end;
+            }
+            .top-right-buttons a {
+                padding: 8px 12px;
+                font-size: 14px;
+            }
+            h1 {
+                font-size: 20px;
+            }
+            input[type="text"], input[type="number"], select, button {
+                font-size: 14px;
+                padding: 10px;
+            }
         }
     </style>
 </head>

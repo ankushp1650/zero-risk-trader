@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -28,7 +29,8 @@
             padding: 50px 40px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width:500px;
+            width: 500px;
+            max-width: 100%;
         }
 
         /* Heading Styling */
@@ -126,6 +128,50 @@
         input[name="csrfmiddlewaretoken"] {
             display: none;
         }
+
+        /* Mobile Friendly Styles */
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 30px 20px;
+            }
+
+            h2 {
+                font-size: 24px;
+            }
+
+            input[type="text"], input[type="email"], input[type="password"], button {
+                font-size: 15px;
+                padding: 12px;
+            }
+
+            a {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+
+            .form-container {
+                padding: 20px 15px;
+                border-radius: 10px;
+            }
+
+            h2 {
+                font-size: 22px;
+            }
+
+            input[type="text"], input[type="email"], input[type="password"], button {
+                font-size: 14px;
+                padding: 10px;
+            }
+
+            a {
+                font-size: 12px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -135,15 +181,6 @@
             {% csrf_token %}
             {{ form.as_p }}
 
-<!--            <p style="margin: 20px 0;">-->
-<!--                &lt;!&ndash; Link to Alpha Vantage for getting an API key &ndash;&gt;-->
-<!--                <label for="get-api-key">-->
-<!--                    <a href="https://www.alphavantage.co/support/#api-key" target="_blank">-->
-<!--                        Click here to get your API key-->
-<!--                    </a>-->
-<!--                </label>-->
-<!--            </p>-->
-
             <!-- Submit button for registration -->
             <button type="submit">Register</button>
 
@@ -152,7 +189,4 @@
         </form>
     </div>
 </body>
-
-
-
 </html>

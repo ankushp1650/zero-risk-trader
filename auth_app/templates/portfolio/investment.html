@@ -14,7 +14,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            flex-direction: column; /* Center everything in a column */
+            flex-direction: column;
         }
 
         h1, h2 {
@@ -27,13 +27,12 @@
             text-align: center;
         }
 
-        /* Styling for the top-right buttons */
         .top-right-buttons {
             position: absolute;
-            top: 20px; /* Position from the top of the container */
-            right: 20px; /* Position from the right side of the container */
+            top: 20px;
+            right: 20px;
             display: flex;
-            gap: 10px; /* Space between the buttons */
+            gap: 10px;
         }
 
         .top-right-buttons a {
@@ -47,40 +46,36 @@
         }
 
         .top-right-buttons a:hover {
-            background-color: #0056b3; /* Darker blue on hover */
+            background-color: #0056b3;
         }
 
-        /* Styling for the button containers */
         .btn-container {
-            margin: 15px 0; /* Space between button containers */
+            margin: 15px 0;
             text-align: center;
         }
 
-        /* Styling for Sell Stock button (orange) */
         .btn-sell {
-            background-color: #ff9800; /* Orange color */
+            background-color: #ff9800;
         }
 
         .btn-sell:hover {
-            background-color: #e68900; /* Darker orange on hover */
+            background-color: #e68900;
         }
 
-        /* Styling for Buy Stock button (green) */
         .btn-buy {
-            background-color: #28a745; /* Green color */
+            background-color: #28a745;
         }
 
         .btn-buy:hover {
-            background-color: #218838; /* Darker green on hover */
+            background-color: #218838;
         }
 
-        /* Styling for Dashboard button (blue) */
         .btn-dashboard {
-            background-color: #007bff; /* Blue color */
+            background-color: #007bff;
         }
 
         .btn-dashboard:hover {
-            background-color: #0056b3; /* Darker blue on hover */
+            background-color: #0056b3;
         }
 
         .btn-container a {
@@ -103,6 +98,38 @@
             margin: 5px 0;
             color: #333;
         }
+
+        /* Mobile Responsive */
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+                height: auto;
+                min-height: 100vh;
+            }
+
+            .top-right-buttons {
+                flex-direction: column;
+                top: 10px;
+                right: 10px;
+            }
+
+            .top-right-buttons a {
+                padding: 8px 12px;
+                font-size: 14px;
+            }
+
+            h1, h2 {
+                font-size: 22px;
+                margin: 10px 0;
+            }
+
+            .btn-container a {
+                font-size: 16px;
+                padding: 10px 16px;
+                width: 100%;
+                max-width: 300px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -118,6 +145,5 @@
     <div class="btn-container">
         <a href="{% url 'buy_stock' %}" class="btn btn-buy btn-lg mb-3">Buy Stock</a>
     </div>
-
 </body>
 </html>

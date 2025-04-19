@@ -35,37 +35,36 @@
         }
 
         /* Styling for the buttons in the top-right corner */
-.top-right-buttons {
-    position: absolute;
-    top: 20px; /* Position from the top of the container */
-    right: 20px; /* Position from the right side of the container */
-    display: flex;
-    flex-direction: column; /* Stack the buttons vertically */
-    gap: 10px; /* Space between the buttons */
-}
+        .top-right-buttons {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column; /* Stack the buttons vertically */
+            gap: 10px;
+        }
 
-.top-right-buttons a {
-    padding: 10px 15px;
-    font-size: 16px;
-    color: white;
-    background-color: #007bff;
-    border-radius: 5px;
-    text-decoration: none;
-    display: inline-block;
-    text-align: center; /* Center align text in the button */
-}
+        .top-right-buttons a {
+            padding: 10px 15px;
+            font-size: 16px;
+            color: white;
+            background-color: #007bff;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center; /* Center align text in the button */
+        }
 
-.top-right-buttons a:hover {
-    background-color: #0056b3; /* Darker blue on hover */
-}
-
+        .top-right-buttons a:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
 
         /* Dropdown and buttons container */
         .dropdown-container {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 10px; /* Space between the dropdown and buttons */
+            gap: 10px;
             margin-bottom: 30px;
         }
 
@@ -96,8 +95,50 @@
 
         /* Disabled button styling */
         .dropdown-submit:disabled {
-            background-color: #c0c0c0; /* Grey background when disabled */
+            background-color: #c0c0c0;
             cursor: not-allowed;
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            /* Stack the top-right buttons vertically on small screens */
+            .top-right-buttons {
+                position: relative;
+                top: auto;
+                right: auto;
+                display: block;
+                margin-bottom: 15px;
+                gap: 5px;
+            }
+
+            /* Adjust dropdown and button width on smaller screens */
+            .dropdown {
+                width: 100%;
+                max-width: 250px;
+            }
+
+            .dropdown-submit {
+                width: 100%;
+                max-width: 250px;
+            }
+
+            h1 {
+                font-size: 28px; /* Smaller header size on mobile */
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 24px; /* Further reduce header size for very small screens */
+            }
+
+            .dropdown {
+                font-size: 14px; /* Reduce font size for dropdown */
+            }
+
+            .dropdown-submit {
+                font-size: 14px; /* Reduce font size for button */
+            }
         }
     </style>
 </head>
@@ -105,11 +146,11 @@
 
     <div class="container">
         <h1>Stock Analysis</h1>
-<div class="top-right-buttons">
+        <div class="top-right-buttons">
             <a href="{% url 'logout' %}" class="btn">Logout</a>
             <a href="{% url 'dashboard' %}" class="btn">Home</a>
-
         </div>
+
         <!-- Dropdown for selecting stock symbol -->
         <div class="dropdown-container">
             <form method="POST" action="{% url 'stock_analysis' %}" id="stock-form" style="display: inline;">
