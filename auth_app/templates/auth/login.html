@@ -1,37 +1,43 @@
 {% extends 'layouts/app.html' %}
-{% load form_tags %}
 
 {% block content %}
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         h2.page-title {
             text-align: center;
             margin-top: 5px;
-            font-size: 35px;
+            font-size: 28px;
             font-weight: bold;
         }
 
         body {
             margin: 0;
-            padding: 0;
-            height: 100vh;
+            padding: 20px;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             background: linear-gradient(135deg, #a8edea, #fed6e3);
+            font-family: Arial, sans-serif;
         }
 
         .login-container {
-            width: 400px;
+            width: 100%;
+            max-width: 400px;
             background-color: #fff;
             padding: 25px;
-            border-radius: 25px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -44,7 +50,8 @@
         }
 
         .login-container label {
-            margin-bottom: 10px;
+            margin-bottom: 8px;
+            font-weight: 600;
         }
 
         .login-container input {
@@ -52,19 +59,21 @@
             padding: 10px;
             font-size: 16px;
             border: 1px solid #ccc;
-            border-radius: 20px;
+            border-radius: 10px;
             width: 100%;
         }
 
         .login-container button {
-            padding: 10px;
+            padding: 12px;
             font-size: 16px;
             border: none;
-            border-radius: 4px;
+            border-radius: 10px;
             background-color: #007bff;
             color: white;
             cursor: pointer;
             width: 100%;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
         }
 
         .login-container button:hover {
@@ -72,63 +81,60 @@
         }
 
         .login-container a {
-            margin-top: 10px;
+            margin-top: 12px;
             text-align: center;
             display: block;
             color: #007bff;
             text-decoration: none;
+            font-size: 14px;
         }
 
         .login-container a:hover {
             text-decoration: underline;
         }
 
-        .errors {
-            margin-bottom: 10px;
-            font-size: 14px;
-            color: red;
-            list-style: none;
-            padding-left: 0;
-            text-align: left;
-            width: 100%;
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+
+            h2.page-title {
+                font-size: 22px;
+            }
+
+            .login-container {
+                padding: 20px 15px;
+                border-radius: 15px;
+            }
+
+            .login-container input, 
+            .login-container button {
+                font-size: 14px;
+                padding: 10px;
+            }
         }
     </style>
 </head>
 <body>
     <h2 class="page-title">Your Virtual Platform for</h2>
     <h2 class="page-title">Real-Time Trading Practice</h2>
-    <div class="login-container">
 
+    <div class="login-container">
         <form method="POST">
             {% csrf_token %}
-
-            {% if form.non_field_errors %}
-                <ul class="errors">
-                    {% for error in form.non_field_errors %}
-                        <li>{{ error }}</li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
-
             <label for="username">Username:</label>
-            <input type="text" id="username" name="username" value="{{ form.username.value|default:'' }}" required>
-            {% if form.username.errors %}
-                <p class="errors">{{ form.username.errors.0 }}</p>
-            {% endif %}
+            <input type="text" id="username" name="username" required>
 
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required>
-            {% if form.password.errors %}
-                <p class="errors">{{ form.password.errors.0 }}</p>
-            {% endif %}
 
             <button type="submit">Login</button>
         </form>
 
         <a href="{% url 'register' %}" class="btn btn-default">Create New Account</a>
         <a href="{% url 'password_reset' %}" class="btn btn-default">Forget Password?</a>
-
     </div>
 </body>
 </html>
+
 {% endblock %}
