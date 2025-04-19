@@ -1,10 +1,80 @@
-{% blocktrans %}
-You're receiving this email because you requested a password reset for your user account at {{ site_name }}.
-{% endblocktrans %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Reset</title>
+    <style>
+        /* Basic styling for email */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
 
-{% blocktrans %}Please go to the following page and choose a new password:{% endblocktrans %}
-{{ protocol }}://{{ domain }}{% url 'password_reset_confirm' uidb64=uid token=token %}
+        .email-container {
+            background-color: #ffffff;
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+            box-sizing: border-box;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
 
-{% blocktrans %}Your username, in case you've forgotten: {{ user.get_username }}{% endblocktrans %}
+        h1 {
+            font-size: 24px;
+            text-align: center;
+            color: #333;
+        }
 
-{% blocktrans %}Thanks for using our site!{% endblocktrans %}
+        p {
+            font-size: 16px;
+            line-height: 1.5;
+            margin: 10px 0;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 600px) {
+            .email-container {
+                padding: 15px;
+                width: 100%;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+
+            p {
+                font-size: 14px;
+            }
+
+            a {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <h1>{% blocktrans %}Password Reset Request{% endblocktrans %}</h1>
+
+        <p>{% blocktrans %}You're receiving this email because you requested a password reset for your user account at {{ site_name }}.{% endblocktrans %}</p>
+
+        <p>{% blocktrans %}Please go to the following page and choose a new password:{% endblocktrans %}</p>
+        <p><a href="{{ protocol }}://{{ domain }}{% url 'password_reset_confirm' uidb64=uid token=token %}">{% blocktrans %}Reset your password{% endblocktrans %}</a></p>
+
+        <p>{% blocktrans %}Your username, in case you've forgotten: {{ user.get_username }}{% endblocktrans %}</p>
+
+        <p>{% blocktrans %}Thanks for using our site!{% endblocktrans %}</p>
+    </div>
+</body>
+</html>

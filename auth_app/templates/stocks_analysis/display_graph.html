@@ -8,44 +8,107 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Data Visualization</title>
     <style>
-    /* Styling for the buttons in the top-right corner */
+    /* General styling */
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Styling for the top-right buttons */
+    .top-right-buttons {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        display: flex;
+        flex-direction: row; /* Stack buttons horizontally */
+        gap: 10px;
+    }
+
+    .top-right-buttons a {
+        padding: 10px 15px;
+        font-size: 16px;
+        color: white;
+        background-color: #007bff;
+        border-radius: 5px;
+        text-decoration: none;
+        display: inline-block;
+        text-align: center;
+    }
+
+    .top-right-buttons a:hover {
+        background-color: #0056b3;
+    }
+
+    /* Container styling for the graph */
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        box-sizing: border-box;
+        position: relative;
+    }
+
+    h1 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 30px;
+        font-size: 28px;
+    }
+
+    /* Mobile responsiveness styling */
+    @media (max-width: 768px) {
+        /* Adjust button layout for small screens */
         .top-right-buttons {
-            position: absolute;
-            top: 20px; /* Position from the top of the container */
-            right: 20px; /* Position from the right side of the container */
-<!--            display: flex;-->
-<!--            flex-direction: column; /* Stack the buttons vertically */-->
-            gap: 10px; /* Space between the buttons */
+            position: relative;
+            top: auto;
+            right: auto;
+            display: block;
+            margin-bottom: 15px;
+            gap: 5px;
         }
 
         .top-right-buttons a {
-            padding: 10px 15px;
-            font-size: 16px;
-            color: white;
-            background-color: #007bff;
-            border-radius: 5px;
-            text-decoration: none;
-            display: inline-block;
-            text-align: center; /* Center align text in the button */
+            padding: 8px 12px;
+            font-size: 14px;
         }
 
-        .top-right-buttons a:hover {
-            background-color: #0056b3; /* Darker blue on hover */
+        h1 {
+            font-size: 24px; /* Adjust header size for smaller screens */
+            margin-bottom: 20px;
         }
+    }
+
+    @media (max-width: 480px) {
+        h1 {
+            font-size: 20px; /* Adjust header size further for very small screens */
+        }
+
+        .top-right-buttons a {
+            font-size: 12px;
+            padding: 6px 10px;
+        }
+
+        .container {
+            padding: 15px; /* Add some padding to the container on smaller screens */
+        }
+    }
     </style>
 </head>
 <body>
     <h1>Stock Data Visualization</h1>
-<div class="container">
+    <div class="container">
         <!-- Top-right buttons -->
         <div class="top-right-buttons">
             <a href="{% url 'logout' %}" class="btn">Logout</a>
             <a href="{% url 'dashboard' %}" class="btn">Home</a>
             <a href="{% url 'stock_analysis' %}" class="btn">Back to Stock Analysis</a>
         </div>
-    <div>
-        {{ graph_html|safe }}  <!-- Use the 'safe' filter to render the raw HTML -->
+
+        <div>
+            {{ graph_html|safe }}  <!-- Use the 'safe' filter to render the raw HTML -->
+        </div>
     </div>
-</div>
 </body>
 </html>

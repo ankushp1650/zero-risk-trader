@@ -15,6 +15,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
+            flex-direction: column;
         }
 
         /* Main container styling */
@@ -116,6 +117,68 @@
             padding: 10px;
             border-radius: 5px;
             border: 1px solid #f5c6cb;
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            /* Adjust container padding for smaller screens */
+            .container {
+                padding: 20px;
+            }
+
+            /* Adjust form elements font size and padding for mobile screens */
+            input[type="text"], input[type="number"], select, button {
+                font-size: 14px;
+                padding: 10px;
+            }
+
+            /* Adjust button padding for mobile */
+            button {
+                padding: 10px;
+            }
+
+            /* Adjust main title font size for smaller screens */
+            h1 {
+                font-size: 20px;
+            }
+
+            /* Adjust top-right buttons for mobile */
+            .top-right-buttons {
+                position: fixed;
+                top: 15px;
+                right: 10px;
+                gap: 5px;
+            }
+
+            .top-right-buttons a {
+                font-size: 14px;
+                padding: 8px 12px;
+            }
+        }
+
+        /* Extra small screen responsiveness */
+        @media (max-width: 480px) {
+            /* Adjust the container for very small screens */
+            .container {
+                padding: 15px;
+                width: 100%;
+            }
+
+            /* Adjust form inputs and button sizes for smaller screens */
+            input[type="text"], input[type="number"], select, button {
+                font-size: 12px;
+                padding: 8px;
+            }
+
+            /* Adjust button size for smaller screens */
+            button {
+                padding: 8px;
+            }
+
+            /* Adjust title size further for smaller screens */
+            h1 {
+                font-size: 18px;
+            }
         }
     </style>
 </head>

@@ -12,42 +12,58 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
+            margin: 0;
         }
 
         .container {
             background-color: #fff;
             padding: 30px;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
             text-align: center;
-            width: 400px;
+            width: 100%;
+            max-width: 500px;
         }
 
         h2 {
             color: #333;
             margin-bottom: 20px;
+            font-size: 24px;
         }
 
         p {
             color: #555;
             margin-bottom: 20px;
+            font-size: 16px;
+            line-height: 1.6;
         }
 
         a {
             color: #007bff;
             text-decoration: none;
+            font-weight: bold;
         }
 
         a:hover {
             text-decoration: underline;
         }
+
+        .message {
+            margin-top: 30px;
+            font-size: 16px;
+            color: #333;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h2>Verification Email Sent</h2>
+        <h2>Email Verification Sent</h2>
         <p>A verification link has been sent to your email address. Please check your inbox and click on the link to verify your email address.</p>
         <p>If you haven't received the email, please check your spam folder or <a href="{% url 'register' %}">try registering again</a>.</p>
+
+        <div class="message">
+            <p>If you did not request an account, you can safely ignore this message.</p>
+        </div>
     </div>
 </body>
 </html>

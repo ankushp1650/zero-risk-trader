@@ -69,27 +69,15 @@
 
         /* Specific button colors */
         #firstButton {
-            background-color: #20c997; /* Custom green */
+            background-color: #20c997;
             color: white;
         }
 
-        #secondButton {
-            background-color: #0056b3; /* Default color */
-            color: white;
-        }
-
-        #thirdButton {
-            background-color: #0056b3; /* Default color */
-            color: white;
-        }
-
-        #fourthButton {
-            background-color: #0056b3; /* Default color */
-            color: white;
-        }
-
+        #secondButton,
+        #thirdButton,
+        #fourthButton,
         #fifthButton {
-            background-color: #0056b3; /* Default color */
+            background-color: #0056b3;
             color: white;
         }
 
@@ -98,25 +86,16 @@
             background-color: #198754;
         }
 
-        #secondButton:hover {
-            background-color: #004085;
-        }
-
-        #thirdButton:hover {
-            background-color: #004085;
-        }
-
-        #fourthButton:hover {
-            background-color: #004085;
-        }
-
+        #secondButton:hover,
+        #thirdButton:hover,
+        #fourthButton:hover,
         #fifthButton:hover {
             background-color: #004085;
         }
 
         /* Custom styling for Logout button */
         a.btn {
-            background-color: #007bff; /* Custom blue for Logout */
+            background-color: #007bff;
             color: white;
         }
 
@@ -124,10 +103,37 @@
             background-color: #0056b3;
         }
 
+        /* Mobile Responsive */
+        @media (max-width: 600px) {
+            .page-title {
+                font-size: 24px;
+                margin: 10px 0;
+            }
+            h1 {
+                font-size: 22px;
+            }
+            .btn {
+                font-size: 16px;
+                padding: 10px;
+                max-width: 100%;
+            }
+            .dashboard-container {
+                padding: 15px;
+                margin: 10px;
+                border-radius: 8px;
+            }
+            body {
+                padding: 10px;
+                height: auto;
+                min-height: 100vh;
+            }
+        }
+
     </style>
 </head>
 
-    <h1 class="page-title">Welcome {{ request.user.username }} </h1>
+<body>
+    <h1 class="page-title">Welcome {{ request.user.username }}</h1>
     <h1 class="page-title">Your Virtual Trading Platform</h1>
     <div class="dashboard-container">
         <h1>Bombay Stock Exchange (BSE)</h1>
@@ -140,13 +146,9 @@
         <div class="btn-container">
             <button onclick="location.href='{% url 'platform' %}'" class="btn btn-secondary btn-lg mb-3" id="thirdButton">Dashboard</button>
         </div>
-
-
-
         <div class="btn-container">
             <a href="{% url 'logout' %}" class="btn btn-primary btn-lg mb-3">Logout</a>
         </div>
-
     </div>
 </body>
 </html>
