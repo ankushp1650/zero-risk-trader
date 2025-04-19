@@ -40,7 +40,6 @@
             top: 20px;
             right: 20px;
             display: flex;
-            flex-direction: column; /* Stack the buttons vertically */
             gap: 10px;
         }
 
@@ -147,8 +146,8 @@
     <div class="container">
         <h1>Stock Analysis</h1>
         <div class="top-right-buttons">
-            <a href="{% url 'logout' %}" class="btn">Logout</a>
             <a href="{% url 'dashboard' %}" class="btn">Home</a>
+            <a href="{% url 'logout' %}" class="btn">Logout</a>
         </div>
 
         <!-- Dropdown for selecting stock symbol -->
