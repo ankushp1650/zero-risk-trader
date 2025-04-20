@@ -79,6 +79,7 @@ h3 {
     gap: 50px;
     margin-bottom: 40px;
     flex-wrap: wrap;
+    margin-top: 30px; /* Moved up here */
 }
 
 /* Portfolio info and holdings table container */
@@ -92,7 +93,7 @@ h3 {
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top:40px;
+    margin-top: 40px;
     font-size: 16px;
     background-color: #ffffff;
     border-radius: 6px;
@@ -101,14 +102,13 @@ table {
 
 /* Table header styling */
 table th {
-    background: linear-gradient(135deg, #7b8a98, #b0c1d4); /* Softer gradient using muted blue and gray tones */
+    background: linear-gradient(135deg, #7b8a98, #b0c1d4);
     color: #ffffff;
     font-weight: 600;
     text-align: left;
     padding: 12px 14px;
-    border-bottom: 2px solid #9bb3c0; /* Lighter border for a more subtle appearance */
+    border-bottom: 2px solid #9bb3c0;
 }
-
 
 /* Table row styling */
 table tbody tr:nth-child(odd) {
@@ -129,17 +129,16 @@ table td {
     font-size: 16px;
 }
 
-/* Button container styles (within the container) */
+/* Button container styles */
 .top-right-buttons {
-     display: flex;
-    justify-content: center;  /* Center the buttons horizontally */
-    align-items: center;      /* Center the buttons vertically */
-    gap: 20px;                /* Space between the buttons */
-    margin-top: 10px;         /* Adds top margin if needed */
-    flex-wrap: wrap;          /* Allow buttons to wrap if the screen is too narrow */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-top: 10px;
+    flex-wrap: wrap;
 }
 
-/* Style for each button */
 .top-right-buttons a {
     padding: 12px 20px;
     font-size: 14px;
@@ -150,41 +149,20 @@ table td {
     text-decoration: none;
     transition: background-color 0.3s ease;
     text-align: center;
-    width: 140px; /* Adjust the width of each button */
+    width: 140px;
 }
-/* Alternatively, you can add space by using padding on portfolio-section */
-.portfolio-section {
-    margin-top: 30px; /* Space between the buttons and the portfolio section */
-}
-/* Hover effect for buttons */
+
 .top-right-buttons a:hover {
     background-color: #005bb5;
 }
-
-/* Responsive styles for smaller screens */
-@media (max-width: 768px) {
-    .top-right-buttons {
-        justify-content: center; /* Aligns buttons to the center on smaller screens */
-        gap: 25px; /* Adjust space between buttons on smaller screens */
-    }
-
-    .top-right-buttons a {
-        width: auto; /* Allow buttons to have flexible width */
-    }
-}
-
-
 
 /* Graph section container */
 #graph-section {
     margin-top: 20px;
     padding-top: 20px;
     border-top: 2px solid #e3e4e8;
-}
-
-/* Graph section styling */
-#graph-section h2 {
-    margin-bottom: 20px;
+    width: 100%;
+    overflow-x: auto;
 }
 
 /* Flexbox styling for centered graph */
@@ -193,6 +171,7 @@ table td {
     justify-content: center;
     align-items: center;
     margin: 20px 0;
+    overflow-x: auto;
 }
 
 /* Portfolio info grid */
@@ -269,6 +248,11 @@ a.btn:hover {
         margin-top: 20px;
         border-top: none;
         padding-top: 10px;
+        overflow-x: auto;
+    }
+
+    .holdings-table {
+        overflow-x: auto;
     }
 }
 
@@ -287,7 +271,7 @@ button:focus {
     box-shadow: 0 0 0 2px #007bff;
 }
 
-/* New section for detailed card design (Optional) */
+/* Card design */
 .card {
     background: #ffffff;
     padding: 20px;
@@ -311,12 +295,22 @@ button:focus {
     color: #555;
 }
 
+/* Graphs and images responsiveness */
+img, svg, canvas, iframe {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
 
-    </style>
+/* Make tables scrollable on smaller screens */
+.table-container, .holdings-table, .centered-graph {
+    overflow-x: auto;
+}
+</style>
+
 </head>
 
 <body>
-
 
     <div class="container">
         <div class="btn-container">
@@ -324,13 +318,13 @@ button:focus {
             <h3>Your detailed portfolio overview, including holdings and transactions</h3>
 
             <div class="header-line"></div>
-<!-- Top right buttons for Logout, Home, Investment Portfolio, Transaction History -->
-<div class="top-right-buttons">
-    <a href="{% url 'dashboard' %}" class="btn">Home</a>
-    <a href="{% url 'investment_view' %}" class="btn">Investment Portfolio</a>
-    <a href="{% url 'transaction_history' %}" class="btn">Transaction History</a>
-    <a href="{% url 'logout' %}" class="btn">Logout</a>
-</div>
+
+            <div class="top-right-buttons">
+                <a href="{% url 'dashboard' %}" class="btn">Home</a>
+                <a href="{% url 'investment_view' %}" class="btn">Investment Portfolio</a>
+                <a href="{% url 'transaction_history' %}" class="btn">Transaction History</a>
+                <a href="{% url 'logout' %}" class="btn">Logout</a>
+            </div>
 
             <div class="portfolio-section">
                 <!-- Portfolio Info -->
@@ -428,5 +422,6 @@ button:focus {
 
         </div>
     </div>
+
 </body>
 </html>
