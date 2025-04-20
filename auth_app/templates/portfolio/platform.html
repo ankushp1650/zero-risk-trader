@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 {% load humanize %}
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio</title>
 
 <style>
-/* General styles for font, background, and layout */
+/* General styles */
 body {
     font-family: 'Poppins', sans-serif;
     background-color: #f7f9fc;
@@ -21,7 +20,6 @@ body {
     color: #444;
 }
 
-/* Container for the entire page */
 .container {
     background-color: #ffffff;
     padding: 40px;
@@ -33,12 +31,10 @@ body {
     transition: all 0.3s ease;
 }
 
-/* Hover effect for the container */
 .container:hover {
     box-shadow: 0 12px 36px rgba(0, 0, 0, 0.2);
 }
 
-/* Header styles */
 h2 {
     color: #333;
     font-size: 26px;
@@ -53,7 +49,6 @@ h3 {
     font-weight: 400;
 }
 
-/* Blue horizontal line under the header */
 .header-line {
     width: 100%;
     height: 3px;
@@ -63,7 +58,6 @@ h3 {
     border-radius: 2px;
 }
 
-/* Cash balance section styling */
 .cash-balance-sec {
     font-size: 20px;
     font-weight: bold;
@@ -71,7 +65,6 @@ h3 {
     margin-bottom: 12px;
 }
 
-/* Portfolio section styling */
 .portfolio-section {
     display: flex;
     justify-content: space-between;
@@ -79,19 +72,24 @@ h3 {
     gap: 50px;
     margin-bottom: 40px;
     flex-wrap: wrap;
-    margin-top: 30px; /* Moved up here */
+    margin-top: 30px;
 }
 
-/* Portfolio info and holdings table container */
-.portfolio-info,
-.holdings-table {
+.portfolio-info, .holdings-table {
     flex: 1;
     margin-top: 20px;
 }
 
-/* Table styling */
-table {
+/* Holdings table container */
+.holdings-table {
     width: 100%;
+    overflow-x: auto;
+}
+
+/* Table styling */
+.holdings-table table {
+    width: 100%;
+    min-width: 600px; /* <-- important for scroll */
     border-collapse: collapse;
     margin-top: 40px;
     font-size: 16px;
@@ -100,7 +98,6 @@ table {
     overflow: hidden;
 }
 
-/* Table header styling */
 table th {
     background: linear-gradient(135deg, #7b8a98, #b0c1d4);
     color: #ffffff;
@@ -110,7 +107,6 @@ table th {
     border-bottom: 2px solid #9bb3c0;
 }
 
-/* Table row styling */
 table tbody tr:nth-child(odd) {
     background-color: #f8faff;
 }
@@ -120,7 +116,6 @@ table tbody tr:hover {
     cursor: pointer;
 }
 
-/* Table cell styling */
 table td {
     padding: 12px 14px;
     border: 1px solid #e3e4e8;
@@ -129,7 +124,6 @@ table td {
     font-size: 16px;
 }
 
-/* Button container styles */
 .top-right-buttons {
     display: flex;
     justify-content: center;
@@ -156,7 +150,6 @@ table td {
     background-color: #005bb5;
 }
 
-/* Graph section container */
 #graph-section {
     margin-top: 20px;
     padding-top: 20px;
@@ -165,7 +158,6 @@ table td {
     overflow-x: auto;
 }
 
-/* Flexbox styling for centered graph */
 .centered-graph {
     display: flex;
     justify-content: center;
@@ -174,7 +166,6 @@ table td {
     overflow-x: auto;
 }
 
-/* Portfolio info grid */
 .portfolio-info {
     display: grid;
     grid-template-columns: auto auto;
@@ -187,7 +178,6 @@ table td {
     display: contents;
 }
 
-/* Label and value styling in the portfolio info section */
 .label {
     font-weight: bold;
     text-align: left;
@@ -200,7 +190,6 @@ table td {
     margin-bottom: 10px;
 }
 
-/* PnL color styling */
 .text-red {
     color: #d9534f;
 }
@@ -213,13 +202,12 @@ table td {
     color: #444;
 }
 
-/* Button hover effect */
 a.btn:hover {
     background-color: #0056b3;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
-/* Responsive styles for smaller screens */
+/* Responsive styles */
 @media (max-width: 768px) {
     .container {
         padding: 20px;
@@ -229,8 +217,7 @@ a.btn:hover {
         font-size: 22px;
     }
 
-    table th,
-    table td {
+    table th, table td {
         padding: 10px;
     }
 
@@ -248,7 +235,6 @@ a.btn:hover {
         margin-top: 20px;
         border-top: none;
         padding-top: 10px;
-        overflow-x: auto;
     }
 
     .holdings-table {
@@ -256,7 +242,6 @@ a.btn:hover {
     }
 }
 
-/* Empty state message styling */
 .empty-state {
     color: #999;
     font-size: 18px;
@@ -264,14 +249,13 @@ a.btn:hover {
     margin-top: 20px;
 }
 
-/* Focus effects for accessibility */
-a:focus,
-button:focus {
+/* Accessibility focus */
+a:focus, button:focus {
     outline: none;
     box-shadow: 0 0 0 2px #007bff;
 }
 
-/* Card design */
+/* Card styling */
 .card {
     background: #ffffff;
     padding: 20px;
@@ -301,127 +285,121 @@ img, svg, canvas, iframe {
     height: auto;
     display: block;
 }
-
-/* Make tables scrollable on smaller screens */
-.table-container, .holdings-table, .centered-graph {
-    overflow-x: auto;
-}
 </style>
-
 </head>
 
 <body>
 
-    <div class="container">
-        <div class="btn-container">
-            <h1>Portfolio</h1>
-            <h3>Your detailed portfolio overview, including holdings and transactions</h3>
+<div class="container">
+  <div class="btn-container">
+    <h1>Portfolio</h1>
+    <h3>Your detailed portfolio overview, including holdings and transactions</h3>
 
-            <div class="header-line"></div>
+    <div class="header-line"></div>
 
-            <div class="top-right-buttons">
-                <a href="{% url 'dashboard' %}" class="btn">Home</a>
-                <a href="{% url 'investment_view' %}" class="btn">Investment Portfolio</a>
-                <a href="{% url 'transaction_history' %}" class="btn">Transaction History</a>
-                <a href="{% url 'logout' %}" class="btn">Logout</a>
-            </div>
-
-            <div class="portfolio-section">
-                <!-- Portfolio Info -->
-                <div class="portfolio-info">
-                    <div class="row">
-                        <span class="value">Your Total Holdings</span>
-                        <span class="value"></span>
-                    </div>
-                    <div class="row">
-                        <span class="label">Opening Balance</span>
-                        <span class="value">{{ portfolio.cash_balance|intcomma }}</span>
-                    </div>
-                    <div class="row">
-                        <span class="label">Invested Value</span>
-                        <span class="value">{{ total_investment_value|intcomma }}</span>
-                    </div>
-                    <div class="row">
-                        <span class="label">Current Value</span>
-                        <span class="value">{{ total_current_value|intcomma }}</span>
-                    </div>
-                    <div class="row">
-                        <span class="label">Profit & Loss:</span>
-                        <span class="value {% if total_pnl < 0 %}text-red{% elif total_pnl > 0 %}text-green{% else %}text-neutral{% endif %}">
-                            {% if total_pnl > 0 %}+{% endif %}{{ total_pnl|intcomma }}
-                        </span>
-                    </div>
-                    <div class="row">
-                        <span class="label">Total Stock Quantity:</span>
-                        <span class="value">{{ total_quantity }}</span>
-                    </div>
-                </div>
-
-                <!-- Holdings Table -->
-                <div class="holdings-table">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Stock Symbol</th>
-                                <th>Quantity</th>
-                                <th>Invested Value</th>
-                                <th>Current Value</th>
-                                <th>Profit & Loss</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for holding in holdings %}
-                            <tr>
-                                <td>{{ holding.stock_symbol }}</td>
-                                <td>{{ holding.quantity }}</td>
-                                <td>{{ holding.investment_value|intcomma }}</td>
-                                <td>{{ holding.current_value|intcomma }}</td>
-                                <td class="{% if holding.pnl < 0 %}text-red{% elif holding.pnl > 0 %}text-green{% else %}text-neutral{% endif %}">
-                                    {% if holding.pnl > 0 %}+{% endif %}{{ holding.pnl|intcomma }}
-                                </td>
-                            </tr>
-                            {% empty %}
-                            <tr>
-                                <td colspan="5" class="empty-state">No holdings available.</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- Graphs Section -->
-            <div id="graph-section" class="table-container">
-                <h2>Invested vs Current Value by all Stock</h2>
-                {{ bar_graph_html|safe }}
-
-                <div class="header-line"></div>
-
-                <h2>Percentage Change for Each Stock</h2>
-                {{ line_graph_html|safe }}
-
-                <h2>Profit & Loss across all Stocks</h2>
-                {{ pnl_bar_chart_graph_html|safe }}
-
-                <div class="header-line"></div>
-
-                <h2>Portfolio Allocation across all Stocks</h2>
-                {{ invested_value_pie_graph_html|safe }}
-                {{ current_value_pie_graph_html|safe }}
-                {{ percentage_change_pie_graph_html|safe }}
-
-                <div class="header-line"></div>
-
-                <h2>Stock Quantity Distribution</h2>
-                <div class="centered-graph">
-                    {{ quantity_bar_graph_html|safe }}
-                </div>
-
-                <div class="header-line"></div>
-            </div>
-
-        </div>
+    <div class="top-right-buttons">
+      <a href="{% url 'dashboard' %}" class="btn">Home</a>
+      <a href="{% url 'investment_view' %}" class="btn">Investment Portfolio</a>
+      <a href="{% url 'transaction_history' %}" class="btn">Transaction History</a>
+      <a href="{% url 'logout' %}" class="btn">Logout</a>
     </div>
+
+    <div class="portfolio-section">
+      <!-- Portfolio Info -->
+      <div class="portfolio-info">
+        <div class="row">
+          <span class="value">Your Total Holdings</span>
+          <span class="value"></span>
+        </div>
+        <div class="row">
+          <span class="label">Opening Balance</span>
+          <span class="value">{{ portfolio.cash_balance|intcomma }}</span>
+        </div>
+        <div class="row">
+          <span class="label">Invested Value</span>
+          <span class="value">{{ total_investment_value|intcomma }}</span>
+        </div>
+        <div class="row">
+          <span class="label">Current Value</span>
+          <span class="value">{{ total_current_value|intcomma }}</span>
+        </div>
+        <div class="row">
+          <span class="label">Profit & Loss:</span>
+          <span class="value {% if total_pnl < 0 %}text-red{% elif total_pnl > 0 %}text-green{% else %}text-neutral{% endif %}">
+            {% if total_pnl > 0 %}+{% endif %}{{ total_pnl|intcomma }}
+          </span>
+        </div>
+        <div class="row">
+          <span class="label">Total Stock Quantity:</span>
+          <span class="value">{{ total_quantity }}</span>
+        </div>
+      </div>
+
+      <!-- Holdings Table -->
+      <div class="holdings-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Stock Symbol</th>
+              <th>Quantity</th>
+              <th>Invested Value</th>
+              <th>Current Value</th>
+              <th>Profit & Loss</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for holding in holdings %}
+            <tr>
+              <td>{{ holding.stock_symbol }}</td>
+              <td>{{ holding.quantity }}</td>
+              <td>{{ holding.investment_value|intcomma }}</td>
+              <td>{{ holding.current_value|intcomma }}</td>
+              <td class="{% if holding.pnl < 0 %}text-red{% elif holding.pnl > 0 %}text-green{% else %}text-neutral{% endif %}">
+                {% if holding.pnl > 0 %}+{% endif %}{{ holding.pnl|intcomma }}
+              </td>
+            </tr>
+            {% empty %}
+            <tr>
+              <td colspan="5" class="empty-state">No holdings available.</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Graphs Section -->
+    <div id="graph-section" class="table-container">
+      <h2>Invested vs Current Value by all Stock</h2>
+      {{ bar_graph_html|safe }}
+
+      <div class="header-line"></div>
+
+      <h2>Percentage Change for Each Stock</h2>
+      {{ line_graph_html|safe }}
+
+      <h2>Profit & Loss across all Stocks</h2>
+      {{ pnl_bar_chart_graph_html|safe }}
+
+      <div class="header-line"></div>
+
+      <h2>Portfolio Allocation across all Stocks</h2>
+      {{ invested_value_pie_graph_html|safe }}
+      {{ current_value_pie_graph_html|safe }}
+      {{ percentage_change_pie_graph_html|safe }}
+
+      <div class="header-line"></div>
+
+      <h2>Stock Quantity Distribution</h2>
+      <div class="centered-graph">
+        {{ quantity_bar_graph_html|safe }}
+      </div>
+
+      <div class="header-line"></div>
+    </div>
+
+  </div>
+</div>
 
 </body>
 </html>
