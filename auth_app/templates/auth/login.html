@@ -92,6 +92,11 @@
         .login-container a:hover {
             text-decoration: underline;
         }
+        .error-messages {
+    color: red;
+    margin-bottom: 10px;
+}
+
 
         @media (max-width: 768px) {
             body {
@@ -147,6 +152,20 @@
     <div class="login-container">
         <form method="POST">
             {% csrf_token %}
+
+            <!-- Show form errors here -->
+            {% if form.errors %}
+                <div class="error-messages">
+                    <ul>
+                        {% for field, errors in form.errors.items %}
+                            {% for error in errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" required>
 
@@ -158,8 +177,12 @@
 
         <a href="{% url 'register' %}" class="btn btn-default">Create New Account</a>
         <a href="{% url 'password_reset' %}" class="btn btn-default">Forgot Password?</a>
+        <a href="{% url 'aboutt' %}" class="btn btn-default">About Us</a>
+
+
     </div>
 </body>
+
 </html>
 
 {% endblock %}
