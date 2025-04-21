@@ -7,7 +7,7 @@ from django.db.models import Max, Sum
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout
 from auth_project.settings import EMAIL_HOST_USER
-from .custom_utils.fetching import get_daily_time_seriess, get_daily_time_series
+from .custom_utils.fetching import get_daily_time_series
 from .custom_utils.graphs import generate_graphs, bar_chart_view, pie_chart_view, line_chart_view, quantity_bar_graph, \
     pnl_bar_chart_view
 from .forms import RegisterForm
@@ -43,28 +43,102 @@ logger = logging.getLogger(__name__)
 User = get_user_model()  # Get the user model in case you're using a custom user model
 
 
-@guest
+# @guest
+# def login_view(request):
+#     if request.method == 'POST':
+#         form = AuthenticationForm(request, data=request.POST)
+#         if form.is_valid():
+#             user = form.get_user()
+#             login(request, user)
+#             # return redirect('api_key_form')
+#             return redirect('save_api_key')
+#     else:
+#         form = AuthenticationForm()
+#     return render(request, 'auth/login.html', {'form': form})
+
+
+# def login_view(request):
+#     if request.method == 'POST':
+#
+#         form = AuthenticationForm(request, data=request.POST)
+#         if form.is_valid():
+#             user = form.get_user()
+#             print(f"✅ User '{user.username}' logged in Successfully ")
+#
+#             login(request, user)
+#
+#             # 👇 Check if API key exists in UserProfile
+#             try:
+#                 user_profile = UserProfile.objects.get(user=user)
+#                 if user_profile.api_key:
+#                     print("🔑 API Key found. Redirecting to dashboard.")
+#                     return redirect('dashboard')
+#             except UserProfile.DoesNotExist:
+#                 pass
+#
+#             # API key missing → redirect to save_api_key
+#             print("🚫 No API Key. Redirecting to Save API Key form.")
+#             return redirect('save_api_key')
+#
+#         else:
+#             print("❌ Invalid credentials")
+#             messages.error(request, "Invalid username or password.")
+#
+#     else:
+#         form = AuthenticationForm()
+#         print("Authentication failed")
+#     return render(request, 'auth/login.html', {'form': form})
+
+from django.utils.timezone import now
+from .models import UserProfile
+
+
 def login_view(request):
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
             user = form.get_user()
-            print(f"✅ User '{user.username}' logged in")
-            print("Errors:", form.errors)  # Log the actual form errors
-            print("POST username:", request.POST.get('username'))
-            print("POST password:", request.POST.get('password'))
+            print(f"✅ User '{user.username}' logged in Successfully ")
 
             login(request, user)
-            # return redirect('api_key_form')
+
+            # 👇 Check if API key exists in UserProfile
+            try:
+                user_profile, created = UserProfile.objects.get_or_create(user=user)
+
+                # ✨ Check if today’s data has already been fetched
+                today = now().date()
+                if user_profile.last_data_fetch_date != today:
+                    # 🛠️ Fetch fresh data
+                    print("📥 Fetching new data for user...")
+                    fetch_and_save_user_data(request)
+                    # Update last_data_fetch_date
+                    user_profile.last_data_fetch_date = today
+                    user_profile.save()
+                else:
+                    print("✅ Data already fetched today. Skipping fetch.")
+
+                # 🚀 API key already exists → go to dashboard
+                if user_profile.api_key:
+                    print("🔑 API Key found. Redirecting to dashboard.")
+                    return redirect('dashboard')
+
+            except UserProfile.DoesNotExist:
+                # Should not normally happen because of get_or_create
+                print("❗ UserProfile not found. Redirecting to Save API Key form.")
+
+            # API key missing → redirect to save_api_key
+            print("🚫 No API Key. Redirecting to Save API Key form.")
             return redirect('save_api_key')
+
         else:
             print("❌ Invalid credentials")
-            print(form.errors)
             messages.error(request, "Invalid username or password.")
 
     else:
         form = AuthenticationForm()
         print("Authentication failed")
+
     return render(request, 'auth/login.html', {'form': form})
 
 
@@ -220,6 +294,15 @@ class CustomPasswordResetCompleteView(PasswordResetCompleteView):
     template_name = 'registration/password_reset_complete.html'
 
 
+def fetch_and_save_user_data(request):
+    try:
+        jason_db(request)
+        fetch_and_store_stock_data(request)
+        print("✅ Data fetching and storing completed successfully.")
+    except Exception as e:
+        print(f"❌ Error while fetching/saving data: {e}")
+
+
 def save_api_key(request):
     if request.method == 'POST':
         api_key = request.POST.get('api_key')
@@ -234,8 +317,9 @@ def save_api_key(request):
 
             messages.success(request, 'API key saved successfully and emailed to you!')
             # to get all the data
-            jason_db(request)
-            fetch_and_store_stock_data(request)
+            # jason_db(request)
+            # fetch_and_store_stock_data(request)
+            # fetch_and_save_user_data(request)
 
             return redirect('dashboard')  # Redirect to your dashboard
         else:

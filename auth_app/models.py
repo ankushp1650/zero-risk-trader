@@ -25,6 +25,7 @@ class Final_holding(models.Model):  # Class name should follow Python naming con
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     api_key = models.CharField(max_length=255, blank=True, null=True)
+    last_data_fetch_date = models.DateField(blank=True, null=True)
 
     def __str__(self):
         return f"{self.user.username}'s API Key: {self.api_key}"
