@@ -42,7 +42,6 @@ logger = logging.getLogger(__name__)
 
 User = get_user_model()  # Get the user model in case you're using a custom user model
 
-
 # @guest
 # def login_view(request):
 #     if request.method == 'POST':
@@ -319,7 +318,7 @@ def save_api_key(request):
             # to get all the data
             # jason_db(request)
             # fetch_and_store_stock_data(request)
-            # fetch_and_save_user_data(request)
+            fetch_and_save_user_data(request)
 
             return redirect('dashboard')  # Redirect to your dashboard
         else:
@@ -1099,3 +1098,10 @@ def fetch_and_store_stock_data(request):
      hdfcbank_df, hdfcbank_meta_df) = fetch_and_process_data_all_stock(request)
 
     return bhartiartl_df, bhartiartl_meta_df, icicibank_df, icicibank_meta_df, reliance_df, reliance_meta_df, tcs_df, tcs_meta_df, hdfcbank_df, hdfcbank_meta_df
+
+
+def about_us(request):
+    return render(request, 'auth/aboutus.html')
+
+def aboutt(request):
+    return render(request, 'auth/about.html')
