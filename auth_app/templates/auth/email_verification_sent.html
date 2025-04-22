@@ -1,69 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Email Verification Sent</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Email Verification Sent</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+    }
 
-        .container {
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            width: 100%;
-            max-width: 500px;
-        }
+    .container {
+      background-color: #fff;
+      padding: 30px 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      width: 100%;
+      max-width: 450px;
+      display: flex;
+      flex-direction: column;
+      min-height: 400px; /* smaller and flexible */
+    }
 
-        h2 {
-            color: #333;
-            margin-bottom: 20px;
-            font-size: 24px;
-        }
+    h2 {
+      color: #333;
+      margin-bottom: 20px;
+      font-size: 24px;
+    }
 
-        p {
-            color: #555;
-            margin-bottom: 20px;
-            font-size: 16px;
-            line-height: 1.6;
-        }
+    p {
+      color: #555;
+      margin-bottom: 15px;
+      font-size: 16px;
+      line-height: 1.5;
+    }
 
-        a {
-            color: #007bff;
-            text-decoration: none;
-            font-weight: bold;
-        }
+    a {
+      color: #007bff;
+      text-decoration: none;
+      font-weight: bold;
+    }
 
-        a:hover {
-            text-decoration: underline;
-        }
+    a:hover {
+      text-decoration: underline;
+    }
 
-        .message {
-            margin-top: 30px;
-            font-size: 16px;
-            color: #333;
-        }
-    </style>
+    .message {
+      margin-top: auto;
+      font-size: 15px;
+      color: #333;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 13px;
+      color: #777;
+      margin-top: 20px;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Email Verification Sent</h2>
-        <p>A verification link has been sent to your email address. Please check your inbox and click on the link to verify your email address.</p>
-        <p>If you haven't received the email, please check your spam folder or <a href="{% url 'register' %}">try registering again</a>.</p>
-
-        <div class="message">
-            <p>If you did not request an account, you can safely ignore this message.</p>
-        </div>
+  <div class="container">
+    <div>
+      <h2>Email Verification Sent</h2>
+      <p>A verification link has been sent to your email address. Please check your inbox and click on the link to verify your email address.</p>
+      <p>If you haven't received the email, please check your spam folder or <a href="{% url 'register' %}">try registering again</a>.</p>
     </div>
+
+    <div class="message">
+      <p>If you did not request an account, you can safely ignore this message.</p>
+    </div>
+
+    <footer>
+      <p>&copy; 2025 ZeroRiskTrader. All rights reserved.</p>
+    </footer>
+  </div>
 </body>
 </html>

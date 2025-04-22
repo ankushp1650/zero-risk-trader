@@ -69,11 +69,49 @@
       border-top: 2px solid #dee2e6;
       margin: 40px 0;
     }
+    .top-right-buttons {
+      position: absolute;
+      top: 30px;
+      right: 30px;
+      display: flex;
+      gap: 10px;
+    }
+    .top-right-buttons a {
+      padding: 10px 15px;
+      font-size: 16px;
+      color: white;
+      background-color: #007bff;
+      border-radius: 5px;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+    }
+    .top-right-buttons a:hover {
+      background-color: #0056b3;
+    }
+    footer {
+    text-align: center;
+    font-size: 14px;
+    color: #777;
+    margin-top: 30px;
+    }
+
+    footer a {
+        color: #007bff;
+    }
+
+    footer a:hover {
+        text-decoration: underline;
+    }
     /* Mobile Responsive */
     @media (max-width: 768px) {
       .container {
         margin: 20px;
         padding: 20px;
+      }
+      .top-right-buttons {
+        position: static;
+        justify-content: center;
+        margin-bottom: 20px;
       }
     }
   </style>
@@ -82,6 +120,10 @@
 <body>
 
 <div class="container">
+  <div class="top-right-buttons">
+    <a href="{% url 'login' %}">Back to Login</a>
+
+  </div>
 
   <h1>About Us</h1>
 
@@ -128,7 +170,9 @@
     Zero Risk. Real Experience. True Growth.<br>
     Welcome to the future of learning to trade.
   </div>
-
+  <footer>
+    <p>&copy; 2025 ZeroRiskTrader. All rights reserved. </p>
+  </footer>
 </div>
 
 </body>

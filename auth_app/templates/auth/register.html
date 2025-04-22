@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -31,12 +30,13 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             width: 500px;
             max-width: 100%;
+            margin: 10px;
         }
 
         /* Heading Styling */
         h2 {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
             color: #333;
         }
 
@@ -44,8 +44,8 @@
         .flex-row {
             display: flex;
             justify-content: space-between;
-            gap: 20px; /* Increased gap for more space between fields */
-            margin-bottom: 20px; /* Added bottom margin for more space */
+            gap: 20px;
+            margin-bottom: 20px;
         }
 
         /* Input Fields Styling */
@@ -58,12 +58,13 @@
 
         input[type="text"], input[type="email"], input[type="password"] {
             width: 100%;
-            padding: 15px; /* Increased padding for larger fields */
+            padding: 15px;
             margin-top: 5px;
             border-radius: 5px;
             border: 1px solid #ccc;
-            font-size: 16px; /* Increased font size */
+            font-size: 16px;
             color: #333;
+            margin-bottom: 20px; /* Space between fields */
         }
 
         input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus {
@@ -74,7 +75,7 @@
         /* Button Styling */
         button {
             width: 100%;
-            padding: 15px; /* Increased padding for the button */
+            padding: 15px;
             background-color: #007bff;
             color: #fff;
             border: none;
@@ -82,6 +83,7 @@
             cursor: pointer;
             font-size: 16px;
             transition: background-color 0.3s;
+            margin-bottom: 20px;
         }
 
         button:hover {
@@ -127,6 +129,22 @@
         /* CSRF Token Styling */
         input[name="csrfmiddlewaretoken"] {
             display: none;
+        }
+
+        /* Footer Styling */
+        footer {
+            text-align: center;
+            font-size: 14px;
+            color: #777;
+            margin-top: 30px;
+        }
+
+        footer a {
+            color: #007bff;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
         }
 
         /* Mobile Friendly Styles */
@@ -180,13 +198,12 @@
         <form method="post" action="{% url 'register' %}">
             {% csrf_token %}
             {{ form.as_p }}
-
-            <!-- Submit button for registration -->
             <button type="submit">Register</button>
-
-            <!-- Link to Login -->
             <a href="{% url 'login' %}">Already have an account? Login here</a>
         </form>
+        <footer>
+            <p>&copy; 2025 ZeroRiskTrader. All rights reserved.</p>
+        </footer>
     </div>
 </body>
 </html>

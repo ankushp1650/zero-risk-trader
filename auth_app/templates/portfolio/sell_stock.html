@@ -14,8 +14,9 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
             flex-direction: column;
+            min-height: 100vh;
+            position: relative;
         }
 
         /* Main container styling */
@@ -28,6 +29,7 @@
             width: 100%;
             box-sizing: border-box;
             position: relative;
+            margin-top: 60px;
         }
 
         /* Main title */
@@ -51,16 +53,16 @@
             border: 2px solid #ccc;
             border-radius: 5px;
             width: 100%;
-            margin-bottom: 20px; /* Space below each input */
+            margin-bottom: 20px;
             box-sizing: border-box;
             transition: border-color 0.3s ease;
         }
 
-        /* Adjust spacing for specific form elements */
+        /* Adjust spacing for labels */
         label {
-            margin-bottom: 5px; /* Space between label and input */
+            margin-bottom: 5px;
             color: #555;
-            font-weight: bold; /* Make label text bold */
+            font-weight: bold;
         }
 
         /* Input focus effect */
@@ -71,18 +73,17 @@
 
         /* Button styling */
         button {
-            background-color: #ff9800; /* Orange color */
+            background-color: #ff9800;
             color: white;
             border: none;
             cursor: pointer;
             transition: background-color 0.3s ease;
-            margin-top: 10px; /* Space above button */
-            padding: 12px; /* Increase padding for the button */
+            margin-top: 10px;
+            padding: 12px;
         }
 
-        /* Button hover effect */
         button:hover {
-            background-color: #e68900; /* Darker orange on hover */
+            background-color: #e68900;
         }
 
         /* Top-right buttons styling */
@@ -103,7 +104,6 @@
             text-decoration: none;
         }
 
-        /* Hover effect for the top-right buttons */
         .top-right-buttons a:hover {
             background-color: #0056b3;
         }
@@ -119,30 +119,38 @@
             border: 1px solid #f5c6cb;
         }
 
+        /* Footer styling */
+        footer {
+            width: 100%;
+            text-align: center;
+            padding: 15px 0;
+            background-color: #ffffff;
+            color: #777;
+            font-size: 14px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+
         /* Mobile responsiveness */
         @media (max-width: 768px) {
-            /* Adjust container padding for smaller screens */
             .container {
                 padding: 20px;
             }
 
-            /* Adjust form elements font size and padding for mobile screens */
             input[type="text"], input[type="number"], select, button {
                 font-size: 14px;
                 padding: 10px;
             }
 
-            /* Adjust button padding for mobile */
             button {
                 padding: 10px;
             }
 
-            /* Adjust main title font size for smaller screens */
             h1 {
                 font-size: 20px;
             }
 
-            /* Adjust top-right buttons for mobile */
             .top-right-buttons {
                 position: fixed;
                 top: 15px;
@@ -154,28 +162,29 @@
                 font-size: 14px;
                 padding: 8px 12px;
             }
+
+            footer {
+                font-size: 12px;
+                padding: 10px 0;
+            }
         }
 
         /* Extra small screen responsiveness */
         @media (max-width: 480px) {
-            /* Adjust the container for very small screens */
             .container {
                 padding: 15px;
                 width: 100%;
             }
 
-            /* Adjust form inputs and button sizes for smaller screens */
             input[type="text"], input[type="number"], select, button {
                 font-size: 12px;
                 padding: 8px;
             }
 
-            /* Adjust button size for smaller screens */
             button {
                 padding: 8px;
             }
 
-            /* Adjust title size further for smaller screens */
             h1 {
                 font-size: 18px;
             }
@@ -212,5 +221,10 @@
             {% endif %}
         </form>
     </div>
+
+    <footer>
+        <p>&copy; 2025 ZeroRiskTrader. All rights reserved.</p>
+        <p>Empowering Traders. Minimizing Risks.</p>
+    </footer>
 </body>
 </html>
