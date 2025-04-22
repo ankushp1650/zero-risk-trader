@@ -14,20 +14,24 @@ body {
     margin: 0;
     padding: 0;
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
+    flex-direction: column;
     min-height: 100vh;
     color: #444;
 }
 
+/* Main container */
 .container {
     background-color: #ffffff;
     padding: 40px;
+    padding-bottom: 100px; /* Space for footer */
     border-radius: 12px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
     max-width: 1100px;
     width: 90%;
-    position: relative;
+    margin: 40px auto 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
     transition: all 0.3s ease;
 }
 
@@ -35,6 +39,18 @@ body {
     box-shadow: 0 12px 36px rgba(0, 0, 0, 0.2);
 }
 
+/* Footer Styling */
+footer {
+    width: 100%;
+    text-align: center;
+    padding: 15px 0;
+    background-color: #ffffff;
+    color: #777;
+    font-size: 14px;
+    margin-top: auto;
+}
+
+/* Headings */
 h2 {
     color: #333;
     font-size: 26px;
@@ -58,6 +74,7 @@ h3 {
     border-radius: 2px;
 }
 
+/* Portfolio section */
 .cash-balance-sec {
     font-size: 20px;
     font-weight: bold;
@@ -80,16 +97,15 @@ h3 {
     margin-top: 20px;
 }
 
-/* Holdings table container */
+/* Holdings Table */
 .holdings-table {
     width: 100%;
     overflow-x: auto;
 }
 
-/* Table styling */
 .holdings-table table {
     width: 100%;
-    min-width: 600px; /* <-- important for scroll */
+    min-width: 600px;
     border-collapse: collapse;
     margin-top: 40px;
     font-size: 16px;
@@ -124,6 +140,7 @@ table td {
     font-size: 16px;
 }
 
+/* Top-right buttons */
 .top-right-buttons {
     display: flex;
     justify-content: center;
@@ -150,6 +167,7 @@ table td {
     background-color: #005bb5;
 }
 
+/* Graph section */
 #graph-section {
     margin-top: 20px;
     padding-top: 20px;
@@ -166,6 +184,7 @@ table td {
     overflow-x: auto;
 }
 
+/* Portfolio info grid */
 .portfolio-info {
     display: grid;
     grid-template-columns: auto auto;
@@ -226,7 +245,6 @@ a.btn:hover {
     }
 
     .top-right-buttons {
-        position: static;
         flex-direction: row;
         gap: 15px;
     }
@@ -369,7 +387,7 @@ img, svg, canvas, iframe {
     </div>
 
     <!-- Graphs Section -->
-    <div id="graph-section" class="table-container">
+    <div id="graph-section">
       <h2>Invested vs Current Value by all Stock</h2>
       {{ bar_graph_html|safe }}
 
@@ -378,7 +396,7 @@ img, svg, canvas, iframe {
       <h2>Percentage Change for Each Stock</h2>
       {{ line_graph_html|safe }}
 
-        <div class="header-line"></div>
+      <div class="header-line"></div>
 
       <h2>Profit & Loss across all Stocks</h2>
       {{ pnl_bar_chart_graph_html|safe }}
@@ -396,12 +414,14 @@ img, svg, canvas, iframe {
       <div class="centered-graph">
         {{ quantity_bar_graph_html|safe }}
       </div>
-
-      <div class="header-line"></div>
     </div>
-
   </div>
 </div>
+
+<footer>
+    <p>&copy; 2025 ZeroRiskTrader. All rights reserved.</p>
+    <p>Empowering Traders. Minimizing Risks.</p>
+</footer>
 
 </body>
 </html>

@@ -11,6 +11,9 @@
             padding: 0;
             font-family: Arial, sans-serif;
             background-color: #f8f9fa; /* Light grey background */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Ensure the body takes full height */
         }
 
         /* Container styling for centering content */
@@ -24,6 +27,7 @@
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
             box-sizing: border-box;
             position: relative;
+            flex: 1; /* Ensure it takes available space */
         }
 
         /* Main heading styling */
@@ -47,7 +51,7 @@
             padding: 10px 15px;
             font-size: 16px;
             color: white;
-            background-color: #007bff;
+            background-color: #007bff; /* Blue button */
             border-radius: 5px;
             text-decoration: none;
             display: inline-block;
@@ -80,7 +84,7 @@
         .dropdown-submit {
             padding: 10px 20px;
             font-size: 16px;
-            background-color: #007bff;
+            background-color: #007bff; /* Blue button */
             color: white;
             border: none;
             border-radius: 5px;
@@ -89,7 +93,7 @@
 
         /* Button hover effect */
         .dropdown-submit:hover {
-            background-color: #0056b3;
+            background-color: #0056b3; /* Darker blue on hover */
         }
 
         /* Disabled button styling */
@@ -139,6 +143,20 @@
                 font-size: 14px; /* Reduce font size for button */
             }
         }
+
+        /* Footer Styling */
+        footer {
+            background-color: #f8f9fa; /* Light grey */
+            color: #333; /* Dark text color */
+            text-align: center;
+            padding: 15px 0;
+            margin-top: auto; /* Push footer to the bottom */
+            font-size: 14px;
+        }
+
+        footer p {
+            margin: 0;
+        }
     </style>
 </head>
 <body>
@@ -167,6 +185,11 @@
             </form>
         </div>
     </div>
+
+    <footer>
+        <p>&copy; 2025 ZeroRiskTrader. All rights reserved.</p>
+        <p>Empowering Traders. Minimizing Risks.</p>
+    </footer>
 
     <script>
         // Get references to the dropdown and submit button

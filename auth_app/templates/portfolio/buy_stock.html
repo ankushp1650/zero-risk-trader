@@ -1,174 +1,198 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buy Stock</title>
-    <style>
-        /* Body styling */
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buy Stock</title>
+  <style>
+    /* Body styling */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      min-height: 100vh;
+      position: relative;
+    }
 
-        /* Main container styling */
-        .container {
-            background-color: white;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            max-width: 450px;
-            width: 100%;
-            box-sizing: border-box;
-            position: relative;
-        }
+    /* Main container styling */
+    .container {
+      background-color: white;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      max-width: 450px;
+      width: 100%;
+      box-sizing: border-box;
+      position: relative;
+      margin-top: 60px;
+    }
 
-        /* Main title */
-        h1 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 30px;
-            font-size: 24px;
-        }
+    /* Main title */
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 30px;
+      font-size: 24px;
+    }
 
-        /* Form styling */
-        form {
-            display: flex;
-            flex-direction: column;
-        }
+    /* Form styling */
+    form {
+      display: flex;
+      flex-direction: column;
+    }
 
-        /* Consistent input, dropdown, and button styling */
-        input[type="text"], input[type="number"], select, button {
-            padding: 12px;
-            font-size: 16px;
-            border: 2px solid #ccc;
-            border-radius: 5px;
-            width: 100%;
-            margin-bottom: 20px;
-            box-sizing: border-box;
-            transition: border-color 0.3s ease;
-        }
+    input[type="text"], input[type="number"], select, button {
+      padding: 12px;
+      font-size: 16px;
+      border: 2px solid #ccc;
+      border-radius: 5px;
+      width: 100%;
+      margin-bottom: 20px;
+      box-sizing: border-box;
+      transition: border-color 0.3s ease;
+    }
 
-        label {
-            margin-bottom: 5px;
-            color: #555;
-            font-weight: bold;
-        }
+    label {
+      margin-bottom: 5px;
+      color: #555;
+      font-weight: bold;
+    }
 
-        input[type="text"]:focus, input[type="number"]:focus, select:focus {
-            border-color: #007bff;
-            outline: none;
-        }
+    input[type="text"]:focus, input[type="number"]:focus, select:focus {
+      border-color: #007bff;
+      outline: none;
+    }
 
-        button {
-            background-color: #28a745;
-            color: white;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            margin-top: 10px;
-            padding: 12px;
-        }
+    button {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-top: 10px;
+      padding: 12px;
+    }
 
-        button:hover {
-            background-color: #218838;
-        }
+    button:hover {
+      background-color: #218838;
+    }
 
-        .top-right-buttons {
-            position: absolute;
-            top: 30px;
-            right: 400px;
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
+    .top-right-buttons {
+      position: absolute;
+      top: 30px;
+      right: 400px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
 
-        .top-right-buttons a {
-            padding: 10px 15px;
-            font-size: 16px;
-            color: white;
-            background-color: #007bff;
-            border-radius: 5px;
-            text-decoration: none;
-            white-space: nowrap;
-        }
+    .top-right-buttons a {
+      padding: 10px 15px;
+      font-size: 16px;
+      color: white;
+      background-color: #007bff;
+      border-radius: 5px;
+      text-decoration: none;
+      white-space: nowrap;
+    }
 
-        .top-right-buttons a:hover {
-            background-color: #0056b3;
-        }
+    .top-right-buttons a:hover {
+      background-color: #0056b3;
+    }
 
-        /* Error message styling */
-        p.error {
-            color: red;
-            font-size: 14px;
-            margin-top: 10px;
-            background-color: #f8d7da;
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #f5c6cb;
-        }
+    /* Error message styling */
+    p.error {
+      color: red;
+      font-size: 14px;
+      margin-top: 10px;
+      background-color: #f8d7da;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #f5c6cb;
+    }
 
-        /* Mobile Responsiveness */
-        @media (max-width: 500px) {
-            .container {
-                padding: 20px;
-                margin: 10px;
-            }
-            .top-right-buttons {
-                top: 5px;
-                right: 5px;
-                flex-direction: column;
-                align-items: flex-end;
-            }
-            .top-right-buttons a {
-                padding: 8px 12px;
-                font-size: 14px;
-            }
-            h1 {
-                font-size: 20px;
-            }
-            input[type="text"], input[type="number"], select, button {
-                font-size: 14px;
-                padding: 10px;
-            }
-        }
-    </style>
+    /* Footer styling */
+    footer {
+      width: 100%;
+      text-align: center;
+      padding: 15px 0;
+      background-color: #ffffff;
+      color: #777;
+      font-size: 14px;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+    }
+
+    /* Mobile Responsiveness */
+    @media (max-width: 500px) {
+      .container {
+        padding: 20px;
+        margin: 10px;
+      }
+      .top-right-buttons {
+        top: 5px;
+        right: 5px;
+        flex-direction: column;
+        align-items: flex-end;
+      }
+      .top-right-buttons a {
+        padding: 8px 12px;
+        font-size: 14px;
+      }
+      h1 {
+        font-size: 20px;
+      }
+      input[type="text"], input[type="number"], select, button {
+        font-size: 14px;
+        padding: 10px;
+      }
+      footer {
+        font-size: 12px;
+        padding: 10px 0;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="top-right-buttons">
-        <a href="{% url 'investment_view' %}" class="btn">Back to Investment</a>
-        <a href="{% url 'logout' %}" class="btn">Logout</a>
-    </div>
+  <div class="top-right-buttons">
+    <a href="{% url 'investment_view' %}" class="btn">Back to Investment</a>
+    <a href="{% url 'logout' %}" class="btn">Logout</a>
+  </div>
 
-    <div class="container">
-        <h1>Buy BSE Stock</h1>
-        <form method="POST">
-            {% csrf_token %}
-            <label for="stock_symbol">Select Stock Symbol:</label>
-            <select id="stock_symbol" name="stock_symbol" class="dropdown" required>
-                <option value="">-- Select a stock --</option>
-                <option value="RELIANCE.BSE">RELIANCE.BSE</option>
-                <option value="HDFCBANK.BSE">HDFCBANK.BSE</option>
-                <option value="TCS.BSE">TCS.BSE</option>
-                <option value="BHARTIARTL.BSE">BHARTIARTL.BSE</option>
-                <option value="ICICIBANK.BSE">ICICIBANK.BSE</option>
-            </select>
+  <div class="container">
+    <h1>Buy BSE Stock</h1>
+    <form method="POST">
+      {% csrf_token %}
+      <label for="stock_symbol">Select Stock Symbol:</label>
+      <select id="stock_symbol" name="stock_symbol" class="dropdown" required>
+        <option value="">-- Select a stock --</option>
+        <option value="RELIANCE.BSE">RELIANCE.BSE</option>
+        <option value="HDFCBANK.BSE">HDFCBANK.BSE</option>
+        <option value="TCS.BSE">TCS.BSE</option>
+        <option value="BHARTIARTL.BSE">BHARTIARTL.BSE</option>
+        <option value="ICICIBANK.BSE">ICICIBANK.BSE</option>
+      </select>
 
-            <label for="quantity">Quantity:</label>
-            <input type="number" id="quantity" name="quantity" min="1" required>
+      <label for="quantity">Quantity:</label>
+      <input type="number" id="quantity" name="quantity" min="1" required>
 
-            <button type="submit">Buy</button>
+      <button type="submit">Buy</button>
 
-            {% if error %}
-                <p class="error">{{ error }}</p>
-            {% endif %}
-        </form>
-    </div>
+      {% if error %}
+        <p class="error">{{ error }}</p>
+      {% endif %}
+    </form>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 ZeroRiskTrader. All rights reserved.</p>
+    <p>Empowering Traders. Minimizing Risks.</p>
+  </footer>
 </body>
 </html>

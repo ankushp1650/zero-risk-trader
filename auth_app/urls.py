@@ -2,13 +2,14 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
+    path('terms-and-conditions/', views.terms_and_conditions, name='terms_and_conditions'),
     path('aboutt/', views.aboutt, name='aboutt'),
     path('about/', views.about_us, name='aboutus'),
     path('register/', views.register_view, name='register'),
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
     path('dashboard/', views.dashboard_view, name='dashboard'),
-    path('register-alpha-vantage/', views.alpha_vantage_register, name='alpha_vantage_register'),
+    # path('register-alpha-vantage/', views.alpha_vantage_register, name='alpha_vantage_register'),
     # path('api_key_form/', api_key_form, name='api_key_form'),
     path('save-api-key/', views.save_api_key, name='save_api_key'),
     path('select_symbol/', views.symbol_selection_stock, name='select_symbol'),

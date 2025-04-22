@@ -1,74 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Email Verification</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            padding: 20px;
-            color: #333;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Email Verification - ZeroRiskTrader</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      padding: 20px;
+      color: #333;
+    }
 
-        .container {
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 600px;
-            margin: 0 auto;
-        }
+    .container {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      min-height: 500px;
+      justify-content: space-between;
+    }
 
-        h2 {
-            color: #333;
-            text-align: center;
-        }
+    h2 {
+      color: #333;
+      text-align: center;
+      margin-bottom: 20px;
+    }
 
-        p {
-            font-size: 16px;
-            line-height: 1.5;
-            color: #555;
-        }
+    p {
+      font-size: 16px;
+      line-height: 1.5;
+      color: #555;
+      margin-bottom: 15px;
+    }
 
-        a {
-            color: #007bff;
-            text-decoration: none;
-            font-weight: bold;
-        }
+    a {
+      color: #007bff;
+      text-decoration: none;
+      font-weight: bold;
+    }
 
-        a:hover {
-            text-decoration: underline;
-        }
+    a:hover {
+      text-decoration: underline;
+    }
 
-        .cta-button {
-            display: block;
-            background-color: #007bff;
-            color: #fff;
-            padding: 10px 20px;
-            text-align: center;
-            border-radius: 6px;
-            margin: 20px 0;
-            text-decoration: none;
-        }
+    .cta-button {
+      display: inline-block;
+      background-color: #007bff;
+      color: #fff;
+      padding: 12px 24px;
+      text-align: center;
+      border-radius: 6px;
+      margin: 20px 0;
+      text-decoration: none;
+      font-size: 16px;
+    }
 
-        .cta-button:hover {
-            background-color: #0056b3;
-        }
-    </style>
+    .cta-button:hover {
+      background-color: #0056b3;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 13px;
+      color: #777;
+      margin-top: 30px;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Email Verification</h2>
-        <p>Hello {{ user.username }},</p>
-        <p>Please click the link below to verify your email address and complete your registration:</p>
-        <p>
-            <a href="{{ link }}" class="cta-button">Verify your email address</a>
-        </p>
-        <p>Congratulations for registering! You will be credited 10 Lakhs once you verify your email.</p>
-        <p>If you didn't sign up for an account, you can ignore this email.</p>
+  <div class="container">
+    <div>
+      <h2>Verify Your Email Address</h2>
+      <p>Hi {{ user.username }},</p>
+      <p>Thank you for signing up with <strong>ZeroRiskTrader</strong>! Please click the button below to verify your email and activate your account:</p>
+      <p>
+        <a href="{{ link }}" class="cta-button">Verify Email</a>
+      </p>
+      <p>Once verified, you will receive <strong>₹10,00,000 virtual credits</strong> in your account to start your paper trading journey risk-free!</p>
+      <p>If you did not create an account with us, you can safely ignore this email.</p>
     </div>
+
+    <footer>
+      <p>&copy; 2025 ZeroRiskTrader. All rights reserved.</p>
+      <p>Empowering Traders. Minimizing Risks.</p>
+    </footer>
+  </div>
 </body>
 </html>

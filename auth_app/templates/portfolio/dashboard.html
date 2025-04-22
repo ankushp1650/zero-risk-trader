@@ -102,7 +102,18 @@
         a.btn:hover {
             background-color: #0056b3;
         }
-
+    /* Footer styling */
+    footer {
+      width: 100%;
+      text-align: center;
+      padding: 5px 0;
+      background-color: #ffffff;
+      color: #777;
+      font-size: 14px;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+    }
         /* Mobile Responsive */
         @media (max-width: 600px) {
             .page-title {
@@ -153,6 +164,10 @@
             <a href="{% url 'logout' %}" class="btn btn-primary btn-lg mb-3">Logout</a>
         </div>
     </div>
+  <footer>
+    <p>&copy; 2025 ZeroRiskTrader. All rights reserved.</p>
+    <p>Empowering Traders. Minimizing Risks.</p>
+  </footer>
 </body>
 </html>
 
