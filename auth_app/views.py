@@ -165,19 +165,19 @@ def register_view(request):
     return render(request, 'auth/register.html', {'form': form})
 
 
-def alpha_vantage_register(request):
-    if request.method == 'POST':
-        form = AlphaVantageRegistrationForm(request.POST)
-        if form.is_valid():
-            email = form.cleaned_data['email']
-            # Here, you would typically send a request to register the user
-            # But since Alpha Vantage requires manual registration, we simulate this
-            messages.success(request, 'Registration successful! Please check your email for the API key.')
-            # Redirect or render the same page with success message
-            return redirect('alpha_vantage_register')
-    else:
-        form = AlphaVantageRegistrationForm()
-    return render(request, 'auth/register_alpha_vantage.html', {'form': form})
+# def alpha_vantage_register(request):
+#     if request.method == 'POST':
+#         form = AlphaVantageRegistrationForm(request.POST)
+#         if form.is_valid():
+#             email = form.cleaned_data['email']
+#             # Here, you would typically send a request to register the user
+#             # But since Alpha Vantage requires manual registration, we simulate this
+#             messages.success(request, 'Registration successful! Please check your email for the API key.')
+#             # Redirect or render the same page with success message
+#             return redirect('alpha_vantage_register')
+#     else:
+#         form = AlphaVantageRegistrationForm()
+#     return render(request, 'auth/register_alpha_vantage.html', {'form': form})
 
 
 def send_verification_email(user, request):
@@ -318,7 +318,7 @@ def save_api_key(request):
             # to get all the data
             # jason_db(request)
             # fetch_and_store_stock_data(request)
-            fetch_and_save_user_data(request)
+            # fetch_and_save_user_data(request)
 
             return redirect('dashboard')  # Redirect to your dashboard
         else:
@@ -464,26 +464,6 @@ def stock_dataframe(request):
     }
 
     return render(request, 'stocks_analysis/stock_analysis.html', context)
-
-
-# def display_graph(request):
-#     # Generate the graph HTML
-#     stock_data = get_stock_file(request)
-#     # Check if stock_data is an HttpResponse (indicating an error was returned)
-#     if isinstance(stock_data, HttpResponse):
-#         # Return the error response directly
-#         return stock_data
-#     #
-#     #     # Unpack the returned data
-#     table1, table2 = stock_data
-#     #     # table1, table2 = get_stock_file(request)
-#     #
-#     graph_html = generate_graphs(table2)
-#
-#     # Pass the graph HTML to the template context
-#     context = {'graph_html': graph_html}
-#
-#     return render(request, 'stocks_analysis/display_graph.html', context)
 
 
 def investment_platform(request):
@@ -1103,5 +1083,10 @@ def fetch_and_store_stock_data(request):
 def about_us(request):
     return render(request, 'auth/aboutus.html')
 
+
 def aboutt(request):
     return render(request, 'auth/about.html')
+
+
+def terms_and_conditions(request):
+    return render(request, 'auth/termsandconditions.html')

@@ -1,0 +1,188 @@
+{% extends 'layouts/app.html' %}
+
+{% block content %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background: #f4f7fc;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: relative;  /* Make container relative for button positioning */
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: #007bff;
+        }
+
+        h2 {
+            font-size: 24px;
+            margin-top: 20px;
+            color: #0056b3;
+        }
+
+        p {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+
+        li {
+            font-size: 16px;
+            line-height: 1.8;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 14px;
+            color: #777;
+            margin-top: 30px;
+        }
+
+        footer a {
+            color: #007bff;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Styling for the 'Back to Login' button inside the container */
+        .top-right-buttons {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+        .top-right-buttons a {
+            padding: 10px 15px;
+            font-size: 16px;
+            color: white;
+            background-color: #007bff;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        .top-right-buttons a:hover {
+            background-color: #0056b3;
+        }
+
+        /* Responsive styling */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Back to Login Button -->
+        <div class="top-right-buttons">
+            <a href="{% url 'login' %}">Back to Login</a>
+        </div>
+
+        <h1>Terms and Conditions</h1>
+
+        <h2>1. Introduction</h2>
+        <p>Welcome to ZeroRiskTrader! By accessing or using our website and services (collectively referred to as "the Platform"), you agree to comply with these Terms and Conditions. If you do not agree with any part of these terms, please refrain from using our Platform.</p>
+
+        <h2>2. Acceptance of Terms</h2>
+        <p>By using the Platform, you acknowledge that you have read, understood, and agree to be bound by these Terms and Conditions, as well as any additional terms or policies referenced herein. We reserve the right to modify or update these Terms at any time, and such changes will be effective once posted on the Platform.</p>
+
+        <h2>3. User Registration</h2>
+        <p>In order to use certain features of the Platform, you may be required to register for an account. You agree to provide accurate and complete information during registration and to keep your account details updated. You are responsible for maintaining the confidentiality of your login credentials and agree to notify us immediately of any unauthorized use of your account.</p>
+
+        <h2>4. Use of the Platform</h2>
+        <p>You agree to use the Platform only for lawful purposes and in accordance with these Terms and applicable laws. Prohibited uses include, but are not limited to:</p>
+        <ul>
+            <li>Engaging in fraudulent activities.</li>
+            <li>Using the Platform for unlawful purposes.</li>
+            <li>Distributing harmful, offensive, or illegal content.</li>
+        </ul>
+
+        <h2>5. Risk Disclaimer</h2>
+        <p>ZeroRiskTrader is a paper trading platform designed for simulated trading. While we strive to provide realistic trading environments, the results and outcomes in real-life markets may differ significantly. By using the Platform, you acknowledge that any trades or transactions made are purely for educational or simulated purposes and carry no financial risk or real-world consequences.</p>
+
+        <h2>6. Use of Alpha Vantage API</h2>
+        <p>The ZeroRiskTrader platform utilizes the Alpha Vantage API to provide real-time and historical financial data.</p>
+        <p>By using the Platform, you acknowledge and agree to comply with the Alpha Vantage API Terms of Service <a href="https://www.alphavantage.co/terms_of_service/" target="_blank">[link to Alpha Vantage's terms]</a> and that any use of their data is subject to those terms.</p>
+        <p>ZeroRiskTrader is not responsible for any outages or issues related to the Alpha Vantage API. If you experience issues with the data, you should contact Alpha Vantage directly.</p>
+        <p>The financial data and any other information obtained via the Alpha Vantage API are provided for educational purposes only and should not be considered as financial or investment advice.</p>
+
+        <h2>7. Intellectual Property</h2>
+        <p>The content, software, graphics, and designs on the Platform are the property of ZeroRiskTrader or its licensors. You may not copy, distribute, or use any part of the Platform for commercial purposes without prior written permission from us.</p>
+
+        <h2>8. Privacy and Data Collection</h2>
+        <p>We are committed to protecting your privacy. For more information on how we collect, use, and protect your data, please refer to our Privacy Policy. By using the Platform, you consent to our data collection practices.</p>
+
+        <h2>9. Termination</h2>
+        <p>We may suspend or terminate your access to the Platform at any time, without notice, if we believe you have violated these Terms or engaged in inappropriate conduct.</p>
+
+        <h2>10. Disclaimers and Limitation of Liability</h2>
+        <p>The Platform is provided "as is" and without any warranties, express or implied. We do not guarantee that the Platform will be error-free or available at all times. You agree that we are not liable for any damages, losses, or other consequences arising from your use of the Platform, including any disruptions in service or loss of data.</p>
+
+        <h2>11. Governing Law</h2>
+        <p>These Terms and Conditions are governed by the laws of [Insert your country/state jurisdiction]. Any disputes arising out of or related to these Terms will be resolved in the courts of [Insert jurisdiction].</p>
+
+        <h2>12. Indemnification</h2>
+        <p>You agree to indemnify and hold ZeroRiskTrader, its affiliates, officers, and employees harmless from any claims, losses, or damages arising out of your use of the Platform, your violation of these Terms, or your infringement of any third-party rights.</p>
+
+        <h2>13. Contact Information</h2>
+        <p>If you have any questions or concerns about these Terms and Conditions, please contact us at:</p>
+        <p>Email: <a href="mailto:support@zerorisktrader.com">support@zerorisktrader.com</a></p>
+        <p>Phone: [Insert your contact number]</p>
+
+        <footer>
+            <p>&copy; 2025 ZeroRiskTrader. All rights reserved. </p>
+        </footer>
+    </div>
+</body>
+
+</html>
+
+{% endblock %}

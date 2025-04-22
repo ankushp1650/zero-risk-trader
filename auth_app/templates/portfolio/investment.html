@@ -13,8 +13,9 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
             flex-direction: column;
+            min-height: 100vh;
+            position: relative;
         }
 
         h1, h2 {
@@ -99,6 +100,18 @@
             color: #333;
         }
 
+        footer {
+            width: 100%;
+            text-align: center;
+            padding: 15px 0;
+            background-color: #ffffff;
+            color: #777;
+            font-size: 14px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+
         /* Mobile Responsive */
         @media (max-width: 600px) {
             body {
@@ -129,6 +142,11 @@
                 width: 100%;
                 max-width: 300px;
             }
+
+            footer {
+                font-size: 12px;
+                padding: 10px 0;
+            }
         }
     </style>
 </head>
@@ -137,6 +155,7 @@
         <a href="{% url 'dashboard' %}" class="btn">Home</a>
         <a href="{% url 'logout' %}" class="btn">Logout</a>
     </div>
+
     <h1 class="page-title">Welcome {{ request.user.username }} to the Investment Portfolio</h1>
 
     <div class="btn-container">
@@ -145,5 +164,10 @@
     <div class="btn-container">
         <a href="{% url 'buy_stock' %}" class="btn btn-buy btn-lg mb-3">Buy Stock</a>
     </div>
+
+    <footer>
+        <p>&copy; 2025 ZeroRiskTrader. All rights reserved.</p>
+        <p>Empowering Traders. Minimizing Risks.</p>
+    </footer>
 </body>
 </html>
