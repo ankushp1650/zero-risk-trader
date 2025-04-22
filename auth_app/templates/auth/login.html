@@ -1,12 +1,11 @@
 {% extends 'layouts/app.html' %}
 
 {% block content %}
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <title>Login - ZeroRiskTrader</title>
     <style>
         * {
             box-sizing: border-box;
@@ -80,80 +79,92 @@
             background-color: #0056b3;
         }
 
-        .login-container a {
-            margin-top: 12px;
+        .error-messages {
+            color: red;
+            margin-bottom: 10px;
+        }
+
+
+.agree-terms {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 5px;
+    gap: 20px; /* nice spacing between checkbox and text */
+    justify-content: flex-start; /* ensure they stay left */
+}
+
+.agree-terms input[type="checkbox"] {
+    margin: 0; /* remove weird margins */
+    width: 18px;
+    height: 18px;
+}
+
+
+
+        /* Side‑by‑side buttons */
+        .button-group {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+            margin-top: 15px;
+        }
+        .button-group a {
+            flex: 1;
             text-align: center;
-            display: block;
+        }
+
+        .login-container a.about {
+            margin-top: 15px;
+            text-align: center;
             color: #007bff;
             text-decoration: none;
             font-size: 14px;
         }
-
-        .login-container a:hover {
+        .login-container a.about:hover {
             text-decoration: underline;
         }
-        .error-messages {
-    color: red;
-    margin-bottom: 10px;
-}
 
+        footer {
+            text-align: center;
+            font-size: 14px;
+            color: #777;
+            margin-top: 30px;
+        }
 
         @media (max-width: 768px) {
-            body {
-                padding: 15px;
-            }
-
-            h2.page-title {
-                font-size: 24px;
-            }
-
+            body { padding: 15px; }
+            h2.page-title { font-size: 24px; }
             .login-container {
                 padding: 20px 10px;
                 border-radius: 15px;
             }
-
             .login-container input,
-            .login-container button {
-                font-size: 15px;
-                padding: 12px;
-            }
+            .login-container button { font-size: 15px; padding: 12px; }
         }
 
         @media (max-width: 480px) {
-            body {
-                padding: 10px;
-            }
-
-            h2.page-title {
-                font-size: 20px;
-            }
-
+            body { padding: 10px; }
+            h2.page-title { font-size: 20px; }
             .login-container {
                 padding: 15px 10px;
                 border-radius: 10px;
             }
-
             .login-container input,
-            .login-container button {
-                font-size: 14px;
-                padding: 10px;
-            }
-
-            .login-container a {
-                font-size: 12px;
-            }
+            .login-container button { font-size: 14px; padding: 10px; }
+            .button-group { flex-direction: column; }
+            .button-group a { margin: 5px 0; }
         }
     </style>
 </head>
 <body>
-    <h2 class="page-title">Your Virtual Platform for</h2>
-    <h2 class="page-title">Real-Time Trading Practice</h2>
+    <h2 class="page-title">Step into the Market with Confidence</h2>
+    <h2 class="page-title">ZeroRiskTrader's Virtual Platform</h2>
 
     <div class="login-container">
         <form method="POST">
             {% csrf_token %}
 
-            <!-- Show form errors here -->
             {% if form.errors %}
                 <div class="error-messages">
                     <ul>
@@ -172,17 +183,30 @@
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required>
 
+            <div class="agree-terms">
+
+              <label for="agree_terms">
+                  <input type="checkbox" id="agree_terms" name="agree_terms" required>
+                I agree to the <a href="{% url 'terms_and_conditions' %}">Terms and Conditions</a>
+              </label>
+            </div>
+
+
+
             <button type="submit">Login</button>
         </form>
 
-        <a href="{% url 'register' %}" class="btn btn-default">Create New Account</a>
-        <a href="{% url 'password_reset' %}" class="btn btn-default">Forgot Password?</a>
-        <a href="{% url 'aboutt' %}" class="btn btn-default">About Us</a>
+        <div class="button-group">
+            <a href="{% url 'register' %}">Create New Account</a>
+            <a href="{% url 'password_reset' %}">Forgot Password?</a>
+        </div>
 
+        <a href="{% url 'aboutt' %}" class="about">About Us</a>
 
+        <footer>
+            <p>&copy; 2025 ZeroRiskTrader. All rights reserved.</p>
+        </footer>
     </div>
 </body>
-
 </html>
-
 {% endblock %}

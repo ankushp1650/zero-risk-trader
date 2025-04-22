@@ -11,6 +11,9 @@
             padding: 0;
             font-family: Arial, sans-serif;
             background-color: #f5f7fa;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Ensure the body takes full height */
         }
 
         /* Container styling for centering content */
@@ -24,6 +27,7 @@
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
             position: relative;
             overflow: hidden;
+            flex: 1; /* Ensure it takes available space */
         }
 
         /* Main heading styling */
@@ -147,6 +151,20 @@
                 padding: 8px 15px; /* Adjust button padding */
             }
         }
+
+        /* Footer Styling */
+        footer {
+            background-color: #f8f9fa; /* Light grey */
+            color: #333; /* Dark text color */
+            text-align: center;
+            padding: 15px 0;
+            margin-top: auto; /* Push footer to the bottom */
+            font-size: 14px;
+        }
+
+        footer p {
+            margin: 0;
+        }
     </style>
 </head>
 <body>
@@ -183,5 +201,11 @@
             </div>
         </div>
     </div>
+
+    <footer>
+        <p>&copy; 2025 ZeroRiskTrader. All rights reserved.</p>
+        <p>Empowering Traders. Minimizing Risks.</p>
+    </footer>
+
 </body>
 </html>

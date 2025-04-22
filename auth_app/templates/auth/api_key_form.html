@@ -9,6 +9,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            flex-direction: column;
             height: 100vh;
         }
 
@@ -21,6 +22,7 @@
             width: 100%;
             max-width: 450px;
             text-align: left;
+            margin-bottom: 20px;
         }
 
         h2 {
@@ -86,9 +88,9 @@
 
         /* Style for the instructional text */
         p {
-            font-size: 15px; /* Increased the font size */
+            font-size: 15px;
             color: #666;
-            margin: 5px 0 10px; /* Reduced margin above and below */
+            margin: 5px 0 10px;
             line-height: 1.6;
         }
 
@@ -118,6 +120,14 @@
         /* Align messages to the left */
         .messages {
             text-align: left;
+        }
+
+        /* Footer styling */
+        footer {
+            text-align: center;
+            font-size: 14px;
+            color: #777;
+            padding: 10px 0;
         }
 
         /* Mobile Responsive Styles */
@@ -174,17 +184,17 @@
 
 <body>
     <div class="form-container">
-        <h2>Alpha Vintage API</h2>
+        <h2>Alpha Vantage API</h2>
         <form method="POST" action="{% url 'save_api_key' %}">
             {% csrf_token %}
 
             <p style="margin: 20px 0;">
-                <!-- Link to Alpha Vantage for getting an API key -->
                 <label for="get-api-key">
                     <a href="https://www.alphavantage.co/support/#api-key" target="_blank">
-                        Click here to get your API key
+                        Click here to create your free Alpha Vantage API key
                     </a>
-                </label>
+                </label><br>
+                Once you get your API key, simply copy it and paste it below to kickstart your exciting paper trading journey with <strong>ZeroRiskTrader</strong>!
             </p>
 
             <p>
@@ -195,7 +205,6 @@
 
             <p>Your API key should be 16 uppercase letters or numbers.</p>
 
-            <!-- Display messages if any -->
             {% if messages %}
                 <ul class="messages">
                     {% for message in messages %}
@@ -204,9 +213,12 @@
                 </ul>
             {% endif %}
 
-            <!-- Submit button for API key -->
             <button type="submit">Submit API Key</button>
-
         </form>
     </div>
+
+    <footer>
+        <p>&copy; 2025 ZeroRiskTrader. All rights reserved.</p>
+        <p>Empowering Traders. Minimizing Risks.</p>
+    </footer>
 </body>
