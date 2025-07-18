@@ -32,3 +32,15 @@
 ```bash
 git clone https://github.com/ankushp1650/zero-risk-trader.git
 cd zero-risk-trader
+### 2. Set Up Environment Variables
+Create a .env file in the root directory and configure the following:
+SECRET_KEY=your_django_secret_key
+DEBUG=True
+DB_NAME=your_database_name
+DB_USER=your_db_user
+DB_PASSWORD=your_db_password
+DB_HOST=your_db_host
+ALPHA_VANTAGE_API_KEY=your_api_key
+### 3. Build & Run with Docker
+docker-compose build
+docker-compose up
