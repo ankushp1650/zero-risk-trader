@@ -33,7 +33,7 @@
 ```bash
 git clone https://github.com/ankushp1650/zero-risk-trader.git
 cd zero-risk-trader
-
+````
 
 ### 2. Set Up Environment Variables
 
@@ -56,7 +56,7 @@ docker-compose build
 docker-compose up
 ```
 
-App will be live at: [http://localhost:8000](http://localhost:8000)
+> App will be live at: [http://localhost:8000](http://localhost:8000)
 
 ---
 
@@ -68,5 +68,4 @@ Run unit tests using:
 python manage.py test
 ```
 
----
 
