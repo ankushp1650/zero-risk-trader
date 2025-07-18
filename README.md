@@ -30,5 +30,5 @@
 
 ### 1. Clone Repository
 ```bash
-git clone https://github.com/yourusername/zerorisktrader.git
-cd zerorisktrader
+git clone https://github.com/ankushp1650/zero-risk-trader.git
+cd zero-risk-trader
