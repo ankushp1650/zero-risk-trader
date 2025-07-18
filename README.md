@@ -34,6 +34,7 @@
 git clone https://github.com/ankushp1650/zero-risk-trader.git
 cd zero-risk-trader
 
+
 ### 2. Set Up Environment Variables
 
 Create a `.env` file in the root directory and configure the following variables:
@@ -47,8 +48,6 @@ DB_PASSWORD=your_db_password
 DB_HOST=your_db_host
 ALPHA_VANTAGE_API_KEY=your_api_key
 ```
-
-> 💡 You can also refer to `.env.example` for a sample format.
 
 ### 3. Build & Run with Docker
 
