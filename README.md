@@ -71,19 +71,3 @@ python manage.py test
 
 ---
 
-## 📂 Project Structure
-
-```
-zero-risk-trader/
-│
-├── core/                # Django project settings
-├── trader/              # Main application logic
-├── templates/           # HTML templates for the frontend
-├── static/              # CSS and JS files
-├── Dockerfile           # Docker image definition
-├── docker-compose.yml   # Multi-container setup
-├── .env.example         # Sample environment variables
-├── requirements.txt     # Python dependencies
-└── README.md            # Project documentation
-```
-
