@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model Explainability</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f6f9;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1300px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .top-right-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .top-right-buttons a {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #ffffff;
+            background-color: #0056b3;
+            border-radius: 5px;
+            text-decoration: none;
+            text-align: center;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .top-right-buttons a:hover {
+            background-color: #004085;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            font-size: 36px;
+            margin-bottom: 30px;
+        }
+
+        h3 {
+            color: #2a3d66;
+            font-size: 28px;
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+
+        h4 {
+            color: #2a3d66;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .plot-row {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            gap: 20px;
+        }
+
+        .plot-box {
+            flex: 0 0 48%;
+        }
+
+        .plot-box img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: #fff;
+            font-size: 14px;
+            margin-top: auto;
+        }
+
+        footer p {
+            margin: 5px 0;
+        }
+
+        .header-line {
+            width: 100%;
+            height: 3px;
+            background-color: #007bff;
+            margin-top: 10px;
+            margin-bottom: 30px;
+            border-radius: 2px;
+        }
+
+        @media (max-width: 768px) {
+            .plot-row {
+                flex-direction: column;
+            }
+
+            .top-right-buttons {
+                flex-direction: column;
+                align-items: flex-end;
+            }
+
+            .top-right-buttons a {
+                font-size: 14px;
+                padding: 8px 15px;
+            }
+
+            h2 {
+                font-size: 28px;
+                margin-top: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="top-right-buttons">
+            <a href="{% url 'dashboard' %}">Home</a>
+            <a href="{% url 'platform' %}">Dashboard</a>
+            <a href="{% url 'recommendations' %}">Recommendations Page</a>
+            <a href="{% url 'logout' %}">Logout</a>
+        </div>
+
+        {% load custom_filters %}
+
+        <h2>Model Explainability</h2>
+        <div class="header-line"></div>
+
+        {% for stock in explainability_data %}
+            <h2>{{ stock.stock_name }} — Best Model: {{ stock.best_model_prediction }}</h2>
+
+            {% for model_key, img_path in stock.summary_imgs.items %}
+                <h3>{{ model_key }}</h3>
+                <div class="plot-row">
+                    <div class="plot-box">
+                        <h4>Summary Plot</h4>
+                        {% if img_path %}
+                            <img src="data:image/png;base64,{{ img_path }}" alt="SHAP Summary for {{ stock.stock_name }}">
+                        {% else %}
+                            <p>No SHAP summary available for {{ model_key }}.</p>
+                        {% endif %}
+                    </div>
+
+                    <div class="plot-box">
+                        <h4>Feature Importance Plot</h4>
+                        {% if stock.feature_imgs|get_item:model_key %}
+                            <img src="data:image/png;base64,{{ stock.feature_imgs|get_item:model_key }}" alt="Feature Importance for {{ stock.stock_name }}">
+                        {% else %}
+                            <p>No feature importance plot available for {{ model_key }}.</p>
+                        {% endif %}
+                    </div>
+                </div>
+                <hr>
+            {% endfor %}
+
+            {% if stock.best_model_prediction == "LSTM_Model" %}
+                <p><i><b>Note:</b> SHAP explainability is not available for LSTM models as it requires Deep SHAP with TensorFlow backend.</i></p>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <footer>
+        <p>&copy; 2025 ZeroRiskTrader. All rights reserved.</p>
+        <p>Empowering Traders. Minimizing Risks.</p>
+    </footer>
+
+</body>
+</html>

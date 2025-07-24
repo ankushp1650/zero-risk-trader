@@ -1,0 +1,433 @@
+{% extends 'layouts/app.html' %}
+
+{% block extra_css %}
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background-color: #e6ecf0;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    .container {
+        width: 90%;
+        max-width: 1600px;
+        margin: 40px auto;
+        padding: 20px 20px 40px;
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        flex: 1;
+        position: relative;
+    }
+
+    .top-right-buttons {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        position: absolute;
+        top: 20px;
+        right: 20px;
+    }
+
+    .top-right-buttons a {
+        padding: 10px 20px;
+        font-size: 16px;
+        color: #ffffff;
+        background-color: #0056b3;
+        border-radius: 5px;
+        text-decoration: none;
+        text-align: center;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .top-right-buttons a:hover {
+        background-color: #004085;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    h1 {
+        text-align: center;
+        margin-top: 80px;
+        margin-bottom: 30px;
+        font-size: 36px;
+        color: #2a3d66;
+    }
+
+    .recommendations-container {
+        background: linear-gradient(to right, #f5f7fa, #dbe9f4);
+        padding: 20px;
+        margin: 30px auto;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .recommendations-container ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .recommendations-container li {
+        background-color: #f0f4fb;
+        padding: 15px;
+        margin-bottom: 12px;
+        border-radius: 6px;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+    }
+
+    .recommendations-container li:hover {
+        background-color: #e4ebf5;
+        transform: translateY(-2px);
+    }
+
+    .recommendations-container strong {
+        font-size: 18px;
+        color: #1a237e;
+    }
+
+    .recommendation-details {
+        font-size: 14px;
+        color: #37474f;
+        margin-top: 5px;
+    }
+
+    .no-recommendations {
+        text-align: center;
+        color: #888;
+        font-size: 16px;
+        margin-top: 10px;
+    }
+
+    footer {
+        background-color: #f1f3f5;
+        color: #333;
+        text-align: center;
+        padding: 15px 0;
+        font-size: 14px;
+        border-top: 1px solid #ccc;
+    }
+
+    @media (max-width: 768px) {
+        .top-right-buttons {
+            flex-direction: column;
+            top: 10px;
+            right: 10px;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-top: 100px;
+        }
+
+        .top-right-buttons a {
+            font-size: 14px;
+            padding: 8px 15px;
+        }
+    }
+
+    .table-container {
+        overflow-x: auto;
+        margin-top: 20px;
+    }
+
+    .styled-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 16px;
+        background-color: #ffffff;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .styled-table th, .styled-table td {
+        padding: 12px 10px;
+        border: 1px solid #ccc;
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    .styled-table th {
+        background-color: #2a3d66;
+        color: #ffffff;
+        font-size: 15px;
+        font-weight: 600;
+        position: sticky;
+        top: 0;
+        z-index: 2;
+    }
+
+    .styled-table tbody tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    .styled-table tbody tr:nth-child(odd) {
+        background-color: #f1f6fc;
+    }
+
+    .styled-table tbody tr:hover {
+        background-color: #e2eefb;
+        transition: background-color 0.3s ease;
+    }
+
+    .model-explanation, .model-metrics-note, .filtered-models-note {
+        margin-top: 25px;
+        background-color: #f9fbfe;
+        border-left: 4px solid #2a3d66;
+        padding: 20px;
+        border-radius: 6px;
+        font-size: 15px;
+    }
+
+    .model-explanation h3, .model-metrics-note h3, .filtered-models-note h3 {
+        color: #2a3d66;
+        margin-bottom: 10px;
+    }
+
+    .model-explanation ul, .model-metrics-note ul, .filtered-models-note ul {
+        margin: 10px 0 0 20px;
+        padding-left: 10px;
+    }
+    .best-model-row {
+    background-color: #d1e7dd !important;  /* Light green */
+    font-weight: bold;
+}
+
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Top Recommendation Container -->
+<div class="container">
+    <div class="top-right-buttons">
+        <a href="{% url 'dashboard' %}">Home</a>
+        <a href="{% url 'platform' %}">Dashboard</a>
+        <a href="{% url 'logout' %}">Logout</a>
+        <a href="{% url 'stock_visualizations' %}">visualizations</a>
+    </div>
+
+    <h1>📈 Your Top Stock Recommendations</h1>
+    <p>These are the stocks you've historically traded most profitably based on past buy/sell performance.</p>
+    <div class="recommendations-container">
+        {% if recommendations %}
+            <ul>
+                {% for recommendation in recommendations %}
+                    <li>
+                        <strong>{{ recommendation.stock }}</strong>
+                        <div class="recommendation-details">
+                            Profit: {{ recommendation.profit_percent }}% <br>
+                            Success Rate: {{ recommendation.success_rate }}%
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="no-recommendations">No recommendations available at this time.</p>
+        {% endif %}
+    </div>
+</div>
+
+<!-- df1: Prediction Data Table -->
+<div class="container">
+    <h1>📊 Stock Data Prediction</h1>
+    {% if df1 %}
+        <div class="table-container">
+            <table class="styled-table">
+                <thead>
+                    <tr>
+                        <th>Stock Name</th>
+                        <th>Symbol</th>
+                        <th>Last Refreshed</th>
+                        <th>Date</th>
+                        <th>Low</th>
+                        <th>Open</th>
+                        <th>High</th>
+                        <th>Close</th>
+                        <th>Linear Model</th>
+                        <th>Decision Tree Model</th>
+                        <th>Random Forest Model</th>
+                        <th>SVM Model</th>
+                        <th>LSTM Model</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for entry in df1 %}
+                        <tr>
+                            <td>{{ entry.Stock_Name }}</td>
+                            <td>{{ entry.Symbol }}</td>
+                            <td>{{ entry.Last_Refreshed }}</td>
+                            <td>{{ entry.Date }}</td>
+                            <td>{{ entry.Low|floatformat:2 }}</td>
+                            <td>{{ entry.Open|floatformat:2 }}</td>
+                            <td>{{ entry.High|floatformat:2 }}</td>
+                            <td>{{ entry.Close|floatformat:2 }}</td>
+                            <td>{{ entry.Linear_Model|floatformat:2 }}</td>
+                            <td>{{ entry.Decision_Tree_Model|floatformat:2 }}</td>
+                            <td>{{ entry.Random_Forest_Model|floatformat:2 }}</td>
+                            <td>{{ entry.SVM_Model|floatformat:2 }}</td>
+                            <td>{{ entry.LSTM_Model|floatformat:2 }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="model-explanation">
+                <h3>Model Explanation</h3>
+                <p>The table above displays the stock predictions using five different machine learning models:</p>
+                <ul>
+                    <li><strong>Linear Model:</strong> Simple regression predicting based on linear patterns.</li>
+                    <li><strong>Decision Tree:</strong> Splits data into decision paths for prediction.</li>
+                    <li><strong>Random Forest:</strong> Uses multiple trees for robust prediction.</li>
+                    <li><strong>SVM:</strong> Classifies directional trends based on hyperplanes.</li>
+                    <li><strong>LSTM:</strong> Learns patterns over time for time-series forecasting.</li>
+                </ul>
+            </div>
+        </div>
+    {% else %}
+        <p class="no-recommendations">No stock data available.</p>
+    {% endif %}
+</div>
+
+<!-- df2: Model Performance Table -->
+<div class="container">
+    <h1>🚀 Stock Performance Based on Model Accuracy</h1>
+    {% if df2 %}
+        <div class="table-container">
+            <table class="styled-table">
+                <thead>
+                    <tr>
+                        <th>Stock</th>
+                        <th>Symbol</th>
+                        <th>Linear Error</th>
+                        <th>Linear Directional %</th>
+                        <th>Linear Success %</th>
+                        <th>Decision Tree Error</th>
+                        <th>Decision Tree Directional %</th>
+                        <th>Decision Tree Success %</th>
+                        <th>Random Forest Error</th>
+                        <th>Random Forest Directional %</th>
+                        <th>Random Forest Success %</th>
+                        <th>SVM Error</th>
+                        <th>SVM Directional %</th>
+                        <th>SVM Success %</th>
+                        <th>LSTM Error</th>
+                        <th>LSTM Directional %</th>
+                        <th>LSTM Success %</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for recommendation in df2 %}
+                        <tr>
+                            <td>{{ recommendation.stock_name }}</td>
+                            <td>{{ recommendation.symbol }}</td>
+                            <td>{{ recommendation.linear_model_avg_error|floatformat:2 }}</td>
+                            <td>{{ recommendation.linear_model_directional_success_rate|floatformat:2 }}</td>
+                            <td>{{ recommendation.linear_model_success_rate|floatformat:2 }}</td>
+                            <td>{{ recommendation.decision_tree_model_avg_error|floatformat:2 }}</td>
+                            <td>{{ recommendation.decision_tree_model_directional_success_rate|floatformat:2 }}</td>
+                            <td>{{ recommendation.decision_tree_model_success_rate|floatformat:2 }}</td>
+                            <td>{{ recommendation.random_forest_model_avg_error|floatformat:2 }}</td>
+                            <td>{{ recommendation.random_forest_model_directional_success_rate|floatformat:2 }}</td>
+                            <td>{{ recommendation.random_forest_model_success_rate|floatformat:2 }}</td>
+                            <td>{{ recommendation.svm_model_avg_error|floatformat:2 }}</td>
+                            <td>{{ recommendation.svm_model_directional_success_rate|floatformat:2 }}</td>
+                            <td>{{ recommendation.svm_model_success_rate|floatformat:2 }}</td>
+                            <td>{{ recommendation.lstm_model_avg_error|floatformat:2 }}</td>
+                            <td>{{ recommendation.lstm_model_directional_success_rate|floatformat:2 }}</td>
+                            <td>{{ recommendation.lstm_model_success_rate|floatformat:2 }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="model-metrics-note">
+                <h3>📘 Understanding the Metrics</h3>
+                <ul>
+                    <li><strong>Error:</strong> Difference between predicted and actual prices.</li>
+                    <li><strong>Directional %:</strong> Accuracy in predicting direction (up/down).</li>
+                    <li><strong>Success %:</strong> Overall accuracy of the model.</li>
+                </ul>
+            </div>
+        </div>
+    {% else %}
+        <p class="no-recommendations">No model performance data available.</p>
+    {% endif %}
+</div>
+
+<!-- df4: Filtered Best Model Records -->
+<div class="container">
+    <h1>🏆 Filtered Best Models</h1>
+    {% if df4 %}
+        <div class="table-container">
+            <table class="styled-table">
+                <thead>
+                    <tr>
+                        <th>Stock Name</th>
+                        <th>Model Name</th>
+                        <th>Success Rate</th>
+                        <th>Directional Success</th>
+                        <th>Avg Error</th>
+                        <th>Normalized Score</th>
+                        <th>Best Model?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in df4 %}
+                        <tr class="{% if item.best_model == 'Yes' %}best-model-row{% endif %}">
+
+                            <td>{{ item.stock_name }}</td>
+                            <td>{{ item.model_name }}</td>
+                            <td>{{ item.success_rate|floatformat:2 }}</td>
+                            <td>{{ item.directional_success_rate|floatformat:2 }}</td>
+                            <td>{{ item.average_error|floatformat:2 }}</td>
+                            <td>{{ item.normalized_models_score|floatformat:2 }}</td>
+                            <td>{{ item.best_model }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="filtered-models-note">
+                <h3>🔍 Explanation</h3>
+                <ul>
+                    <li><strong>Success Rate:</strong> Overall predictive accuracy.</li>
+                    <li><strong>Directional Success:</strong> Correct movement prediction accuracy.</li>
+                    <li><strong>Avg Error:</strong> Prediction deviation from actual.</li>
+                    <li><strong>Normalized Score:</strong> Composite metric across models.</li>
+                    <li><strong>Best Model?</strong> Marked as "Yes" if top-performing for the stock.</li>
+                </ul>
+            </div>
+        </div>
+    {% else %}
+        <p class="no-recommendations">No filtered model records available.</p>
+    {% endif %}
+</div>
+
+<!-- SHAP Explainability Button -->
+<!-- SHAP Explainability & Graphs Buttons -->
+<div class="container">
+    <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+        <a href="{% url 'explainability_data' %}"
+           style="padding: 12px 28px; background-color: #0056b3; color: white; text-decoration: none; border-radius: 8px; font-size: 17px; font-weight: 500; box-shadow: 0 3px 8px rgba(0,0,0,0.2); transition: background-color 0.3s ease;">
+            🔍 View Model Explainability
+        </a>
+        <a href="{% url 'stock_visualizations' %}"
+           style="padding: 12px 28px; background-color: #007b5e; color: white; text-decoration: none; border-radius: 8px; font-size: 17px; font-weight: 500; box-shadow: 0 3px 8px rgba(0,0,0,0.2); transition: background-color 0.3s ease;">
+            📊 Let's Dive into Graphs
+        </a>
+        <a href="{% url 'hyperparameter_training' %}"
+           style="padding: 12px 28px; background-color: #007b5e; color: white; text-decoration: none; border-radius: 8px; font-size: 17px; font-weight: 500; box-shadow: 0 3px 8px rgba(0,0,0,0.2); transition: background-color 0.3s ease;">
+            ⚙️ Train Your Own Model
+        </a>
+    </div>
+    <p style="margin-top: 15px; color: #444; font-size: 15px; text-align: center;">
+        asp SHAP visualizations and interactive stock graphs help you better understand prediction insights.
+    </p>
+</div>
+
+
+<footer>
+    <p>&copy; 2025 ZeroRiskTrader. All rights reserved.</p>
+    <p>Empowering Traders. Minimizing Risks.</p>
+</footer>
+{% endblock %}
