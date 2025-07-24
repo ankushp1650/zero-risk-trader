@@ -1,0 +1,390 @@
+{% extends 'layouts/app.html' %}
+
+{% block content %}
+<style>
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px;
+    background-color: #f4f6f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+    .top-right-buttons {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        justify-content: flex-end;
+        margin-bottom: 20px;
+    }
+
+    .top-right-buttons a {
+        padding: 10px 20px;
+        font-size: 16px;
+        color: #ffffff;
+        background-color: #0056b3;
+        border-radius: 5px;
+        text-decoration: none;
+        text-align: center;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .top-right-buttons a:hover {
+        background-color: #004085;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    }
+h2 {
+    text-align: center;
+    color: #333;
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+p {
+    text-align: center;
+    color: #555;
+    font-size: 1rem;
+    margin-bottom: 40px;
+}
+
+/* Grid Layout for 3x2 Sections */
+.model-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+/* Each Grid Box */
+.model-fieldset {
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #fff;
+}
+
+legend {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 0.95rem;
+    color: #555;
+}
+
+select, input {
+    width: 100%;
+    padding: 8px;
+    font-size: 0.95rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+/* Submit Button Inside Grid Box */
+.submit-btn {
+    padding: 14px 24px;
+    background-color: #3498db;
+    color: white;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    width: 100%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+.submit-btn:hover {
+    background-color: #2980b9;
+}
+
+/* Chart Display */
+.chart-container {
+    text-align: center;
+    margin-top: 40px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Footer */
+.footer {
+    color: white;
+    padding: 25px;
+    margin-top: 40px;
+    text-align: center;
+    background-color: transparent;
+}
+
+.footer-content p {
+    margin: 5px 0;
+    font-size: 1rem;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+footer .footer-content p:hover {
+    color: #3498db;
+    cursor: pointer;
+}
+
+/* Responsive Adjustments */
+@media screen and (max-width: 992px) {
+    .model-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media screen and (max-width: 600px) {
+    .model-grid {
+        grid-template-columns: 1fr;
+    }
+    .top-right-buttons {
+            flex-direction: column;
+            top: 10px;
+            right: 10px;
+        }
+
+        .top-right-buttons a {
+            font-size: 14px;
+            padding: 8px 15px;
+        }
+}
+</style>
+
+<div class="container">
+
+        <div class="top-right-buttons" style="justify-content: flex-end;">
+            <a href="{% url 'dashboard' %}">Home</a>
+            <a href="{% url 'platform' %}">Dashboard</a>
+            <a href="{% url 'recommendations' %}">Recommendations Page</a>
+            <a href="{% url 'logout' %}">Logout</a>
+    </div>
+
+    <h2>📊 Train Models with Custom Hyperparameters</h2>
+    <p>Adjust the model parameters below. Hover on labels to understand each setting.</p>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <!-- Grid with 6 Cells (3x2) -->
+        <div class="model-grid">
+
+            <!-- Stock Symbol -->
+            <fieldset class="model-fieldset">
+                <legend><strong>Select Stock</strong></legend>
+                <label for="id_symbol">Stock Symbol:</label>{{ form.stock_symbol }}
+            </fieldset>
+
+            <!-- Linear Regression -->
+            <fieldset class="model-fieldset">
+                <legend><strong>Linear Regression</strong></legend>
+                <label title="Whether to calculate the intercept.">Fit Intercept: {{ form.fit_intercept }}</label>
+                <label for="regularization_type">Regularization Type:</label> {{ form.regularization_type }}
+                <label for="alpha">Alpha (Only for Ridge/Lasso):</label>{{ form.alpha }}
+            </fieldset>
+
+            <!-- Decision Tree -->
+            <fieldset class="model-fieldset">
+                <legend><strong>Decision Tree</strong></legend>
+                <label title="Max depth of the tree.">Max Depth: {{ form.max_depth }}</label>
+                <label title="The minimum number of samples required to split an internal node.">min_samples_split: {{ form.min_samples_split }}</label>
+                <label title="Function to measure the quality of a split.">Criterion: {{ form.criterion }}</label>
+            </fieldset>
+
+            <!-- Random Forest -->
+            <fieldset class="model-fieldset">
+                <legend><strong>Random Forest</strong></legend>
+                <label title="The number of trees in the forest.">Number of Estimators: {{ form.n_estimators }}</label><br>
+                <label title="The maximum depth of each tree. Use 'None' for full depth.">Max Depth: {{ form.rf_max_depth }}</label><br>
+                <label title="The minimum number of samples required to split an internal node.">Min Samples Split: {{ form.min_samples_split_rf }}</label><br>
+                <label title="Function to measure the quality of a split.">Criterion: {{ form.criterion_rf }}</label><br>
+
+            </fieldset>
+
+            <!-- SVM -->
+            <fieldset class="model-fieldset">
+
+                <legend><strong>SVM</strong></legend>
+                <label title="Specifies the kernel type used in the algorithm.">Kernel: {{ form.kernel }}</label><br>
+                <label title="Regularization parameter. A lower value implies stronger regularization.">C: {{ form.C }}</label><br>
+                <label title="Epsilon in the epsilon-SVR model. No penalty is given within this epsilon margin.">Epsilon: {{ form.epsilon }}</label><br>
+                <label title="Kernel coefficient for 'rbf', 'poly' and 'sigmoid'.">Gamma: {{ form.gamma }}</label><br>
+                <label title="Independent term in kernel function (used for 'poly' and 'sigmoid' kernels).">Coef0: {{ form.coef0 }}</label><br>
+                <label title="Degree of the polynomial kernel function (used only when kernel is 'poly').">Degree: {{ form.degree }}</label><br>
+
+            </fieldset>
+
+            <!-- LSTM -->
+            <fieldset class="model-fieldset">
+                <legend><strong>LSTM (Deep Learning)</strong></legend>
+                <label title="Number of units in LSTM hidden layer.">LSTM Units: {{ form.lstm_units }}</label>
+                <label title="Number of training epochs.">Epochs: {{ form.epochs }}</label>
+                <label title="Number of samples in each training batch.">Batch Size: {{ form.batch_size }}</label>
+                <label title="Learning rate for training.">Learning Rate: {{ form.learning_rate }}</label>
+                <label title="Dropout rate for regularization.">Dropout Rate: {{ form.dropout }}</label>
+                <label title="Optimizer algorithm to use.">Optimizer: {{ form.optimizer }}</label>
+                <label title="Loss function for training.">Loss Function: {{ form.loss_function }}</label>
+                <label title="Activation function for output layer.">Activation Function: {{ form.activation_function }}</label>
+                <label title="Number of LSTM layers.">Number of Layers: {{ form.num_layers }}</label>
+            </fieldset>
+            <!-- Submit Button Cell -->
+            <fieldset class="model-fieldset">
+                <legend><strong>Train</strong></legend>
+                <button type="submit" class="submit-btn">🔁 Train Models</button>
+            </fieldset>
+
+        </div>
+
+        <!-- Chart Display -->
+        {% if chart_html %}
+            <hr>
+            <h3>📈 Linear Regression Model Predictions</h3>
+            <div class="chart-container">
+<!--                {{ chart_html|safe }}-->
+            <img src="data:image/png;base64,{{ chart_html }}" alt="Decision Tree Model Predictions">
+            </div>
+        {% endif %}
+         <!-- Chart Display -->
+        {% if dt_chart %}
+            <hr>
+            <h3>📈 Decision Tree Model Predictions</h3>
+            <div class="chart-container">
+<!--                {{ dt_chart|safe }}-->
+            <img src="data:image/png;base64,{{ dt_chart }}" alt="Decision Tree Model Predictions">
+            </div>
+        {% endif %}
+         <!-- Chart Display -->
+        {% if dt_importance_chart %}
+            <hr>
+            <div class="chart-container">
+<!--                {{ dt_importance_chart|safe }}-->
+            <img src="data:image/png;base64,{{ dt_importance_chart }}" alt="Decision Tree Model Predictions">
+            </div>
+        {% endif %}
+         <!-- Chart Display -->
+        {% if main_chart %}
+            <hr>
+            <h3>📈 Random Forest Model Predictions</h3>
+            <div class="chart-container">
+<!--                {{ main_chart|safe }}-->
+            <img src="data:image/png;base64,{{ main_chart }}" alt="Random Forest Model Predictions">
+            </div>
+        {% endif %}
+         <!-- Chart Display -->
+        {% if importance_chart %}
+            <hr>
+            <div class="chart-container">
+<!--               {{ importance_chart|safe }}-->
+            <img src="data:image/png;base64,{{ importance_chart }}" alt="Random Forest Model Predictions">
+            </div>
+        {% endif %}
+         <!-- Chart Display -->
+        {% if main_chart_svm %}
+            <hr>
+            <h3>📈 SVM Model Predictions</h3>
+            <div class="chart-container">
+<!--                {{ main_chart_svm|safe }}-->
+            <img src="data:image/png;base64,{{ main_chart_svm }}" alt="SVM Model Predictions">
+            </div>
+
+        {% endif %}
+         <!-- Chart Display -->
+        {% if importance_chart_svm %}
+            <hr>
+            <div class="chart-container">
+<!--                {{ importance_chart_svm|safe }}-->
+                <img src="data:image/png;base64,{{ importance_chart_svm }}" alt="SVM Model Predictions">
+
+            </div>
+        {% endif %}
+
+          <!-- Chart Display -->
+        {% if main_chart_lstm %}
+            <hr>
+            <div class="chart-container">
+<!--                {{ main_chart_lstm|safe }}-->
+                <img src="data:image/png;base64,{{ main_chart_lstm }}" alt="LSTM Model Predictions">
+
+            </div>
+        {% endif %}
+<h3>Latest Record</h3>
+<table>
+  <thead>
+    <tr>
+      {% for key in latest_record.keys %}
+        <th>{{ key }}</th>
+      {% endfor %}
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      {% for value in latest_record.values %}
+        <td>{{ value }}</td>
+      {% endfor %}
+    </tr>
+  </tbody>
+</table>
+
+        <hr>
+<h2>📋 Model Performance Summary</h2>
+
+<table style="width:100%; border-collapse: collapse; margin-top: 20px;">
+  <thead>
+    <tr style="background-color: #0056b3; color: white;">
+      <th style="padding: 8px; border: 1px solid #ddd;">Stock</th>
+      <th style="padding: 8px; border: 1px solid #ddd;">Model</th>
+      <th style="padding: 8px; border: 1px solid #ddd;">Date</th>
+      <th style="padding: 8px; border: 1px solid #ddd;">Actual Close</th>
+      <th style="padding: 8px; border: 1px solid #ddd;">Predicted Close</th>
+      <th style="padding: 8px; border: 1px solid #ddd;">R2</th>
+      <th style="padding: 8px; border: 1px solid #ddd;">MSE</th>
+      <th style="padding: 8px; border: 1px solid #ddd;">RMSE</th>
+      <th style="padding: 8px; border: 1px solid #ddd;">Success Rate</th>
+      <th style="padding: 8px; border: 1px solid #ddd;">Directional Success</th>
+      <th style="padding: 8px; border: 1px solid #ddd;">Avg Error</th>
+      <th style="padding: 8px; border: 1px solid #ddd;">Normalized Score</th>
+      <th style="padding: 8px; border: 1px solid #ddd;">Best Model</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for row in summary_df %}
+    <tr style="{% if row.Best_Model == 'Yes' %}background-color: #d4edda; font-weight: bold;{% endif %}">
+      <td style="padding: 8px; border: 1px solid #ddd;">{{ row.Stock }}</td>
+      <td style="padding: 8px; border: 1px solid #ddd;">{{ row.Model }}</td>
+      <td style="padding: 8px; border: 1px solid #ddd;">{{ row.Index }}</td>
+      <td style="padding: 8px; border: 1px solid #ddd;">{{ row.Actual_Close }}</td>
+      <td style="padding: 8px; border: 1px solid #ddd;">{{ row.Predicted_Close }}</td>
+      <td style="padding: 8px; border: 1px solid #ddd;">{{ row.R2 }}</td>
+      <td style="padding: 8px; border: 1px solid #ddd;">{{ row.MSE }}</td>
+      <td style="padding: 8px; border: 1px solid #ddd;">{{ row.RMSE }}</td>
+      <td style="padding: 8px; border: 1px solid #ddd;">{{ row.Success_Rate }}</td>
+      <td style="padding: 8px; border: 1px solid #ddd;">{{ row.Directional_Success }}</td>
+      <td style="padding: 8px; border: 1px solid #ddd;">{{ row.Avg_Error }}</td>
+      <td style="padding: 8px; border: 1px solid #ddd;">{{ row.Normalized_Score }}</td>
+      <td style="padding: 8px; border: 1px solid #ddd;">{{ row.Best_Model }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+    </form>
+</div>
+
+<footer class="footer">
+    <div class="footer-content">
+        <p>&copy; 2025 ZeroRiskTrader. All rights reserved.</p>
+        <p>Empowering Traders. Minimizing Risks.</p>
+    </div>
+</footer>
+
+{% endblock %}

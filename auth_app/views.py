@@ -1,21 +1,29 @@
-from datetime import datetime
+from datetime import datetime, date
 from decimal import Decimal
 import pandas as pd
+from django.utils.timezone import now
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
-from django.db.models import Max, Sum
+from django.db.models import Max, Sum, OuterRef
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout
 from auth_project.settings import EMAIL_HOST_USER
+from .aiml.prediction_models import train_linear_model, predict_next_day, train_decision_tree_model, \
+    train_random_forest_model, train_svm_model, predict_next_day_svm, train_lstm_model, predict_next_day_lstm, \
+    save_lstm_to_db, load_lstm_from_db, calculate_model_scores, calculate_success_rate, \
+    calculate_directional_success_rate, calculate_avg_error
+from .custom_utils.explainability import generate_model_explainability
 from .custom_utils.fetching import get_daily_time_series
 from .custom_utils.graphs import generate_graphs, bar_chart_view, pie_chart_view, line_chart_view, quantity_bar_graph, \
     pnl_bar_chart_view
 from .forms import RegisterForm
-from .middlewares import auth, guest
-from .models import Portfolio, Transaction, UserProfile, Final_holding, StockJason, CurrentPrice
+from .models import Portfolio, Transaction, UserProfile, Final_holding, StockJason, CurrentPrice, StockPrediction, \
+    StockPerformance, BestModelRecord \
+    # , StockPrediction, \
+# BestStockRecommendation
 from django.contrib.auth import login
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.utils.encoding import force_bytes, force_str
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
@@ -23,7 +31,6 @@ from django.urls import reverse, reverse_lazy
 from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, \
     PasswordResetCompleteView
 from django.contrib.auth import get_user_model
-from .forms import AlphaVantageRegistrationForm
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django.conf import settings
@@ -35,12 +42,17 @@ from django.shortcuts import redirect
 from django.contrib.auth.models import User
 from django.http import HttpResponseBadRequest
 from django.shortcuts import render
+from .models import UserTrade
+from .utils import recommend_stocks_total_based, transfer_transactions_to_user_trade, parse_iso_datetime
 
 import logging
+import warnings
 
+warnings.filterwarnings("ignore")
 logger = logging.getLogger(__name__)
 
 User = get_user_model()  # Get the user model in case you're using a custom user model
+
 
 # @guest
 # def login_view(request):
@@ -56,43 +68,12 @@ User = get_user_model()  # Get the user model in case you're using a custom user
 #     return render(request, 'auth/login.html', {'form': form})
 
 
-# def login_view(request):
-#     if request.method == 'POST':
-#
-#         form = AuthenticationForm(request, data=request.POST)
-#         if form.is_valid():
-#             user = form.get_user()
-#             print(f"✅ User '{user.username}' logged in Successfully ")
-#
-#             login(request, user)
-#
-#             # 👇 Check if API key exists in UserProfile
-#             try:
-#                 user_profile = UserProfile.objects.get(user=user)
-#                 if user_profile.api_key:
-#                     print("🔑 API Key found. Redirecting to dashboard.")
-#                     return redirect('dashboard')
-#             except UserProfile.DoesNotExist:
-#                 pass
-#
-#             # API key missing → redirect to save_api_key
-#             print("🚫 No API Key. Redirecting to Save API Key form.")
-#             return redirect('save_api_key')
-#
-#         else:
-#             print("❌ Invalid credentials")
-#             messages.error(request, "Invalid username or password.")
-#
-#     else:
-#         form = AuthenticationForm()
-#         print("Authentication failed")
-#     return render(request, 'auth/login.html', {'form': form})
-
-from django.utils.timezone import now
-from .models import UserProfile
-
-
 def login_view(request):
+    print("Login view triggered!")
+    if request.user.is_authenticated:
+        print("👤 User already authenticated, redirecting to dashboard.")
+        return redirect('dashboard')
+
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
@@ -136,7 +117,6 @@ def login_view(request):
 
     else:
         form = AuthenticationForm()
-        print("Authentication failed")
 
     return render(request, 'auth/login.html', {'form': form})
 
@@ -163,21 +143,6 @@ def register_view(request):
         form = RegisterForm()
 
     return render(request, 'auth/register.html', {'form': form})
-
-
-# def alpha_vantage_register(request):
-#     if request.method == 'POST':
-#         form = AlphaVantageRegistrationForm(request.POST)
-#         if form.is_valid():
-#             email = form.cleaned_data['email']
-#             # Here, you would typically send a request to register the user
-#             # But since Alpha Vantage requires manual registration, we simulate this
-#             messages.success(request, 'Registration successful! Please check your email for the API key.')
-#             # Redirect or render the same page with success message
-#             return redirect('alpha_vantage_register')
-#     else:
-#         form = AlphaVantageRegistrationForm()
-#     return render(request, 'auth/register_alpha_vantage.html', {'form': form})
 
 
 def send_verification_email(user, request):
@@ -302,12 +267,16 @@ def fetch_and_save_user_data(request):
         print(f"❌ Error while fetching/saving data: {e}")
 
 
+@login_required
 def save_api_key(request):
     if request.method == 'POST':
         api_key = request.POST.get('api_key')
 
         if api_key:
             user_profile, created = UserProfile.objects.get_or_create(user=request.user)
+            # Debugging: Print to check the UserProfile before saving the API key
+            print(f"UserProfile before saving API key: {user_profile.api_key}")
+
             user_profile.api_key = api_key
             user_profile.save()
 
@@ -362,7 +331,7 @@ def symbol_selection_news(request):
     return render(request, 'stocks_analysis/select_symbol_news.html')
 
 
-@auth
+@login_required
 def dashboard_view(request):
     Portfolio.objects.get_or_create(user=request.user)
     return render(request, 'portfolio/dashboard.html')
@@ -429,26 +398,6 @@ def get_stock_file(request):
         raise ValueError(f"Unknown stock symbol: {symbol}")
 
 
-# def stock_dataframe(request):
-#     # Get the data and generate the HTML components
-#     table1, table2 = get_stock_file(request)
-#     graph_html = generate_graphs(table2)
-#     df_html1 = table1.to_html(classes='table table-striped')
-#     df_html2 = table2.to_html(classes='table table-striped')
-#
-#     # Check if we are in 'graph' view mode
-#     view_mode = request.GET.get('view', 'full')  # Default to 'full' view
-#
-#     context = {
-#         'df1_html': df_html1,
-#         'df2_html': df_html2,
-#         'graph_html': graph_html,
-#         'view_mode': view_mode,
-#     }
-#
-#     return render(request, 'stocks_analysis/stock_analysis.html', context)
-
-
 def stock_dataframe(request):
     table1, table2 = get_stock_file(request)
     # table2.drop(columns=['SMA20', 'SMA50', 'Volume_MA'], inplace=True)
@@ -470,75 +419,51 @@ def investment_platform(request):
     return render(request, 'portfolio/investment.html')
 
 
-def lets_get_started(request):
-    return render(request, 'portfolio/dashboard.html')
-
-
 @login_required
 def buy_stock(request):
     try:
-        # Get the user's portfolio
         portfolio = Portfolio.objects.get(user=request.user)
-
-        # Available margin (cash balance)
         available_margin = portfolio.cash_balance
-
-        # Get all BUY transactions for the user
         transactions = Transaction.objects.filter(user=request.user, transaction_type='BUY')
-
-        # Calculate Invested Margin (sum of all BUY transaction costs)
         invested_margin = sum(tx.cost for tx in transactions)
-
-        # Calculate the current value of all stocks in the user's portfolio
         current_value = Decimal('0.0')
+
         for tx in transactions:
             try:
-
                 table1, table2 = get_stock_file(request)
-
-                # Get the latest closing price
                 current_stock_price_str = table2['Close'].values[0]
                 current_stock_price = Decimal(current_stock_price_str)
-
-                # Calculate the current value for this stock (quantity * current price)
                 current_value += current_stock_price * tx.quantity
-
             except (ValueError, TypeError, IndexError):
-                # Handle any issues with fetching or parsing stock price data
                 return render(request, 'portfolio/buy_stock.html')
 
-                # Calculate the P&L (Profit and Loss)
         pnl = current_value - invested_margin
 
         if request.method == 'POST':
-            # Get stock symbol and quantity from the form
-            stock_symbol = request.POST.get('stock_symbol', 'TCS.BSE')
-            quantity = int(request.POST.get('quantity', 0))  # Get the quantity to buy
+            stock_symbol = request.POST.get('stock_symbol', '')
+            quantity = int(request.POST.get('quantity', 0))
+
+            if not stock_symbol or quantity <= 0:
+                return render(request, 'portfolio/buy_stock.html',
+                              {'error': 'Please select a valid stock and quantity.'})
 
             try:
-
                 table1, table2 = get_stock_file(request)
                 stock_price_str = table2['Close'].values[0]
                 stock_price = Decimal(stock_price_str)
-
             except (ValueError, TypeError, IndexError):
-                # Handle any issues with fetching or converting the stock price
                 return render(request, 'portfolio/buy_stock.html', {'error': 'Invalid stock price data.'})
 
-            # Calculate the total cost of the stock purchase
             cost = stock_price * quantity
 
             if portfolio.cash_balance >= cost:
-                # Update portfolio's cash balance and other fields
                 portfolio.cash_balance -= cost
                 portfolio.invested_margin = invested_margin + cost
-                portfolio.available_margin = portfolio.cash_balance  # Update available margin after purchase
-                portfolio.current_value = current_value + (
-                        stock_price * quantity)  # Update current value after purchase
-                portfolio.pnl = portfolio.current_value - portfolio.invested_margin  # Recalculate P&L
+                portfolio.available_margin = portfolio.cash_balance
+                portfolio.current_value = current_value + (stock_price * quantity)
+                portfolio.pnl = portfolio.current_value - portfolio.invested_margin
                 portfolio.save()
 
-                # Record the transaction
                 Transaction.objects.create(
                     user=request.user,
                     stock=stock_symbol,
@@ -547,26 +472,29 @@ def buy_stock(request):
                     cost=cost,
                     price_at_transaction=stock_price
                 )
+                messages.success(request, 'Stock purchased successfully! 🎉')
+                # Instead of redirect, just send a success flag
+                return render(request, 'portfolio/buy_stock.html', {
+                    'success': True,
+                    'available_margin': portfolio.cash_balance,
+                    'invested_margin': portfolio.invested_margin,
+                    'current_value': portfolio.current_value,
+                    'pnl': portfolio.pnl
+                })
 
-                return redirect('platform')
             else:
-                # Insufficient balance to make the purchase
                 return render(request, 'portfolio/buy_stock.html', {'error': 'Insufficient funds.'})
 
         context = {
             'available_margin': available_margin,
             'invested_margin': invested_margin,
-            'current_value': current_value,  # Display the current portfolio value
-            'pnl': pnl,  # Display the updated P&L
+            'current_value': current_value,
+            'pnl': pnl,
         }
-
         return render(request, 'portfolio/buy_stock.html', context)
 
     except Portfolio.DoesNotExist:
         return render(request, 'portfolio/buy_stock.html', {'error': 'Portfolio does not exist.'})
-
-
-# Assume this is the helper to retrieve stock data
 
 
 def update_holdings_after_sell(user, stock_symbol, quantity_sold, sale_price):
@@ -836,34 +764,6 @@ def transaction_history_view(request):
     return render(request, 'stocks_analysis/transaction_history.html', context)
 
 
-# def save_json_to_file(json_data, filename, directory='C:/Users/Ankush/PycharmProjects/Django/auth_app/files'):
-#     # Ensure the directory exists
-#     if not os.path.exists(directory):
-#         os.makedirs(directory)
-#
-#     # Create the full file path
-#     file_path = os.path.join(directory, filename)
-#
-#     # Save json_data to a file
-#     with open(file_path, 'w') as json_file:
-#         json.dump(json_data, json_file, indent=4)
-#
-#     print(f"Data saved to {file_path}")
-
-
-# def load_json_from_file(filename, directory='C:/Users/Ankush/PycharmProjects/Django/auth_app/files'):
-#     # Create the full file path
-#     file_path = os.path.join(directory, filename)
-#
-#     # Load the JSON data from the file
-#     with open(file_path, 'r') as json_file:
-#         json_data = json.load(json_file)
-#
-#     print(f"Data loaded from {file_path}")
-#     return json_data
-
-
-# Assuming the JSON file path is given, and you want to handle this in a view
 @login_required
 def jason_db(request):
     function = ["TIME_SERIES_DAILY"]
@@ -938,6 +838,8 @@ def fetch_jason_db_data(request):
 
 
 def df_columns(df):
+    if df is None:
+        raise ValueError("Received None as DataFrame")
     df.index.name = 'Date'
     df.columns = df.columns.str.replace(r'^\d+\.\s*', '', regex=True).str.strip()
     df.columns = [col.capitalize() for col in df.columns]
@@ -947,6 +849,8 @@ def df_columns(df):
 
 
 def meta_df_columns(df):
+    if df is None:
+        raise ValueError("Received None as DataFrame")
     df.index.name = 'Parameters'
     df.rename(columns={0: 'Meta data'}, inplace=True)
     # Check if the 'Parameters' column already exists
@@ -960,7 +864,7 @@ def meta_df_columns(df):
     df.index = df.index + 1
     df_transposed = df.set_index('Parameters').T
     df_transposed.reset_index(drop=True)
-
+    df_transposed = df_transposed.reset_index(drop=True)  # ← important fix
     return df_transposed
 
 
@@ -1066,7 +970,6 @@ def store_stock_data(request, stock_name, stock_df):
                 volume=first_row['Volume']
             )
             stock_record.save()
-            # print(f"Created a new record for {stock_name} on {first_row['Date']}")
             return stock_record
 
 
@@ -1090,3 +993,594 @@ def aboutt(request):
 
 def terms_and_conditions(request):
     return render(request, 'auth/termsandconditions.html')
+
+
+@login_required
+def recommendations_view(request):
+    transfer_transactions_to_user_trade()
+    user_trades = UserTrade.objects.filter(user=request.user)
+    df1, df2, df3, df4_unused = predict_df(request)  # df4 will be derived from DB instead
+
+    def safe_float(val):
+        return None if pd.isna(val) or val == '' else float(val)
+
+    # Save df1 to StockPrediction
+    for entry in df1.to_dict(orient='records'):
+        StockPrediction.objects.create(
+            user=request.user,
+            stock_name=entry['Stock_Name'],
+            symbol=entry['Symbol'],
+            last_refreshed=pd.to_datetime(entry['Last_Refreshed']).date(),
+            date=pd.to_datetime(entry['Date']).date(),
+            low=safe_float(entry['Low']),
+            open=safe_float(entry['Open']),
+            high=safe_float(entry['High']),
+            close=safe_float(entry['Close']),
+            linear_model=safe_float(entry['Linear_Model']),
+            lstm_model=safe_float(entry['LSTM_Model']),
+            decision_tree_model=safe_float(entry['Decision_Tree_Model']),
+            random_forest_model=safe_float(entry['Random_Forest_Model']),
+            svm_model=safe_float(entry['SVM_Model'])
+        )
+
+    # Save df2 to StockPerformance
+    for entry in df2.to_dict(orient='records'):
+        StockPerformance.objects.create(
+            user=request.user,
+            stock_name=entry['Stock_Name'],
+            symbol=entry['Symbol'],
+            linear_model_success_rate=safe_float(entry['Linear_Model_Success_Rate']),
+            linear_model_directional_success_rate=safe_float(entry['Linear_Model_Directional_Success_Rate']),
+            linear_model_avg_error=safe_float(entry['Linear_Model_Avg_Error']),
+            decision_tree_model_success_rate=safe_float(entry['Decision_Tree_Model_Success_Rate']),
+            decision_tree_model_directional_success_rate=safe_float(
+                entry['Decision_Tree_Model_Directional_Success_Rate']),
+            decision_tree_model_avg_error=safe_float(entry['Decision_Tree_Model_Avg_Error']),
+            random_forest_model_success_rate=safe_float(entry['Random_Forest_Model_Success_Rate']),
+            random_forest_model_directional_success_rate=safe_float(
+                entry['Random_Forest_Model_Directional_Success_Rate']),
+            random_forest_model_avg_error=safe_float(entry['Random_Forest_Model_Avg_Error']),
+            svm_model_success_rate=safe_float(entry['SVM_Model_Success_Rate']),
+            svm_model_directional_success_rate=safe_float(entry['SVM_Model_Directional_Success_Rate']),
+            svm_model_avg_error=safe_float(entry['SVM_Model_Avg_Error']),
+            lstm_model_success_rate=safe_float(entry['LSTM_Model_Success_Rate']),
+            lstm_model_directional_success_rate=safe_float(entry['LSTM_Model_Directional_Success_Rate']),
+            lstm_model_avg_error=safe_float(entry['LSTM_Model_Avg_Error']),
+        )
+
+    # Save df3 to BestModelRecord
+    for entry in df3.to_dict(orient='records'):
+        BestModelRecord.objects.create(
+            user=request.user,
+            stock_name=entry['Stock_Name'],
+            model_name=entry['Model'],
+            success_rate=safe_float(entry['Success_Rate']),
+            directional_success_rate=safe_float(entry['Directional_Success_Rate']),
+            average_error=safe_float(entry['Average_Error']),
+            normalized_models_score=safe_float(entry['Normalized_Models_Score']),
+            best_model=entry['Best_Model']
+        )
+    stock_performance_qs = StockPerformance.objects.filter(user=request.user).order_by('-created')[:5]
+    df2 = pd.DataFrame(list(stock_performance_qs.values()))
+    # Retrieve df4 from database using filter on BestModelRecord
+    best_model_qs = BestModelRecord.objects.filter(user=request.user).order_by('-created')[:25]
+    df4 = pd.DataFrame(list(best_model_qs.values()))
+
+    # Get recommendations
+    recommendations = recommend_stocks_total_based(user_trades) if user_trades.exists() else []
+
+    return render(request, 'recommendations/recommendations.html', {
+        'recommendations': recommendations,
+        'df1': df1.to_dict(orient='records'),
+        'df2': df2.to_dict(orient='records'),
+        'df3': df3.to_dict(orient='records'),
+        'df4': df4.to_dict(orient='records'),
+    })
+
+
+def model_explainability_view(request):
+    (bhartiartl_df, bhartiartl_meta_df,
+     icicibank_df, icicibank_meta_df,
+     reliance_df, reliance_meta_df,
+     tcs_df, tcs_meta_df,
+     hdfcbank_df, hdfcbank_meta_df) = fetch_and_store_stock_data(request)
+
+    stock_data_dict = {
+        'Bharti Airtel': bhartiartl_df,
+        'ICICI Bank': icicibank_df,
+        'Reliance': reliance_df,
+        'TCS': tcs_df,
+        'HDFC Bank': hdfcbank_df,
+    }
+
+    explainability_data = []
+
+    for stock_name, df in stock_data_dict.items():
+        # Linear Model
+        linear_model, _, _, linear_mse, _, _, _ = train_linear_model(df)
+        # linear_model, linear_predictions, actuals, mse, test_indices, df1, lm_df
+
+        # Decision Tree
+        decision_model, decision_mse, _ = train_decision_tree_model(df)
+
+        # Random Forest
+        rf_model, X_train_rf, X_test_rf, rf_mse, _ = train_random_forest_model(df)
+        # rf_predictions = rf_model.predict(X_test_rf)
+        # rf_mse = mean_squared_error(df['Close'].iloc[-len(X_test_rf):], rf_predictions)
+
+        # SVM
+        svm_model, svm_scaler, X_train_svm_df, X_test_svm_df, mse_svm, _ = train_svm_model(df)
+
+        # LSTM
+        lstm_model, _, _, lstm_mse, _ = train_lstm_model(df)
+
+        mse_dict = {
+            'Linear_Model': linear_mse,
+            'Decision_Tree_Model': decision_mse,
+            'Random_Forest_Model': rf_mse,
+            'SVM_Model': mse_svm,
+            'LSTM_Model': lstm_mse
+        }
+
+        best_model = min(mse_dict, key=mse_dict.get)
+
+        # Generate SHAP explainability plots for Linear, Decision Tree, Random Forest, SVM
+        summary_imgs = {}
+        feature_imgs = {}
+
+        summary_imgs['Linear_Model'], feature_imgs['Linear_Model'] = generate_model_explainability(
+            linear_model, X_train_rf, X_test_rf, f"{stock_name}_Linear")
+
+        summary_imgs['Decision_Tree_Model'], feature_imgs['Decision_Tree_Model'] = generate_model_explainability(
+            decision_model, X_train_rf, X_test_rf, f"{stock_name}_DT")
+
+        summary_imgs['Random_Forest_Model'], feature_imgs['Random_Forest_Model'] = generate_model_explainability(
+            rf_model, X_train_rf, X_test_rf, f"{stock_name}_RF")
+
+        summary_imgs['SVM_Model'], feature_imgs['SVM_Model'] = generate_model_explainability(
+            svm_model, X_train_svm_df, X_test_svm_df, f"{stock_name}_SVM")
+
+        # Note: No SHAP for LSTM (Deep learning models require Deep SHAP + TensorFlow backend)
+
+        explainability_data.append({
+            'stock_name': stock_name,
+            'summary_imgs': summary_imgs,
+            'feature_imgs': feature_imgs,
+            'best_model_prediction': best_model
+        })
+
+    return render(request, 'recommendations/model_explainability.html',
+                  {'explainability_data': explainability_data})
+
+
+def predict_df(request):
+    # Fetch stock data and metadata for all stocks
+    (bhartiartl_df, bhartiartl_meta_df,
+     icicibank_df, icicibank_meta_df,
+     reliance_df, reliance_meta_df,
+     tcs_df, tcs_meta_df,
+     hdfcbank_df, hdfcbank_meta_df) = fetch_and_store_stock_data(request)
+
+    # List of stock dataframes and their corresponding metadata
+    stock_dfs = [bhartiartl_df, icicibank_df, reliance_df, tcs_df, hdfcbank_df]
+    stock_meta_dfs = [bhartiartl_meta_df, icicibank_meta_df, reliance_meta_df, tcs_meta_df, hdfcbank_meta_df]
+    stock_names = ['Bharti Airtel', 'ICICI Bank', 'Reliance', 'TCS', 'HDFC Bank']
+
+    # Initialize an empty list to store merged dataframes
+    merged_dfs = []
+
+    # Iterate over all the stock dataframes
+    for stock_df, meta_df, stock_name in zip(stock_dfs, stock_meta_dfs, stock_names):
+
+        # Train the models for the current stock
+        linear_model, linear_predictions, actuals, mse, test_indices, df1, lm_df = train_linear_model(stock_df)
+        decision_tree_model, decision_mse, dt_df = train_decision_tree_model(stock_df)
+        random_forest_model, X_train, X_test, rf_mse, rf_df = train_random_forest_model(stock_df)
+        svm_model, svm_scaler, X_train_df, X_test_df, mse_svm, svm_df = train_svm_model(stock_df)
+        lstm_model, lstm_scaler, lstm_sequence_length, lstm_mse, lstm_df = train_lstm_model(stock_df,
+                                                                                            sequence_length=60)
+
+        save_lstm_to_db(request, stock_name, lstm_model, lstm_scaler)
+        lstm_modell, lstm_scalerr, sequence_length = load_lstm_from_db(request, stock_name)
+        if lstm_modell is None:
+            lstm_modell, lstm_scalerr, seq_len = train_lstm_model(stock_df)
+            save_lstm_to_db(stock_name, lstm_modell, lstm_scalerr)
+
+        next_day_prediction_lstm_model = predict_next_day_lstm(lstm_modell, lstm_scalerr, stock_df,
+                                                               lstm_sequence_length)
+
+        # Predict the next day's value using the trained models
+        next_day_prediction_linear_model = predict_next_day(linear_model, stock_df.iloc[1])
+        next_day_prediction_decision_tree_model = predict_next_day(decision_tree_model, stock_df.iloc[1])
+        next_day_prediction_random_forest_model = predict_next_day(random_forest_model, stock_df.iloc[1])
+        next_day_prediction_svm_model = predict_next_day_svm(svm_model, svm_scaler, stock_df.iloc[1])
+
+        success_rate_linear = calculate_success_rate(lm_df, 'Linear_Model')
+        directional_success_rate_linear = calculate_directional_success_rate(lm_df, 'Linear_Model')
+        avg_error_linear = calculate_avg_error(lm_df, 'Linear_Model')
+
+        success_rate_decision_tree = calculate_success_rate(dt_df, 'Decision_Tree_Model')
+        directional_success_rate_decision_tree = calculate_directional_success_rate(dt_df, 'Decision_Tree_Model')
+        avg_error_decision_tree = calculate_avg_error(dt_df, 'Decision_Tree_Model')
+
+        success_rate_random_forest = calculate_success_rate(rf_df, 'Random_Forest_Model')
+        directional_success_rate_random_forest = calculate_directional_success_rate(rf_df, 'Random_Forest_Model')
+        avg_error_random_forest = calculate_avg_error(rf_df, 'Random_Forest_Model')
+
+        success_rate_svm = calculate_success_rate(svm_df, 'SVM_Model')
+        directional_success_rate_svm = calculate_directional_success_rate(svm_df, 'SVM_Model')
+        avg_error_svm = calculate_avg_error(svm_df, 'SVM_Model')
+
+        success_rate_lstm = calculate_success_rate(lstm_df, 'LSTM_Model')
+        directional_success_rate_lstm = calculate_directional_success_rate(lstm_df, 'LSTM_Model')
+        avg_error_lstm = calculate_avg_error(lstm_df, 'LSTM_Model')
+
+        # Only keep the necessary columns in the metadata DataFrame
+        meta_df = meta_df[['Symbol', 'Last Refreshed']]
+        stock_df = stock_df.reset_index()  # Ensure date is in the proper column
+        meta_df = meta_df.reset_index(drop=True)  # Reset index to avoid misalignment
+
+        # Extract the last row from the stock data (the most recent data)
+        meta_df['Last Refreshed'] = pd.to_datetime(meta_df['Last Refreshed'])
+
+        df1 = stock_df.sort_values(by="Date", ascending=False).iloc[[0]]
+        merged_df = pd.merge(meta_df, df1, left_on='Last Refreshed', right_on='Date', how='inner')
+
+        merged_df['Linear_Model'] = next_day_prediction_linear_model
+        merged_df['Decision_Tree_Model'] = next_day_prediction_decision_tree_model
+        merged_df['Random_Forest_Model'] = next_day_prediction_random_forest_model
+        merged_df['SVM_Model'] = next_day_prediction_svm_model
+        merged_df['LSTM_Model'] = next_day_prediction_lstm_model
+        merged_df['Stock_Name'] = stock_name
+
+        # Add both success rate, directional success rate, and average error columns for each model
+        merged_df['Linear_Model_Success_Rate'] = success_rate_linear
+        merged_df['Linear_Model_Directional_Success_Rate'] = directional_success_rate_linear
+        merged_df['Linear_Model_Avg_Error'] = avg_error_linear
+
+        merged_df['Decision_Tree_Model_Success_Rate'] = success_rate_decision_tree
+        merged_df['Decision_Tree_Model_Directional_Success_Rate'] = directional_success_rate_decision_tree
+        merged_df['Decision_Tree_Model_Avg_Error'] = avg_error_decision_tree
+
+        merged_df['Random_Forest_Model_Success_Rate'] = success_rate_random_forest
+        merged_df['Random_Forest_Model_Directional_Success_Rate'] = directional_success_rate_random_forest
+        merged_df['Random_Forest_Model_Avg_Error'] = avg_error_random_forest
+
+        merged_df['SVM_Model_Success_Rate'] = success_rate_svm
+        merged_df['SVM_Model_Directional_Success_Rate'] = directional_success_rate_svm
+        merged_df['SVM_Model_Avg_Error'] = avg_error_svm
+
+        merged_df['LSTM_Model_Success_Rate'] = success_rate_lstm
+        merged_df['LSTM_Model_Directional_Success_Rate'] = directional_success_rate_lstm
+        merged_df['LSTM_Model_Avg_Error'] = avg_error_lstm
+
+        # Append the merged dataframe to the list
+        merged_dfs.append(merged_df)
+
+    # Concatenate all merged dataframes into one dataframe
+    final_merged_df = pd.concat(merged_dfs, ignore_index=True)
+    final_merged_df.drop(columns=['Volume', 'Target'], inplace=True)
+    # Reorder columns to place 'Stock Name' first
+    final_merged_df = final_merged_df[['Stock_Name'] + [col for col in final_merged_df.columns if col != 'Stock_Name']]
+    final_merged_df.rename(columns={'Last Refreshed': 'Last_Refreshed'}, inplace=True)
+    # Round selected columns
+    round_columns = [
+        'Low', 'Open', 'High', 'Close',
+        'Linear_Model',
+        'Decision_Tree_Model',
+        'Random_Forest_Model',
+        'SVM_Model',
+        'LSTM_Model'
+    ]
+    final_merged_df[round_columns] = final_merged_df[round_columns].round(2)
+    # Drop the 'index' column
+    final_merged_df = final_merged_df.drop(columns=['index'])
+
+    df1 = final_merged_df.loc[:, 'Stock_Name':'SVM_Model']
+    df2 = final_merged_df[['Stock_Name', 'Symbol'] + list(final_merged_df.loc[:, 'Linear_Model_Success_Rate':].columns)]
+
+    # Calculate scores for each model and get the best one
+    df3, df4 = calculate_model_scores(final_merged_df)
+
+    return df1, df2, df3, df4
+
+
+from django.shortcuts import render
+from .models import StockPrediction
+import pandas as pd
+import plotly.graph_objects as go
+from plotly.offline import plot
+
+
+def generate_stock_visualizations_view(request):
+    records = StockPrediction.objects.all().values(
+        'stock_name', 'symbol', 'last_refreshed', 'date', 'low', 'open', 'high', 'close',
+        'linear_model', 'lstm_model', 'decision_tree_model', 'random_forest_model'
+    )
+
+    if not records:
+        return render(request, 'visualizations/no_data.html')
+
+    df = pd.DataFrame(records)
+    all_charts = []
+
+    for stock in df['stock_name'].unique():
+        df_stock = df[df['stock_name'] == stock].iloc[0]
+
+        # Bar chart
+        bar_fig = go.Figure(data=[
+            go.Bar(name='Actual Close', x=['Actual'], y=[df_stock['close']]),
+            go.Bar(name='Linear', x=['Linear'], y=[df_stock['linear_model']]),
+            go.Bar(name='LSTM', x=['LSTM'], y=[df_stock['lstm_model']]),
+            go.Bar(name='Decision Tree', x=['Decision Tree'], y=[df_stock['decision_tree_model']]),
+            go.Bar(name='Random Forest', x=['Random Forest'], y=[df_stock['random_forest_model']])
+        ])
+        bar_fig.update_layout(
+            title=f"{stock} - One Day Prediction Comparison",
+            xaxis_title="Model",
+            yaxis_title="Price",
+            barmode='group',
+            template='plotly_white'
+        )
+        bar_div = plot(bar_fig, output_type='div')
+
+        all_charts.append({
+            'stock_name': stock,
+            'chart': bar_div,
+            'linear_model': df_stock['linear_model'],
+            'lstm_model': df_stock['lstm_model'],
+            'decision_tree_model': df_stock['decision_tree_model'],
+            'random_forest_model': df_stock['random_forest_model'],
+            'actual_close': df_stock['close']
+        })
+
+    return render(request, 'recommendations/predictions_graphs.html', {
+        'all_charts': all_charts
+    })
+
+
+from django.shortcuts import render
+from auth_app.forms import HyperparameterForm
+from auth_app.aiml.custom_model import train_test_data, \
+    linear_model_hyper_tuning_chart, decision_tree_hyper_tuning_chart, random_forest_hyper_tuning_chart, \
+    svm_hyper_tuning_chart, lstm_hyper_tuning_chart
+
+
+# train_decision_tree_hyper_tuning, train_random_forest_hyper_tuning, train_svm_hyper_tuning, train_lstm_hyper_tuning, \
+# save_predictions_to_db_hyper_tuning
+
+def train_models_with_hyperparameters(request, hyperparams):
+    symbol = hyperparams['stock_symbol']
+    # Extract linear specific hyperparameters
+    fit_intercept = str(hyperparams['fit_intercept']).lower() == 'true'
+    regularization_type = hyperparams['regularization_type']
+    alpha = float(hyperparams['alpha'])
+
+    # Extract decision tree specific hyperparameters
+
+    # min_samples_split = int(hyperparams.get('min_samples_split', 2))  # Default to 2
+    # min_samples_split = int(hyperparams.get('min_samples_split') or 2)
+    criterion = hyperparams['criterion']
+    raw_max_depth = hyperparams.get('max_depth')
+    raw_min_samples_split = hyperparams.get('min_samples_split')
+    max_depth = int(raw_max_depth) if raw_max_depth not in [None, '', 'None'] else None
+    min_samples_split = int(raw_min_samples_split) if raw_min_samples_split not in [None, '', 'None'] else None
+
+    # max_depth = int(hyperparams.get('max_depth')) if hyperparams.get('max_depth') and hyperparams.get(
+    #     'max_depth').isdigit() else 5
+
+    # Extract random forest specific hyperparameters
+    criterion_rf = hyperparams['criterion_rf']
+    min_samples_split_rf = int(hyperparams.get('min_samples_split_rf', 2))  # Default to 2
+    n_estimators = int(hyperparams.get('n_estimators', 100))
+    rf_max_depth = int(hyperparams.get('rf_max_depth')) if hyperparams.get('rf_max_depth') and hyperparams.get(
+        'rf_max_depth').isdigit() else 5
+
+    # Extract SVM specific hyperparameters
+
+    kernel = hyperparams.get('kernel', 'rbf')
+    C = float(hyperparams.get('C', 1.0))
+    epsilon = float(hyperparams.get('epsilon', 0.1))
+    gamma = hyperparams.get('gamma', 'scale')  # can be 'scale', 'auto', or float
+    degree = int(hyperparams.get('degree', 3))
+    coef0 = float(hyperparams.get('coef0', 0.0))
+
+    # Extract LSTM specific hyperparameters
+
+    lstm_units = int(hyperparams.get('lstm_units', 32))
+    epochs = int(hyperparams.get('epochs', 20))
+    batch_size = int(hyperparams.get('batch_size', 32))
+    num_layers = int(hyperparams.get('num_layers', 1))  # from dropdown
+
+    learning_rate = float(hyperparams.get('learning_rate', 0.001))  # from dropdown (stringified)
+    dropout = float(hyperparams.get('dropout', 0.2))  # from dropdown (stringified)
+
+    optimizer = hyperparams.get('optimizer', 'adam')
+    loss_function = hyperparams.get('loss_function', 'mse')
+    activation_function = hyperparams.get('activation_function', 'linear')
+
+    # Fetch stock data using request
+    (bhartiartl_df, bhartiartl_meta_df,
+     icicibank_df, icicibank_meta_df,
+     reliance_df, reliance_meta_df,
+     tcs_df, tcs_meta_df,
+     hdfcbank_df, hdfcbank_meta_df) = fetch_and_store_stock_data(request)
+
+    symbol_to_df = {
+        'BHARTIARTL.BSE': bhartiartl_df,
+        'ICICIBANK.BSE': icicibank_df,
+        'RELIANCE.BSE': reliance_df,
+        'TCS.BSE': tcs_df,
+        'HDFCBANK.BSE': hdfcbank_df,
+    }
+
+    df = symbol_to_df.get(symbol)
+
+    if df is None or df.empty:
+        return "<p>No data available for the selected symbol.</p>"
+    latest_record = df.to_dict(orient='records')[0]
+    # Accumulate all summaries in a list
+    all_summaries = []
+    X_train, X_test, y_train, y_test = train_test_data(df)
+
+    chart_html, summary_lm_df = linear_model_hyper_tuning_chart(
+        X_train=X_train, X_test=X_test, y_train=y_train, y_test=y_test, stock_name=symbol,
+        regularization=regularization_type,
+        alpha=alpha, fit_intercept=fit_intercept
+    )
+    # print(summary_lm_df.to_string())
+
+    dt_chart, dt_importance_chart, summary_dt_df = decision_tree_hyper_tuning_chart(
+        X_train=X_train, X_test=X_test, y_train=y_train, y_test=y_test, stock_name=symbol,
+        criterion=criterion,
+        min_samples_split=min_samples_split,
+        max_depth=max_depth
+    )
+
+    main_chart, importance_chart, summary_rf_df = random_forest_hyper_tuning_chart(
+        X_train=X_train, X_test=X_test, y_train=y_train, y_test=y_test, stock_name=symbol,
+        criterion=criterion_rf,
+        min_samples_split=min_samples_split_rf,
+        n_estimators=n_estimators,
+        rf_max_depth=rf_max_depth
+    )
+
+    main_chart_svm, importance_chart_svm, summary_svm_df = svm_hyper_tuning_chart(
+        X_train=X_train, X_test=X_test, y_train=y_train, y_test=y_test, stock_name=symbol,
+        kernel=kernel,
+        C=C,
+        epsilon=epsilon,
+        gamma=gamma,
+        degree=degree,
+        coef0=coef0
+
+    )
+    main_chart_lstm, summary_lstm_df = lstm_hyper_tuning_chart(
+        X_train=X_train, X_test=X_test, y_train=y_train, y_test=y_test, stock_name=symbol,
+        lstm_units=lstm_units,
+        epochs=epochs,
+        batch_size=batch_size,
+        num_layers=num_layers,
+        learning_rate=learning_rate,
+        dropout=dropout,
+        optimizer=optimizer,
+        loss_function=loss_function,
+        activation_function=activation_function
+
+    )
+    # After generating summary DataFrames
+    all_summaries.append(summary_lm_df)
+    all_summaries.append(summary_dt_df)
+    all_summaries.append(summary_rf_df)
+    all_summaries.append(summary_svm_df)
+    all_summaries.append(summary_lstm_df)
+    # Combine all summaries into one DataFrame
+    final_summary_df = pd.concat(all_summaries, ignore_index=True)
+
+    # final_summary_df['Best_Model'] = final_summary_df['R2'] == final_summary_df['R2'].max()
+    final_summary_df['Best_Model'] = final_summary_df['R2'].apply(
+        lambda x: "Yes" if x == final_summary_df['R2'].max() else "No")
+
+    summary_df = final_summary_df.round(3).to_dict(orient='records')
+    # print(summary_df.to_string())
+
+    return chart_html, dt_chart, dt_importance_chart, main_chart, importance_chart, main_chart_svm, importance_chart_svm, main_chart_lstm, summary_df, latest_record
+
+
+def hyperparameter_training_view(request):
+    chart_html = None
+    dt_chart = None
+    dt_importance_chart = None
+    main_chart = None
+    importance_chart = None
+    main_chart_svm = None
+    importance_chart_svm = None
+    main_chart_lstm = None
+    summary_df = None
+    latest_record = None
+
+    if request.method == 'POST':
+        form = HyperparameterForm(request.POST)
+        if form.is_valid():
+            hyperparams = form.cleaned_data
+            chart_html, dt_chart, dt_importance_chart, main_chart, importance_chart, main_chart_svm, importance_chart_svm, main_chart_lstm, summary_df, latest_record = train_models_with_hyperparameters(
+                request,
+                hyperparams)  # Custom logic
+    else:
+        form = HyperparameterForm()
+
+    return render(request, 'recommendations/train_with_hyperparams.html',
+                  {'form': form,
+                   'chart_html': chart_html,
+                   'dt_chart': dt_chart,
+                   'dt_importance_chart': dt_importance_chart,
+                   'main_chart': main_chart,
+                   'importance_chart': importance_chart,
+                   'main_chart_svm': main_chart_svm,
+                   'importance_chart_svm': importance_chart_svm,
+                   'main_chart_lstm': main_chart_lstm,
+                   'summary_df': summary_df,
+                   'latest_record': latest_record
+                   })
+
+# from django.shortcuts import render
+# from .forms import HyperparameterForm
+# from .models import StockPrediction
+# from sklearn.linear_model import LinearRegression
+# from sklearn.tree import DecisionTreeRegressor
+# from sklearn.ensemble import RandomForestRegressor
+# from sklearn.svm import SVR
+# from tensorflow.keras.models import Sequential
+# from tensorflow.keras.layers import LSTM
+# from sklearn.model_selection import train_test_split
+# from sklearn.metrics import mean_squared_error
+#
+# def train_model_view(request):
+#     form = HyperparameterForm(request.POST or None)
+#     if form.is_valid():
+#         # Get the selected stock symbol and hyperparameters from the form
+#         symbol = form.cleaned_data['symbol']
+#         fit_intercept = form.cleaned_data['fit_intercept']
+#         max_depth = form.cleaned_data['max_depth']
+#         criterion = form.cleaned_data['criterion']
+#         n_estimators = form.cleaned_data['n_estimators']
+#         rf_max_depth = form.cleaned_data['rf_max_depth']
+#         kernel = form.cleaned_data['kernel']
+#         C = form.cleaned_data['C']
+#         lstm_units = form.cleaned_data['lstm_units']
+#         epochs = form.cleaned_data['epochs']
+#
+#         # Retrieve the stock data based on the selected symbol
+#         (bhartiartl_df, bhartiartl_meta_df,
+#          icicibank_df, icicibank_meta_df,
+#          reliance_df, reliance_meta_df,
+#          tcs_df, tcs_meta_df,
+#          hdfcbank_df, hdfcbank_meta_df) = fetch_and_store_stock_data(request)
+#         symbol_map = {
+#             "BHARTIARTL.BSE": bhartiartl_df,
+#             "ICICIBANK.BSE": icicibank_df,
+#             "RELIANCE.BSE": reliance_df,
+#             "TCS.BSE": tcs_df,
+#             "HDFCBANK.BSE": hdfcbank_df
+#         }
+#         df = symbol_map.get(symbol, bhartiartl_df)  # default to bhartiartl_df if not found
+#
+#         # Train each model and collect results
+#         linear_model, linear_predictions, y_test, lm_mse, _, df1, df_with_predictions = train_linear_model_hyper_tuning(df, fit_intercept)
+#         # decision_tree_model, dt_predictions, dt_mse = train_decision_tree_hyper_tuning(df, max_depth, criterion)
+#         # random_forest_model, rf_predictions, rf_mse = train_random_forest_hyper_tuning(df, n_estimators, rf_max_depth)
+#         # svm_model, svm_predictions, svm_mse = train_svm_hyper_tuning(df, kernel, C)
+#         # lstm_model, lstm_predictions, lstm_mse = train_lstm_hyper_tuning(df, lstm_units, epochs)
+#
+#         # Save predictions in the database
+#         # save_predictions_to_db_hyper_tuning(symbol, linear_predictions, dt_predictions, rf_predictions, svm_predictions, lstm_predictions)
+#
+#         # Prepare the chart or result to display
+#         chart_html = create_chart(df_with_predictions)
+#
+#         return render(request, 'Hyperparameter_model_training.html', {
+#             'form': form,
+#             'chart_html': chart_html
+#         })
+#
+#     return render(request, 'recommendations/Hyperparameter_model_training.html', {'form': form})

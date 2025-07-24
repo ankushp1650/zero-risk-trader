@@ -2,6 +2,10 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
+    path('hyperparameter-training/', views.hyperparameter_training_view, name='hyperparameter_training'),
+    path('stock-visualizations/', views.generate_stock_visualizations_view, name='stock_visualizations'),
+    path('model-explainability/', views.model_explainability_view, name='explainability_data'),
+    path('stock-recommendations/', views.recommendations_view, name='recommendations'),
     path('terms-and-conditions/', views.terms_and_conditions, name='terms_and_conditions'),
     path('aboutt/', views.aboutt, name='aboutt'),
     path('about/', views.about_us, name='aboutus'),

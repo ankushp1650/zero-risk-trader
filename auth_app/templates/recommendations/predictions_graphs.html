@@ -1,0 +1,233 @@
+{% extends 'layouts/app.html' %}
+
+{% block content %}
+
+<style>
+    /* Container styling */
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 30px;
+        background-color: #f9f9f9;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+     .top-right-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .top-right-buttons a {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #ffffff;
+            background-color: #0056b3;
+            border-radius: 5px;
+            text-decoration: none;
+            text-align: center;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .top-right-buttons a:hover {
+            background-color: #004085;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+    /* Heading styling */
+    h1 {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #333;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    /* Stock name styling */
+    h2 {
+        font-size: 1.8rem;
+        color: #2c3e50;
+        margin-top: 20px;
+        font-weight: 600;
+    }
+
+    /* Chart container styling */
+    div {
+        margin-bottom: 30px;
+    }
+
+    /* Table styling */
+    table {
+        width: 100%;
+        margin-top: 20px;
+        border-collapse: collapse;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Table header styling */
+    table th {
+        background-color: #3498db;
+        color: #fff;
+        text-align: left;
+        padding: 12px 15px;
+        font-size: 1rem;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+    }
+
+    /* Table row styling */
+    table td {
+        text-align: left;
+        padding: 8px 10px; /* Reduced padding for smaller columns */
+        font-size: 1rem;
+        color: #555;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    /* Table row hover effect */
+    table tr:hover {
+        background-color: #f5f5f5;
+    }
+
+    /* Table last row (Actual Close) styling */
+    table tr:last-child td {
+        font-weight: bold;
+        color: #e74c3c;
+    }
+
+    /* Button-like style for chart links */
+    a.chart-link {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 10px 20px;
+        background-color: #3498db;
+        color: white;
+        font-size: 1rem;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+    }
+
+    a.chart-link:hover {
+        background-color: #2980b9;
+    }
+
+    /* Chart container and div adjustment */
+    .chart-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .chart-container div {
+        width: 100%;
+    }
+    footer {
+        background-color: #f1f3f5;
+        color: #333;
+        text-align: center;
+        padding: 15px 0;
+        font-size: 14px;
+        border-top: 1px solid #ccc;
+    }
+
+    /* Mobile responsiveness */
+    @media screen and (max-width: 768px) {
+        .container {
+            padding: 15px;
+        }
+        .top-right-buttons {
+                flex-direction: column;
+                align-items: flex-end;
+            }
+
+            .top-right-buttons a {
+                font-size: 14px;
+                padding: 8px 15px;
+            }
+
+        h1 {
+            font-size: 2rem;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+        }
+
+        table th,
+        table td {
+            font-size: 0.9rem;
+        }
+
+        .chart-container {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+    }
+</style>
+
+<div class="container">
+    <div class="top-right-buttons">
+            <a href="{% url 'dashboard' %}">Home</a>
+            <a href="{% url 'platform' %}">Dashboard</a>
+            <a href="{% url 'recommendations' %}">Recommendations Page</a>
+            <a href="{% url 'logout' %}">Logout</a>
+        </div>
+    <h1>📈 Stock Visualizations</h1>
+    {% for chart in all_charts %}
+        <h2>{{ chart.stock_name }}</h2>
+
+        <!-- Bar Chart -->
+        <div>{{ chart.chart|safe }}</div>
+        <br>
+
+        <!-- Table of Data (Optional) -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Model</th>
+                    <th>Predicted Close</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Linear Model</td>
+                    <td>{{ chart.linear_model|floatformat:2 }}</td> <!-- Rounded to 2 decimal places -->
+                </tr>
+                <tr>
+                    <td>LSTM Model</td>
+                    <td>{{ chart.lstm_model|floatformat:2 }}</td> <!-- Rounded to 2 decimal places -->
+                </tr>
+                <tr>
+                    <td>Decision Tree</td>
+                    <td>{{ chart.decision_tree_model|floatformat:2 }}</td> <!-- Rounded to 2 decimal places -->
+                </tr>
+                <tr>
+                    <td>Random Forest</td>
+                    <td>{{ chart.random_forest_model|floatformat:2 }}</td> <!-- Rounded to 2 decimal places -->
+                </tr>
+                <tr>
+                    <td>Actual Close</td>
+                    <td>{{ chart.actual_close|floatformat:2 }}</td> <!-- Rounded to 2 decimal places -->
+                </tr>
+            </tbody>
+        </table>
+
+        <hr>
+    {% endfor %}
+<footer>
+    <p>&copy; 2025 ZeroRiskTrader. All rights reserved.</p>
+    <p>Empowering Traders. Minimizing Risks.</p>
+</footer>
+</div>
+
+{% endblock %}
