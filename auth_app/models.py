@@ -114,3 +114,95 @@ class CurrentPrice(models.Model):
         indexes = [
             models.Index(fields=['date'], name='date_index')
         ]
+
+
+class UserTrade(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    stock_symbol = models.CharField(max_length=50)
+    buy_price = models.DecimalField(max_digits=10, decimal_places=2)
+    sell_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    quantity = models.IntegerField()
+    buy_date = models.DateTimeField()
+    sell_date = models.DateTimeField(null=True, blank=True)
+    cost = models.DecimalField(max_digits=10, decimal_places=2, default=0)  # <<== New field
+
+    def __str__(self):
+        return f"{self.user.username} - {self.stock_symbol} ({self.quantity})"
+
+
+class LSTMModelStorage(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    stock_name = models.CharField(max_length=100)
+    model_blob = models.BinaryField()
+    scaler_blob = models.BinaryField()
+    sequence_length = models.IntegerField(default=60)
+    description = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'stock_name')
+
+    def __str__(self):
+        return f"LSTM Model for {self.stock_name} (User: {self.user.username})"
+
+
+
+class StockPrediction(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True)
+
+    stock_name = models.CharField(max_length=100)
+    symbol = models.CharField(max_length=50)
+    last_refreshed = models.DateField()
+    date = models.DateField()
+    low = models.FloatField()
+    open = models.FloatField()
+    high = models.FloatField()
+    close = models.FloatField()
+
+    linear_model = models.FloatField()
+    lstm_model = models.FloatField()
+    decision_tree_model = models.FloatField()
+    random_forest_model = models.FloatField()
+    svm_model = models.FloatField()
+
+
+class StockPerformance(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True)
+
+    stock_name = models.CharField(max_length=100)
+    symbol = models.CharField(max_length=50)
+
+    linear_model_success_rate = models.FloatField()
+    linear_model_directional_success_rate = models.FloatField()
+    linear_model_avg_error = models.FloatField()
+
+    decision_tree_model_success_rate = models.FloatField()
+    decision_tree_model_directional_success_rate = models.FloatField()
+    decision_tree_model_avg_error = models.FloatField()
+
+    random_forest_model_success_rate = models.FloatField()
+    random_forest_model_directional_success_rate = models.FloatField()
+    random_forest_model_avg_error = models.FloatField()
+
+    svm_model_success_rate = models.FloatField()
+    svm_model_directional_success_rate = models.FloatField()
+    svm_model_avg_error = models.FloatField()
+
+    lstm_model_success_rate = models.FloatField()
+    lstm_model_directional_success_rate = models.FloatField()
+    lstm_model_avg_error = models.FloatField()
+
+
+class BestModelRecord(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True)
+
+    stock_name = models.CharField(max_length=100)
+    model_name = models.CharField(max_length=100)
+    success_rate = models.FloatField()
+    directional_success_rate = models.FloatField()
+    average_error = models.FloatField()
+    normalized_models_score = models.FloatField()
+    best_model = models.CharField(max_length=3)  # "Yes" or "No"
