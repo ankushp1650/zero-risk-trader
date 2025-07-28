@@ -40,7 +40,7 @@ from django.contrib.auth.tokens import default_token_generator
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.contrib.auth.models import User
-from django.http import HttpResponseBadRequest
+from django.http import HttpResponseBadRequest, HttpResponse
 from django.shortcuts import render
 from .models import UserTrade
 from .utils import recommend_stocks_total_based, transfer_transactions_to_user_trade, parse_iso_datetime
@@ -999,14 +999,18 @@ def terms_and_conditions(request):
 def recommendations_view(request):
     transfer_transactions_to_user_trade()
     user_trades = UserTrade.objects.filter(user=request.user)
-    df1, df2, df3, df4_unused = predict_df(request)  # df4 will be derived from DB instead
+    try:
+        df1, df2, df3, df4_unused = predict_df(request)
+    except Exception as e:
+        print("predict_df error:", e)
+        return HttpResponse("Prediction function error", status=500)
 
     def safe_float(val):
         return None if pd.isna(val) or val == '' else float(val)
 
     # Save df1 to StockPrediction
     for entry in df1.to_dict(orient='records'):
-        StockPrediction.objects.create(
+        StockPrediction.objects.get_or_create(
             user=request.user,
             stock_name=entry['Stock_Name'],
             symbol=entry['Symbol'],
@@ -1025,7 +1029,7 @@ def recommendations_view(request):
 
     # Save df2 to StockPerformance
     for entry in df2.to_dict(orient='records'):
-        StockPerformance.objects.create(
+        StockPerformance.objects.get_or_create(
             user=request.user,
             stock_name=entry['Stock_Name'],
             symbol=entry['Symbol'],
@@ -1050,15 +1054,17 @@ def recommendations_view(request):
 
     # Save df3 to BestModelRecord
     for entry in df3.to_dict(orient='records'):
-        BestModelRecord.objects.create(
+        BestModelRecord.objects.update_or_create(
             user=request.user,
             stock_name=entry['Stock_Name'],
             model_name=entry['Model'],
-            success_rate=safe_float(entry['Success_Rate']),
-            directional_success_rate=safe_float(entry['Directional_Success_Rate']),
-            average_error=safe_float(entry['Average_Error']),
-            normalized_models_score=safe_float(entry['Normalized_Models_Score']),
-            best_model=entry['Best_Model']
+            best_model=entry['Best_Model'],
+            defaults={
+                'success_rate': safe_float(entry['Success_Rate']),
+                'directional_success_rate': safe_float(entry['Directional_Success_Rate']),
+                'average_error': safe_float(entry['Average_Error']),
+                'normalized_models_score': safe_float(entry['Normalized_Models_Score']),
+            }
         )
     stock_performance_qs = StockPerformance.objects.filter(user=request.user).order_by('-created')[:5]
     df2 = pd.DataFrame(list(stock_performance_qs.values()))
