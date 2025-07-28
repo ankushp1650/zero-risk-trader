@@ -198,7 +198,6 @@ class StockPerformance(models.Model):
 class BestModelRecord(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
-
     stock_name = models.CharField(max_length=100)
     model_name = models.CharField(max_length=100)
     success_rate = models.FloatField()
@@ -206,3 +205,6 @@ class BestModelRecord(models.Model):
     average_error = models.FloatField()
     normalized_models_score = models.FloatField()
     best_model = models.CharField(max_length=3)  # "Yes" or "No"
+
+    class Meta:
+        unique_together = ('user', 'stock_name', 'model_name', 'best_model')
