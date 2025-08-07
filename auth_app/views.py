@@ -41,9 +41,9 @@ from django.contrib import messages
 from django.shortcuts import redirect
 from django.contrib.auth.models import User
 from django.http import HttpResponseBadRequest, HttpResponse
-from django.shortcuts import render
-from .models import UserTrade
-from .utils import recommend_stocks_total_based, transfer_transactions_to_user_trade, parse_iso_datetime
+# from django.shortcuts import render
+# from .models import UserTrade
+# from .utils import recommend_stocks_total_based, transfer_transactions_to_user_trade, parse_iso_datetime
 
 import logging
 import warnings
