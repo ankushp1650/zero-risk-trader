@@ -999,11 +999,11 @@ def terms_and_conditions(request):
 def recommendations_view(request):
     # transfer_transactions_to_user_trade()
     # user_trades = UserTrade.objects.filter(user=request.user)
-    try:
-        df1, df2, df3, df4_unused = predict_df(request)
-    except Exception as e:
-        print("predict_df error:", e)
-        return HttpResponse("Prediction function error", status=500)
+    # try:
+    df1, df2, df3, df4_unused = predict_df(request)
+    # except Exception as e:
+        # print("predict_df error:", e)
+        # return HttpResponse("Prediction function error", status=500)
 
     def safe_float(val):
         return None if pd.isna(val) or val == '' else float(val)
