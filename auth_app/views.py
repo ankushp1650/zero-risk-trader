@@ -997,8 +997,8 @@ def terms_and_conditions(request):
 
 @login_required
 def recommendations_view(request):
-    transfer_transactions_to_user_trade()
-    user_trades = UserTrade.objects.filter(user=request.user)
+    # transfer_transactions_to_user_trade()
+    # user_trades = UserTrade.objects.filter(user=request.user)
     try:
         df1, df2, df3, df4_unused = predict_df(request)
     except Exception as e:
@@ -1073,10 +1073,10 @@ def recommendations_view(request):
     df4 = pd.DataFrame(list(best_model_qs.values()))
 
     # Get recommendations
-    recommendations = recommend_stocks_total_based(user_trades) if user_trades.exists() else []
+    # recommendations = recommend_stocks_total_based(user_trades) if user_trades.exists() else []
 
     return render(request, 'recommendations/recommendations.html', {
-        'recommendations': recommendations,
+        # 'recommendations': recommendations,
         'df1': df1.to_dict(orient='records'),
         'df2': df2.to_dict(orient='records'),
         'df3': df3.to_dict(orient='records'),
