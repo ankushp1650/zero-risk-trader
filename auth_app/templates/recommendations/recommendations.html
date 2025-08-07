@@ -201,37 +201,43 @@
 
 {% block content %}
 <!-- Top Recommendation Container -->
+<!--<div class="container">-->
+<!--    <div class="top-right-buttons">-->
+<!--        <a href="{% url 'dashboard' %}">Home</a>-->
+<!--        <a href="{% url 'platform' %}">Dashboard</a>-->
+<!--        <a href="{% url 'logout' %}">Logout</a>-->
+<!--        <a href="{% url 'stock_visualizations' %}">visualizations</a>-->
+<!--    </div>-->
+
+<!--    <h1>📈 Your Top Stock Recommendations</h1>-->
+<!--    <p>These are the stocks you've historically traded most profitably based on past buy/sell performance.</p>-->
+<!--    <div class="recommendations-container">-->
+<!--        {% if recommendations %}-->
+<!--            <ul>-->
+<!--                {% for recommendation in recommendations %}-->
+<!--                    <li>-->
+<!--                        <strong>{{ recommendation.stock }}</strong>-->
+<!--                        <div class="recommendation-details">-->
+<!--                            Profit: {{ recommendation.profit_percent }}% <br>-->
+<!--                            Success Rate: {{ recommendation.success_rate }}%-->
+<!--                        </div>-->
+<!--                    </li>-->
+<!--                {% endfor %}-->
+<!--            </ul>-->
+<!--        {% else %}-->
+<!--            <p class="no-recommendations">No recommendations available at this time.</p>-->
+<!--        {% endif %}-->
+<!--    </div>-->
+<!--</div>-->
+
+<!-- df1: Prediction Data Table -->
 <div class="container">
-    <div class="top-right-buttons">
+        <div class="top-right-buttons">
         <a href="{% url 'dashboard' %}">Home</a>
         <a href="{% url 'platform' %}">Dashboard</a>
         <a href="{% url 'logout' %}">Logout</a>
         <a href="{% url 'stock_visualizations' %}">visualizations</a>
     </div>
-
-    <h1>📈 Your Top Stock Recommendations</h1>
-    <p>These are the stocks you've historically traded most profitably based on past buy/sell performance.</p>
-    <div class="recommendations-container">
-        {% if recommendations %}
-            <ul>
-                {% for recommendation in recommendations %}
-                    <li>
-                        <strong>{{ recommendation.stock }}</strong>
-                        <div class="recommendation-details">
-                            Profit: {{ recommendation.profit_percent }}% <br>
-                            Success Rate: {{ recommendation.success_rate }}%
-                        </div>
-                    </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p class="no-recommendations">No recommendations available at this time.</p>
-        {% endif %}
-    </div>
-</div>
-
-<!-- df1: Prediction Data Table -->
-<div class="container">
     <h1>📊 Stock Data Prediction</h1>
     {% if df1 %}
         <div class="table-container">
