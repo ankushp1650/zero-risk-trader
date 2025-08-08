@@ -1008,9 +1008,10 @@ def recommendations_view(request):
     def safe_float(val):
         return None if pd.isna(val) or val == '' else float(val)
 
-    # Save df1 to StockPrediction
+    # --- Save df1 to StockPrediction using bulk_create ---
+    predictions = []
     for entry in df1.to_dict(orient='records'):
-        StockPrediction.objects.get_or_create(
+        predictions.append(StockPrediction(
             user=request.user,
             stock_name=entry['Stock_Name'],
             symbol=entry['Symbol'],
@@ -1025,11 +1026,13 @@ def recommendations_view(request):
             decision_tree_model=safe_float(entry['Decision_Tree_Model']),
             random_forest_model=safe_float(entry['Random_Forest_Model']),
             svm_model=safe_float(entry['SVM_Model'])
-        )
+        ))
+    StockPrediction.objects.bulk_create(predictions, ignore_conflicts=True)
 
-    # Save df2 to StockPerformance
+    # --- Save df2 to StockPerformance using bulk_create ---
+    performances = []
     for entry in df2.to_dict(orient='records'):
-        StockPerformance.objects.get_or_create(
+        performances.append(StockPerformance(
             user=request.user,
             stock_name=entry['Stock_Name'],
             symbol=entry['Symbol'],
@@ -1050,9 +1053,10 @@ def recommendations_view(request):
             lstm_model_success_rate=safe_float(entry['LSTM_Model_Success_Rate']),
             lstm_model_directional_success_rate=safe_float(entry['LSTM_Model_Directional_Success_Rate']),
             lstm_model_avg_error=safe_float(entry['LSTM_Model_Avg_Error']),
-        )
+        ))
+    StockPerformance.objects.bulk_create(performances, ignore_conflicts=True)
 
-    # Save df3 to BestModelRecord
+    # --- Save df3 to BestModelRecord using update_or_create (no bulk_create for this safely) ---
     for entry in df3.to_dict(orient='records'):
         BestModelRecord.objects.update_or_create(
             user=request.user,
@@ -1066,9 +1070,10 @@ def recommendations_view(request):
                 'normalized_models_score': safe_float(entry['Normalized_Models_Score']),
             }
         )
+    # --- Fetch updated data for df2 and df4 for rendering ---
     stock_performance_qs = StockPerformance.objects.filter(user=request.user).order_by('-created')[:5]
     df2 = pd.DataFrame(list(stock_performance_qs.values()))
-    # Retrieve df4 from database using filter on BestModelRecord
+
     best_model_qs = BestModelRecord.objects.filter(user=request.user).order_by('-created')[:25]
     df4 = pd.DataFrame(list(best_model_qs.values()))
 
