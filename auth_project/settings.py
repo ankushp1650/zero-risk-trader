@@ -73,7 +73,7 @@ DATABASES = {
         'HOST': env('DB_HOST'),
         'PORT': '3306',
         'OPTIONS': {
-            # 'ssl': {'ssl_disabled': False}
+            # 'ssl': {'ssl_disabled': True},
             'ssl': {'ca': os.path.join(BASE_DIR, 'certificate', 'DigiCertGlobalRootCA.crt.pem')},
            # 'ssl': {'ca': '/home/site/wwwroot/certificate/DigiCertGlobalRootCA.crt.pem'},
             
