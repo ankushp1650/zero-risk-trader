@@ -1,5 +1,11 @@
 from datetime import datetime, date
 from decimal import Decimal
+
+import pandas as pd
+import matplotlib
+matplotlib.use('Agg')  # must be set before importing pyplot
+import matplotlib.pyplot as plt
+
 from django.utils.timezone import now
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
