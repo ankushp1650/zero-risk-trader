@@ -133,7 +133,7 @@ def train_lstm_model(stock_df, sequence_length=10):
     y = np.array(y)
     x = x.reshape((x.shape[0], x.shape[1], 1))
 
-    if len(x) < 5:
+    if len(x) < 10:
         raise ValueError("Not enough samples after preprocessing to train LSTM.")
 
     # Step 2: Train/Test split (80/20)
@@ -143,7 +143,7 @@ def train_lstm_model(stock_df, sequence_length=10):
 
     # Adjust LSTM units and batch size based on dataset size
     units = min(50, max(10, len(x_train) // 2))
-    batch_size = min(32, len(x_train))
+    batch_size = min(16, len(x_train))
 
     # Step 3: Build LSTM model
     model = Sequential()
