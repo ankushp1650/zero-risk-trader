@@ -1,6 +1,5 @@
 from datetime import datetime, date
 from decimal import Decimal
-import pandas as pd
 from django.utils.timezone import now
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
@@ -44,7 +43,11 @@ from django.http import HttpResponseBadRequest, HttpResponse
 # from django.shortcuts import render
 # from .models import UserTrade
 # from .utils import recommend_stocks_total_based, transfer_transactions_to_user_trade, parse_iso_datetime
-
+from django.shortcuts import render
+from .models import StockPrediction
+import pandas as pd
+import plotly.graph_objects as go
+from plotly.offline import plot
 import logging
 import warnings
 
@@ -1004,8 +1007,8 @@ def recommendations_view(request):
     # try:
     df1, df2, df3, df4_unused = predict_df(request)
     # except Exception as e:
-        # print("predict_df error:", e)
-        # return HttpResponse("Prediction function error", status=500)
+    # print("predict_df error:", e)
+    # return HttpResponse("Prediction function error", status=500)
     print("df1 length:", len(df1))
     print("df2 length:", len(df2))
     print("df3 length:", len(df3))
@@ -1302,13 +1305,6 @@ def predict_df(request):
     return df1, df2, df3, df4
 
 
-from django.shortcuts import render
-from .models import StockPrediction
-import pandas as pd
-import plotly.graph_objects as go
-from plotly.offline import plot
-
-
 def generate_stock_visualizations_view(request):
     records = StockPrediction.objects.all().values(
         'stock_name', 'symbol', 'last_refreshed', 'date', 'low', 'open', 'high', 'close',
@@ -1539,65 +1535,3 @@ def hyperparameter_training_view(request):
                    'summary_df': summary_df,
                    'latest_record': latest_record
                    })
-
-# from django.shortcuts import render
-# from .forms import HyperparameterForm
-# from .models import StockPrediction
-# from sklearn.linear_model import LinearRegression
-# from sklearn.tree import DecisionTreeRegressor
-# from sklearn.ensemble import RandomForestRegressor
-# from sklearn.svm import SVR
-# from tensorflow.keras.models import Sequential
-# from tensorflow.keras.layers import LSTM
-# from sklearn.model_selection import train_test_split
-# from sklearn.metrics import mean_squared_error
-#
-# def train_model_view(request):
-#     form = HyperparameterForm(request.POST or None)
-#     if form.is_valid():
-#         # Get the selected stock symbol and hyperparameters from the form
-#         symbol = form.cleaned_data['symbol']
-#         fit_intercept = form.cleaned_data['fit_intercept']
-#         max_depth = form.cleaned_data['max_depth']
-#         criterion = form.cleaned_data['criterion']
-#         n_estimators = form.cleaned_data['n_estimators']
-#         rf_max_depth = form.cleaned_data['rf_max_depth']
-#         kernel = form.cleaned_data['kernel']
-#         C = form.cleaned_data['C']
-#         lstm_units = form.cleaned_data['lstm_units']
-#         epochs = form.cleaned_data['epochs']
-#
-#         # Retrieve the stock data based on the selected symbol
-#         (bhartiartl_df, bhartiartl_meta_df,
-#          icicibank_df, icicibank_meta_df,
-#          reliance_df, reliance_meta_df,
-#          tcs_df, tcs_meta_df,
-#          hdfcbank_df, hdfcbank_meta_df) = fetch_and_store_stock_data(request)
-#         symbol_map = {
-#             "BHARTIARTL.BSE": bhartiartl_df,
-#             "ICICIBANK.BSE": icicibank_df,
-#             "RELIANCE.BSE": reliance_df,
-#             "TCS.BSE": tcs_df,
-#             "HDFCBANK.BSE": hdfcbank_df
-#         }
-#         df = symbol_map.get(symbol, bhartiartl_df)  # default to bhartiartl_df if not found
-#
-#         # Train each model and collect results
-#         linear_model, linear_predictions, y_test, lm_mse, _, df1, df_with_predictions = train_linear_model_hyper_tuning(df, fit_intercept)
-#         # decision_tree_model, dt_predictions, dt_mse = train_decision_tree_hyper_tuning(df, max_depth, criterion)
-#         # random_forest_model, rf_predictions, rf_mse = train_random_forest_hyper_tuning(df, n_estimators, rf_max_depth)
-#         # svm_model, svm_predictions, svm_mse = train_svm_hyper_tuning(df, kernel, C)
-#         # lstm_model, lstm_predictions, lstm_mse = train_lstm_hyper_tuning(df, lstm_units, epochs)
-#
-#         # Save predictions in the database
-#         # save_predictions_to_db_hyper_tuning(symbol, linear_predictions, dt_predictions, rf_predictions, svm_predictions, lstm_predictions)
-#
-#         # Prepare the chart or result to display
-#         chart_html = create_chart(df_with_predictions)
-#
-#         return render(request, 'Hyperparameter_model_training.html', {
-#             'form': form,
-#             'chart_html': chart_html
-#         })
-#
-#     return render(request, 'recommendations/Hyperparameter_model_training.html', {'form': form})
