@@ -1,13 +1,11 @@
 import shap
 import numpy as np
+
+from sklearn.svm import SVR
 import matplotlib
+
 matplotlib.use('Agg')  # must be set before importing pyplot
 import matplotlib.pyplot as plt
-from sklearn.svm import SVR
-from sklearn.linear_model import LinearRegression
-from sklearn.tree import DecisionTreeRegressor
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.preprocessing import StandardScaler
 
 
 def generate_model_explainability(model, X_train, X_test, stock_name):

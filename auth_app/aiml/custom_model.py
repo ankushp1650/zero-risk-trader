@@ -10,6 +10,8 @@ from sklearn.preprocessing import StandardScaler
 from io import BytesIO
 import base64
 import pandas as pd
+import matplotlib
+matplotlib.use('Agg')  # must be set before importing pyplot
 import matplotlib.pyplot as plt
 from sklearn.metrics import r2_score, mean_squared_error
 from keras.models import Sequential
@@ -30,9 +32,9 @@ import numpy as np
 #     return X_train, X_test, y_train, y_test
 
 def train_test_data(df):
-    print(df.columns)
-    print(df.dtypes)
-    print("Original df tail:\n", df.head(3)[['Date', 'Close']])
+    # print(df.columns)
+    # print(df.dtypes)
+    # print("Original df tail:\n", df.head(3)[['Date', 'Close']])
 
     # Convert 'Date' to datetime and set as index
     if 'Date' in df.columns:
