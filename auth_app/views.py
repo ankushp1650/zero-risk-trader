@@ -997,13 +997,19 @@ def terms_and_conditions(request):
 
 @login_required
 def recommendations_view(request):
+    print("Request user:", request.user)
+
     # transfer_transactions_to_user_trade()
     # user_trades = UserTrade.objects.filter(user=request.user)
-    try:
-        df1, df2, df3, df4_unused = predict_df(request)
-    except Exception as e:
-        print("predict_df error:", e)
-        return HttpResponse("Prediction function error", status=500)
+    # try:
+    df1, df2, df3, df4_unused = predict_df(request)
+    # except Exception as e:
+        # print("predict_df error:", e)
+        # return HttpResponse("Prediction function error", status=500)
+    print("df1 length:", len(df1))
+    print("df2 length:", len(df2))
+    print("df3 length:", len(df3))
+    print("df4 length:", len(df4_unused))
 
     def safe_float(val):
         return None if pd.isna(val) or val == '' else float(val)

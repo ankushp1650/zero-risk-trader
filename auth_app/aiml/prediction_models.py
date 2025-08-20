@@ -10,7 +10,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error
 import numpy as np
 from auth_app.models import LSTMModelStorage
-
+from tensorflow.keras import backend as K
 
 def train_linear_model(df):
     df1 = df[['Low', 'Open', 'High', 'Close']].iloc[0:1]
@@ -137,8 +137,8 @@ def train_lstm_model(stock_df, sequence_length=60):
     model.fit(x_train, y_train, epochs=5, batch_size=32, verbose=0)
 
     # Step 4: Predict
-    predictions = model.predict(x_test)
-
+    # predictions = model.predict(x_test)
+    predictions = model.predict(x_test, batch_size=32, verbose=0)
     # Step 5: Align predictions with stock_df
     prediction_start_index = sequence_length + split_index
     prediction_indices = stock_df.index[prediction_start_index:prediction_start_index + len(predictions)]
@@ -153,7 +153,7 @@ def train_lstm_model(stock_df, sequence_length=60):
     # Calculate MSE in original scale
     actuals_rescaled = scaler.inverse_transform(y_test.reshape(-1, 1))
     mse = mean_squared_error(actuals_rescaled, predictions_rescaled)
-
+    K.clear_session()
     return model, scaler, sequence_length, mse, stock_df
 
 
