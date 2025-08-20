@@ -9,8 +9,13 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error
 import numpy as np
+import matplotlib
+
+matplotlib.use('Agg')  # must be set before importing pyplot
+import matplotlib.pyplot as plt
 from auth_app.models import LSTMModelStorage
 from tensorflow.keras import backend as K
+
 
 def train_linear_model(df):
     df1 = df[['Low', 'Open', 'High', 'Close']].iloc[0:1]
@@ -104,16 +109,26 @@ def train_svm_model(stock_df):
 
 
 def train_lstm_model(stock_df, sequence_length=60):
+    import numpy as np
     from sklearn.preprocessing import MinMaxScaler
     from sklearn.metrics import mean_squared_error
     from keras.models import Sequential
     from keras.layers import LSTM, Dense
+    from keras import backend as K
+
+    # Ensure enough data
+    if 'Close' not in stock_df.columns or len(stock_df) < 2:
+        raise ValueError("Not enough data to train LSTM.")
+
+    # Auto-adjust sequence_length for small datasets
+    sequence_length = min(sequence_length, max(5, len(stock_df) - 1))
 
     # Step 1: Scale data
     data = stock_df['Close'].values.reshape(-1, 1)
     scaler = MinMaxScaler()
     scaled_data = scaler.fit_transform(data)
 
+    # Prepare training data
     x, y = [], []
     for i in range(sequence_length, len(scaled_data)):
         x.append(scaled_data[i - sequence_length:i, 0])
@@ -123,37 +138,45 @@ def train_lstm_model(stock_df, sequence_length=60):
     y = np.array(y)
     x = x.reshape((x.shape[0], x.shape[1], 1))
 
+    if len(x) < 5:
+        raise ValueError("Not enough samples after preprocessing to train LSTM.")
+
     # Step 2: Train/Test split (80/20)
     split_index = int(len(x) * 0.8)
     x_train, x_test = x[:split_index], x[split_index:]
     y_train, y_test = y[:split_index], y[split_index:]
 
+    # Adjust LSTM units and batch size based on dataset size
+    units = min(50, max(10, len(x_train) // 2))
+    batch_size = min(32, len(x_train))
+
     # Step 3: Build LSTM model
     model = Sequential()
-    model.add(LSTM(50, return_sequences=True, input_shape=(x_train.shape[1], 1)))
-    model.add(LSTM(50))
+    model.add(LSTM(units, return_sequences=True, input_shape=(x_train.shape[1], 1)))
+    model.add(LSTM(units))
     model.add(Dense(1))
     model.compile(optimizer='adam', loss='mean_squared_error')
-    model.fit(x_train, y_train, epochs=5, batch_size=32, verbose=0)
+    model.fit(x_train, y_train, epochs=5, batch_size=batch_size, verbose=0)
 
     # Step 4: Predict
-    # predictions = model.predict(x_test)
-    predictions = model.predict(x_test, batch_size=32, verbose=0)
+    predictions = model.predict(x_test, batch_size=batch_size, verbose=0)
+
     # Step 5: Align predictions with stock_df
     prediction_start_index = sequence_length + split_index
     prediction_indices = stock_df.index[prediction_start_index:prediction_start_index + len(predictions)]
-
-    # Convert predictions back from scaled to original values
     predictions_rescaled = scaler.inverse_transform(predictions)
 
-    # Create new column and fill predictions
+    # Fill predictions in dataframe
     stock_df['LSTM_Model'] = np.nan
     stock_df.loc[prediction_indices, 'LSTM_Model'] = predictions_rescaled.flatten()
 
-    # Calculate MSE in original scale
+    # Step 6: Calculate MSE
     actuals_rescaled = scaler.inverse_transform(y_test.reshape(-1, 1))
     mse = mean_squared_error(actuals_rescaled, predictions_rescaled)
+
+    # Clear session
     K.clear_session()
+
     return model, scaler, sequence_length, mse, stock_df
 
 
