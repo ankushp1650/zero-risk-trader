@@ -1,5 +1,7 @@
 import shap
 import numpy as np
+import matplotlib
+matplotlib.use('Agg')  # must be set before importing pyplot
 import matplotlib.pyplot as plt
 from sklearn.svm import SVR
 from sklearn.linear_model import LinearRegression
