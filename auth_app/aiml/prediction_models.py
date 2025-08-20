@@ -9,12 +9,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error
 import numpy as np
-import matplotlib
-
-matplotlib.use('Agg')  # must be set before importing pyplot
-import matplotlib.pyplot as plt
 from auth_app.models import LSTMModelStorage
-from tensorflow.keras import backend as K
 
 
 def train_linear_model(df):
