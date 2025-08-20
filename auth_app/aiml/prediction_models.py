@@ -108,7 +108,7 @@ def train_svm_model(stock_df):
     return model, scaler, X_train_df, X_test_df, mse_svm, stock_df
 
 
-def train_lstm_model(stock_df, sequence_length=60):
+def train_lstm_model(stock_df, sequence_length=10):
     import numpy as np
     from sklearn.preprocessing import MinMaxScaler
     from sklearn.metrics import mean_squared_error
@@ -183,7 +183,7 @@ def train_lstm_model(stock_df, sequence_length=60):
 # STEP 2: Save to DB
 
 # Save LSTM model and scaler to DB for a specific user and stock
-def save_lstm_to_db(request, stock_name, model, scaler, sequence_length=60, description=""):
+def save_lstm_to_db(request, stock_name, model, scaler, sequence_length=10, description=""):
     model_buffer = io.BytesIO()
     scaler_buffer = io.BytesIO()
 
@@ -215,7 +215,7 @@ def load_lstm_from_db(request, stock_name):
 
 
 # STEP 4: Predict next day
-def predict_next_day_lstm(model, scaler, stock_df, sequence_length=60):
+def predict_next_day_lstm(model, scaler, stock_df, sequence_length=10):
     last_data = stock_df['Close'].values[-sequence_length:].reshape(-1, 1)
     scaled_last_data = scaler.transform(last_data)
     X_test = np.reshape(scaled_last_data, (1, sequence_length, 1))
