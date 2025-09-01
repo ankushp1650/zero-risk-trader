@@ -76,14 +76,14 @@ def train_test_data(df):
     X_test = X.iloc[split_index:]
     y_train = y.iloc[:split_index]
     y_test = y.iloc[split_index:]
-    print("X_train")
-    print(X_train.head(3))
-    print("y_train")
-    print(y_train.head(3))
-    print("X_test")
-    print(X_test.head(3))
-    print("y_test")
-    print(y_test.head(3))
+    # print("X_train")
+    # print(X_train.head(3))
+    # print("y_train")
+    # print(y_train.head(3))
+    # print("X_test")
+    # print(X_test.head(3))
+    # print("y_test")
+    # print(y_test.head(3))
 
     return X_train, X_test, y_train, y_test
 
@@ -522,157 +522,159 @@ def svm_hyper_tuning_chart(X_train, X_test, y_train, y_test, kernel, C, epsilon,
     importance_chart_svm = fig_to_base64(fig_imp)
 
     return main_chart_svm, importance_chart_svm, summary_svm_df
-def lstm_hyper_tuning_chart(X_train, X_test, y_train, y_test,
-                            lstm_units, epochs, batch_size,
-                            learning_rate, dropout, optimizer, num_layers,
-                            loss_function, activation_function, stock_name):
-    import pandas as pd
-    import numpy as np
-    import matplotlib.pyplot as plt
-    from keras.models import Sequential
-    from keras.layers import LSTM, Dense, Dropout
-    from keras.optimizers import Adam, SGD, RMSprop
-    from keras.losses import MeanSquaredError, MeanAbsoluteError
-    from keras.callbacks import EarlyStopping
-    from sklearn.metrics import r2_score, mean_squared_error
-    from keras import backend as K
 
-    # ----------------------------
-    # 1. Convert data to numeric
-    # ----------------------------
-    for col in ['Open', 'High', 'Low', 'Close', 'Volume']:
-        if col in X_train.columns:
-            X_train[col] = pd.to_numeric(X_train[col], errors='coerce')
-        if col in X_test.columns:
-            X_test[col] = pd.to_numeric(X_test[col], errors='coerce')
-
-    y_train = pd.to_numeric(y_train, errors='coerce')
-    y_test = pd.to_numeric(y_test, errors='coerce')
-
-    # Drop NaNs and align
-    X_train = X_train.dropna()
-    y_train = y_train.loc[X_train.index]
-    X_test = X_test.dropna()
-    y_test = y_test.loc[X_test.index]
-
-    # ----------------------------
-    # 2. Convert to numpy and reshape
-    # ----------------------------
-    X_train = X_train.values.reshape((X_train.shape[0], 1, X_train.shape[1])).astype(np.float32)
-    X_test = X_test.values.reshape((X_test.shape[0], 1, X_test.shape[1])).astype(np.float32)
-    y_train = np.array(y_train, dtype=np.float32)
-    y_test_values = np.array(y_test, dtype=np.float32)  # keep y_test index separately
-
-    # ----------------------------
-    # 3. Optimizer & Loss
-    # ----------------------------
-    opt = {
-        'adam': Adam(learning_rate=learning_rate),
-        'sgd': SGD(learning_rate=learning_rate)
-    }.get(optimizer.lower(), RMSprop(learning_rate=learning_rate))
-
-    loss = MeanSquaredError() if loss_function.lower() == 'mse' else MeanAbsoluteError()
-
-    # ----------------------------
-    # 4. Build LSTM model
-    # ----------------------------
-    model = Sequential()
-    for i in range(num_layers):
-        return_seq = i < num_layers - 1
-        model.add(LSTM(units=lstm_units,
-                       activation=activation_function,
-                       return_sequences=return_seq,
-                       input_shape=(X_train.shape[1], X_train.shape[2]) if i == 0 else None))
-        model.add(Dropout(dropout))
-    model.add(Dense(1))
-    model.compile(optimizer=opt, loss=loss)
-
-    # ----------------------------
-    # 5. Train model
-    # ----------------------------
-    early_stop = EarlyStopping(monitor='val_loss', patience=10, restore_best_weights=True)
-    history = model.fit(X_train, y_train,
-                        epochs=epochs,
-                        batch_size=batch_size,
-                        validation_data=(X_test, y_test_values),
-                        callbacks=[early_stop],
-                        verbose=0)
-
-    # ----------------------------
-    # 6. Predictions & Metrics
-    # ----------------------------
-    predictions = model.predict(X_test).flatten()
-
-    r2 = r2_score(y_test_values, predictions)
-    mse = mean_squared_error(y_test_values, predictions)
-    rmse = np.sqrt(mse)
-
-    # Use your evaluate_model_metrics function if exists
-    avg_error, normalized_score, success_rate, directional_success = evaluate_model_metrics(
-        y_test_values, predictions, rmse
-    )
-
-    # ----------------------------
-    # 7. Summary DataFrame
-    # ----------------------------
-    summary_lstm_df = pd.DataFrame([{
-        'Stock': stock_name,
-        'Model': "LSTM",
-        'Index': y_test.index[0].strftime('%Y-%m-%d'),
-        'Actual_Close': y_test_values[0],
-        'Predicted_Close': predictions[0],
-        'R2': r2,
-        'MSE': mse,
-        'RMSE': rmse,
-        'Success_Rate': success_rate,
-        'Directional_Success': directional_success,
-        'Avg_Error': avg_error,
-        'Normalized_Score': normalized_score,
-        'Best_Model': False
-    }])
-
-    # ----------------------------
-    # 8. Plotting
-    # ----------------------------
-    fig, axs = plt.subplots(2, 2, figsize=(12, 10))
-
-    # Actual vs Predicted
-    axs[0, 0].plot(range(len(y_test_values)), y_test_values, label='Actual', color='blue', linewidth=2)
-    axs[0, 0].plot(range(len(predictions)), predictions, label='Predicted', color='red', linestyle='--', linewidth=2)
-    axs[0, 0].set_title(f'LSTM Prediction\nUnits={lstm_units}, Epochs={epochs}, Batch={batch_size}, LR={learning_rate}, Dropout={dropout}, Layers={num_layers}', fontsize=10)
-    axs[0, 0].legend()
-    axs[0, 0].grid(True)
-    axs[0, 0].text(0.05, 0.95, f"R² = {r2:.3f}", transform=axs[0, 0].transAxes)
-    axs[0, 0].text(0.05, 0.90, f"MSE = {mse:.3f}", transform=axs[0, 0].transAxes)
-    axs[0, 0].text(0.05, 0.85, f"RMSE = {rmse:.3f}", transform=axs[0, 0].transAxes)
-
-    # Scatter plot
-    axs[0, 1].scatter(y_test_values, predictions, alpha=0.6, color='green', edgecolors='black', linewidth=0.5)
-    min_val = min(min(y_test_values), min(predictions))
-    max_val = max(max(y_test_values), max(predictions))
-    axs[0, 1].plot([min_val, max_val], [min_val, max_val], color='gray', linestyle='--')
-    axs[0, 1].set_title('Predicted vs Actual Prices (LSTM)', fontsize=13)
-    axs[0, 1].grid(True)
-
-    # Loss over epochs
-    axs[1, 0].plot(history.history['loss'], label='Train Loss', color='blue', linestyle='-', linewidth=2)
-    axs[1, 0].plot(history.history['val_loss'], label='Validation Loss', color='red', linestyle='--', linewidth=2)
-    axs[1, 0].set_title('Model Loss over Epochs', fontsize=13)
-    axs[1, 0].legend()
-    axs[1, 0].grid(True)
-
-    # Placeholder for feature importance
-    axs[1, 1].text(0.5, 0.5, "LSTM does not support feature importance directly.\nUse SHAP or similar techniques.",
-                   ha='center', va='center', fontsize=12, color='gray')
-    axs[1, 1].axis('off')
-
-    plt.tight_layout()
-    main_chart_lstm = fig_to_base64(fig)
-
-    # Clear session to prevent memory issues
-    K.clear_session()
-
-    return main_chart_lstm, summary_lstm_df
+#
+# def lstm_hyper_tuning_chart(X_train, X_test, y_train, y_test,
+#                             lstm_units, epochs, batch_size,
+#                             learning_rate, dropout, optimizer, num_layers,
+#                             loss_function, activation_function, stock_name):
+#     import pandas as pd
+#     import numpy as np
+#     import matplotlib.pyplot as plt
+#     from keras.models import Sequential
+#     from keras.layers import LSTM, Dense, Dropout
+#     from keras.optimizers import Adam, SGD, RMSprop
+#     from keras.losses import MeanSquaredError, MeanAbsoluteError
+#     from keras.callbacks import EarlyStopping
+#     from sklearn.metrics import r2_score, mean_squared_error
+#     from keras import backend as K
+#
+#     # ----------------------------
+#     # 1. Convert data to numeric
+#     # ----------------------------
+#     for col in ['Open', 'High', 'Low', 'Close', 'Volume']:
+#         if col in X_train.columns:
+#             X_train[col] = pd.to_numeric(X_train[col], errors='coerce')
+#         if col in X_test.columns:
+#             X_test[col] = pd.to_numeric(X_test[col], errors='coerce')
+#
+#     y_train = pd.to_numeric(y_train, errors='coerce')
+#     y_test = pd.to_numeric(y_test, errors='coerce')
+#
+#     # Drop NaNs and align
+#     X_train = X_train.dropna()
+#     y_train = y_train.loc[X_train.index]
+#     X_test = X_test.dropna()
+#     y_test = y_test.loc[X_test.index]
+#
+#     # ----------------------------
+#     # 2. Convert to numpy and reshape
+#     # ----------------------------
+#     X_train = X_train.values.reshape((X_train.shape[0], 1, X_train.shape[1])).astype(np.float32)
+#     X_test = X_test.values.reshape((X_test.shape[0], 1, X_test.shape[1])).astype(np.float32)
+#     y_train = np.array(y_train, dtype=np.float32)
+#     y_test_values = np.array(y_test, dtype=np.float32)  # keep y_test index separately
+#
+#     # ----------------------------
+#     # 3. Optimizer & Loss
+#     # ----------------------------
+#     opt = {
+#         'adam': Adam(learning_rate=learning_rate),
+#         'sgd': SGD(learning_rate=learning_rate)
+#     }.get(optimizer.lower(), RMSprop(learning_rate=learning_rate))
+#
+#     loss = MeanSquaredError() if loss_function.lower() == 'mse' else MeanAbsoluteError()
+#
+#     # ----------------------------
+#     # 4. Build LSTM model
+#     # ----------------------------
+#     model = Sequential()
+#     for i in range(num_layers):
+#         return_seq = i < num_layers - 1
+#         model.add(LSTM(units=lstm_units,
+#                        activation=activation_function,
+#                        return_sequences=return_seq,
+#                        input_shape=(X_train.shape[1], X_train.shape[2]) if i == 0 else None))
+#         model.add(Dropout(dropout))
+#     model.add(Dense(1))
+#     model.compile(optimizer=opt, loss=loss)
+#
+#     # ----------------------------
+#     # 5. Train model
+#     # ----------------------------
+#     early_stop = EarlyStopping(monitor='val_loss', patience=10, restore_best_weights=True)
+#     history = model.fit(X_train, y_train,
+#                         epochs=epochs,
+#                         batch_size=batch_size,
+#                         validation_data=(X_test, y_test_values),
+#                         callbacks=[early_stop],
+#                         verbose=0)
+#
+#     # ----------------------------
+#     # 6. Predictions & Metrics
+#     # ----------------------------
+#     predictions = model.predict(X_test).flatten()
+#
+#     r2 = r2_score(y_test_values, predictions)
+#     mse = mean_squared_error(y_test_values, predictions)
+#     rmse = np.sqrt(mse)
+#
+#     # Use your evaluate_model_metrics function if exists
+#     avg_error, normalized_score, success_rate, directional_success = evaluate_model_metrics(
+#         y_test_values, predictions, rmse
+#     )
+#
+#     # ----------------------------
+#     # 7. Summary DataFrame
+#     # ----------------------------
+#     summary_lstm_df = pd.DataFrame([{
+#         'Stock': stock_name,
+#         'Model': "LSTM",
+#         'Index': y_test.index[0].strftime('%Y-%m-%d'),
+#         'Actual_Close': y_test_values[0],
+#         'Predicted_Close': predictions[0],
+#         'R2': r2,
+#         'MSE': mse,
+#         'RMSE': rmse,
+#         'Success_Rate': success_rate,
+#         'Directional_Success': directional_success,
+#         'Avg_Error': avg_error,
+#         'Normalized_Score': normalized_score,
+#         'Best_Model': False
+#     }])
+#
+#     # ----------------------------
+#     # 8. Plotting
+#     # ----------------------------
+#     fig, axs = plt.subplots(2, 2, figsize=(12, 10))
+#
+#     # Actual vs Predicted
+#     axs[0, 0].plot(range(len(y_test_values)), y_test_values, label='Actual', color='blue', linewidth=2)
+#     axs[0, 0].plot(range(len(predictions)), predictions, label='Predicted', color='red', linestyle='--', linewidth=2)
+#     axs[0, 0].set_title(f'LSTM Prediction\nUnits={lstm_units}, Epochs={epochs}, Batch={batch_size}, LR={learning_rate}, Dropout={dropout}, Layers={num_layers}', fontsize=10)
+#     axs[0, 0].legend()
+#     axs[0, 0].grid(True)
+#     axs[0, 0].text(0.05, 0.95, f"R² = {r2:.3f}", transform=axs[0, 0].transAxes)
+#     axs[0, 0].text(0.05, 0.90, f"MSE = {mse:.3f}", transform=axs[0, 0].transAxes)
+#     axs[0, 0].text(0.05, 0.85, f"RMSE = {rmse:.3f}", transform=axs[0, 0].transAxes)
+#
+#     # Scatter plot
+#     axs[0, 1].scatter(y_test_values, predictions, alpha=0.6, color='green', edgecolors='black', linewidth=0.5)
+#     min_val = min(min(y_test_values), min(predictions))
+#     max_val = max(max(y_test_values), max(predictions))
+#     axs[0, 1].plot([min_val, max_val], [min_val, max_val], color='gray', linestyle='--')
+#     axs[0, 1].set_title('Predicted vs Actual Prices (LSTM)', fontsize=13)
+#     axs[0, 1].grid(True)
+#
+#     # Loss over epochs
+#     axs[1, 0].plot(history.history['loss'], label='Train Loss', color='blue', linestyle='-', linewidth=2)
+#     axs[1, 0].plot(history.history['val_loss'], label='Validation Loss', color='red', linestyle='--', linewidth=2)
+#     axs[1, 0].set_title('Model Loss over Epochs', fontsize=13)
+#     axs[1, 0].legend()
+#     axs[1, 0].grid(True)
+#
+#     # Placeholder for feature importance
+#     axs[1, 1].text(0.5, 0.5, "LSTM does not support feature importance directly.\nUse SHAP or similar techniques.",
+#                    ha='center', va='center', fontsize=12, color='gray')
+#     axs[1, 1].axis('off')
+#
+#     plt.tight_layout()
+#     main_chart_lstm = fig_to_base64(fig)
+#
+#     # Clear session to prevent memory issues
+#     K.clear_session()
+#
+#     return main_chart_lstm, summary_lstm_df
 
 #
 # def lstm_hyper_tuning_chart(X_train, X_test, y_train, y_test,
