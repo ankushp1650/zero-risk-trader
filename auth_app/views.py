@@ -1203,8 +1203,7 @@ def predict_df(request):
         decision_tree_model, decision_mse, dt_df = train_decision_tree_model(stock_df)
         random_forest_model, X_train, X_test, rf_mse, rf_df = train_random_forest_model(stock_df)
         svm_model, svm_scaler, X_train_df, X_test_df, mse_svm, svm_df = train_svm_model(stock_df)
-        lstm_model, lstm_scaler, lstm_sequence_length, lstm_mse, lstm_df = train_lstm_model(stock_df, stock_name,
-                                                                                            sequence_length=60)
+        lstm_model, lstm_scaler, lstm_sequence_length, lstm_mse, lstm_df = train_lstm_model(stock_df)
 
         save_lstm_to_db(request, stock_name, lstm_model, lstm_scaler)
         lstm_modell, lstm_scalerr, sequence_length = load_lstm_from_db(request, stock_name)
