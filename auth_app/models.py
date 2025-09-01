@@ -161,7 +161,6 @@ class StockPrediction(models.Model):
     close = models.FloatField()
 
     linear_model = models.FloatField()
-    lstm_model = models.FloatField()
     decision_tree_model = models.FloatField()
     random_forest_model = models.FloatField()
     svm_model = models.FloatField()
@@ -189,10 +188,6 @@ class StockPerformance(models.Model):
     svm_model_success_rate = models.FloatField()
     svm_model_directional_success_rate = models.FloatField()
     svm_model_avg_error = models.FloatField()
-
-    lstm_model_success_rate = models.FloatField()
-    lstm_model_directional_success_rate = models.FloatField()
-    lstm_model_avg_error = models.FloatField()
 
 
 class BestModelRecord(models.Model):
