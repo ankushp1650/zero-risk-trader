@@ -142,58 +142,58 @@ class HyperparameterForm(forms.Form):
         widget=forms.Select(),
         initial='0.0'
     )
-
-    # LSTM
-    lstm_units = forms.ChoiceField(
-        choices=int_choices(16, 512, 16),  # e.g., 16, 32, ..., 512
-        initial=32,
-        widget=forms.Select()
-    )
-
-    epochs = forms.ChoiceField(
-        choices=int_choices(10, 1000, 10),  # e.g., 10, 20, ..., 1000
-        initial=20,
-        widget=forms.Select()
-    )
-
-    batch_size = forms.ChoiceField(
-        choices=int_choices(8, 512, 8),  # e.g., 8, 16, ..., 512
-        initial=32,
-        widget=forms.Select()
-    )
-
-    num_layers = forms.ChoiceField(
-        choices=int_choices(1, 5),
-        initial=1,
-        widget=forms.Select()
-    )
-
-    learning_rate = forms.ChoiceField(
-        choices=[(str(v), str(v)) for v in [0.0001, 0.0005, 0.001, 0.005, 0.01, 0.05, 0.1]],
-        initial='0.001',
-        widget=forms.Select()
-    )
-
-    dropout = forms.ChoiceField(
-        choices=[(str(v), str(v)) for v in [0.0, 0.1, 0.2, 0.3, 0.4, 0.5]],
-        initial='0.2',
-        widget=forms.Select()
-    )
-
-    optimizer = forms.ChoiceField(
-        choices=[('adam', 'Adam'), ('sgd', 'SGD'), ('rmsprop', 'RMSProp')],
-        initial='adam',
-        widget=forms.Select()
-    )
-
-    loss_function = forms.ChoiceField(
-        choices=[('mse', 'Mean Squared Error'), ('mae', 'Mean Absolute Error')],
-        initial='mse',
-        widget=forms.Select()
-    )
-
-    activation_function = forms.ChoiceField(
-        choices=[('linear', 'Linear'), ('relu', 'ReLU'), ('sigmoid', 'Sigmoid')],
-        initial='linear',
-        widget=forms.Select()
-    )
+    #
+    # # LSTM
+    # lstm_units = forms.ChoiceField(
+    #     choices=int_choices(16, 512, 16),  # e.g., 16, 32, ..., 512
+    #     initial=32,
+    #     widget=forms.Select()
+    # )
+    #
+    # epochs = forms.ChoiceField(
+    #     choices=int_choices(10, 1000, 10),  # e.g., 10, 20, ..., 1000
+    #     initial=20,
+    #     widget=forms.Select()
+    # )
+    #
+    # batch_size = forms.ChoiceField(
+    #     choices=int_choices(8, 512, 8),  # e.g., 8, 16, ..., 512
+    #     initial=32,
+    #     widget=forms.Select()
+    # )
+    #
+    # num_layers = forms.ChoiceField(
+    #     choices=int_choices(1, 5),
+    #     initial=1,
+    #     widget=forms.Select()
+    # )
+    #
+    # learning_rate = forms.ChoiceField(
+    #     choices=[(str(v), str(v)) for v in [0.0001, 0.0005, 0.001, 0.005, 0.01, 0.05, 0.1]],
+    #     initial='0.001',
+    #     widget=forms.Select()
+    # )
+    #
+    # dropout = forms.ChoiceField(
+    #     choices=[(str(v), str(v)) for v in [0.0, 0.1, 0.2, 0.3, 0.4, 0.5]],
+    #     initial='0.2',
+    #     widget=forms.Select()
+    # )
+    #
+    # optimizer = forms.ChoiceField(
+    #     choices=[('adam', 'Adam'), ('sgd', 'SGD'), ('rmsprop', 'RMSProp')],
+    #     initial='adam',
+    #     widget=forms.Select()
+    # )
+    #
+    # loss_function = forms.ChoiceField(
+    #     choices=[('mse', 'Mean Squared Error'), ('mae', 'Mean Absolute Error')],
+    #     initial='mse',
+    #     widget=forms.Select()
+    # )
+    #
+    # activation_function = forms.ChoiceField(
+    #     choices=[('linear', 'Linear'), ('relu', 'ReLU'), ('sigmoid', 'Sigmoid')],
+    #     initial='linear',
+    #     widget=forms.Select()
+    # )

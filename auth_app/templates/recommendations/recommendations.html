@@ -256,7 +256,7 @@
                         <th>Decision Tree Model</th>
                         <th>Random Forest Model</th>
                         <th>SVM Model</th>
-                        <th>LSTM Model</th>
+<!--                        <th>LSTM Model</th>-->
                     </tr>
                 </thead>
                 <tbody>
@@ -274,7 +274,7 @@
                             <td>{{ entry.Decision_Tree_Model|floatformat:2 }}</td>
                             <td>{{ entry.Random_Forest_Model|floatformat:2 }}</td>
                             <td>{{ entry.SVM_Model|floatformat:2 }}</td>
-                            <td>{{ entry.LSTM_Model|floatformat:2 }}</td>
+<!--                            <td>{{ entry.LSTM_Model|floatformat:2 }}</td>-->
                         </tr>
                     {% endfor %}
                 </tbody>
@@ -287,7 +287,7 @@
                     <li><strong>Decision Tree:</strong> Splits data into decision paths for prediction.</li>
                     <li><strong>Random Forest:</strong> Uses multiple trees for robust prediction.</li>
                     <li><strong>SVM:</strong> Classifies directional trends based on hyperplanes.</li>
-                    <li><strong>LSTM:</strong> Learns patterns over time for time-series forecasting.</li>
+<!--                    <li><strong>LSTM:</strong> Learns patterns over time for time-series forecasting.</li>-->
                 </ul>
             </div>
         </div>
@@ -318,9 +318,9 @@
                         <th>SVM Error</th>
                         <th>SVM Directional %</th>
                         <th>SVM Success %</th>
-                        <th>LSTM Error</th>
-                        <th>LSTM Directional %</th>
-                        <th>LSTM Success %</th>
+<!--                        <th>LSTM Error</th>-->
+<!--                        <th>LSTM Directional %</th>-->
+<!--                        <th>LSTM Success %</th>-->
                     </tr>
                 </thead>
                 <tbody>
@@ -340,9 +340,9 @@
                             <td>{{ recommendation.svm_model_avg_error|floatformat:2 }}</td>
                             <td>{{ recommendation.svm_model_directional_success_rate|floatformat:2 }}</td>
                             <td>{{ recommendation.svm_model_success_rate|floatformat:2 }}</td>
-                            <td>{{ recommendation.lstm_model_avg_error|floatformat:2 }}</td>
-                            <td>{{ recommendation.lstm_model_directional_success_rate|floatformat:2 }}</td>
-                            <td>{{ recommendation.lstm_model_success_rate|floatformat:2 }}</td>
+<!--                            <td>{{ recommendation.lstm_model_avg_error|floatformat:2 }}</td>-->
+<!--                            <td>{{ recommendation.lstm_model_directional_success_rate|floatformat:2 }}</td>-->
+<!--                            <td>{{ recommendation.lstm_model_success_rate|floatformat:2 }}</td>-->
                         </tr>
                     {% endfor %}
                 </tbody>

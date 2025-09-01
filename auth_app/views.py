@@ -3,6 +3,7 @@ from decimal import Decimal
 
 import pandas as pd
 import matplotlib
+
 matplotlib.use('Agg')  # must be set before importing pyplot
 import matplotlib.pyplot as plt
 
@@ -14,9 +15,9 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout
 from auth_project.settings import EMAIL_HOST_USER
 from .aiml.prediction_models import train_linear_model, predict_next_day, train_decision_tree_model, \
-    train_random_forest_model, train_svm_model, predict_next_day_svm, train_lstm_model, predict_next_day_lstm, \
-    save_lstm_to_db, load_lstm_from_db, calculate_model_scores, calculate_success_rate, \
+    train_random_forest_model, train_svm_model, predict_next_day_svm, calculate_model_scores, calculate_success_rate, \
     calculate_directional_success_rate, calculate_avg_error
+# , train_lstm_model, predict_next_day_lstm, save_lstm_to_db, load_lstm_from_db,
 from .custom_utils.explainability import generate_model_explainability
 from .custom_utils.fetching import get_daily_time_series
 from .custom_utils.graphs import generate_graphs, bar_chart_view, pie_chart_view, line_chart_view, quantity_bar_graph, \
@@ -1012,13 +1013,14 @@ def recommendations_view(request):
     # user_trades = UserTrade.objects.filter(user=request.user)
     # try:
     df1, df2, df3, df4_unused = predict_df(request)
+
     # except Exception as e:
     # print("predict_df error:", e)
     # return HttpResponse("Prediction function error", status=500)
-    print("df1 length:", len(df1))
-    print("df2 length:", len(df2))
-    print("df3 length:", len(df3))
-    print("df4 length:", len(df4_unused))
+    # print("df1 length:", len(df1))
+    # print("df2 length:", len(df2))
+    # print("df3 length:", len(df3))
+    # print("df4 length:", len(df4_unused))
 
     def safe_float(val):
         return None if pd.isna(val) or val == '' else float(val)
@@ -1037,7 +1039,7 @@ def recommendations_view(request):
             high=safe_float(entry['High']),
             close=safe_float(entry['Close']),
             linear_model=safe_float(entry['Linear_Model']),
-            lstm_model=safe_float(entry['LSTM_Model']),
+            # lstm_model=safe_float(entry['LSTM_Model']),
             decision_tree_model=safe_float(entry['Decision_Tree_Model']),
             random_forest_model=safe_float(entry['Random_Forest_Model']),
             svm_model=safe_float(entry['SVM_Model'])
@@ -1065,9 +1067,9 @@ def recommendations_view(request):
             svm_model_success_rate=safe_float(entry['SVM_Model_Success_Rate']),
             svm_model_directional_success_rate=safe_float(entry['SVM_Model_Directional_Success_Rate']),
             svm_model_avg_error=safe_float(entry['SVM_Model_Avg_Error']),
-            lstm_model_success_rate=safe_float(entry['LSTM_Model_Success_Rate']),
-            lstm_model_directional_success_rate=safe_float(entry['LSTM_Model_Directional_Success_Rate']),
-            lstm_model_avg_error=safe_float(entry['LSTM_Model_Avg_Error']),
+            # lstm_model_success_rate=safe_float(entry['LSTM_Model_Success_Rate']),
+            # lstm_model_directional_success_rate=safe_float(entry['LSTM_Model_Directional_Success_Rate']),
+            # lstm_model_avg_error=safe_float(entry['LSTM_Model_Avg_Error']),
         ))
     StockPerformance.objects.bulk_create(performances, ignore_conflicts=True)
 
@@ -1190,29 +1192,28 @@ def predict_df(request):
     # List of stock dataframes and their corresponding metadata
     stock_dfs = [bhartiartl_df, icicibank_df, reliance_df, tcs_df, hdfcbank_df]
     stock_meta_dfs = [bhartiartl_meta_df, icicibank_meta_df, reliance_meta_df, tcs_meta_df, hdfcbank_meta_df]
-    stock_names = ['BHARTIARTL_BSE', 'ICICIBANK_BSE', 'RELIANCE_BSE', 'TCS_BSE', 'HDFCBANK_BSE']
+    stock_names = ['Bharti Airtel', 'ICICI Bank', 'Reliance', 'TCS', 'HDFC Bank']
 
     # Initialize an empty list to store merged dataframes
     merged_dfs = []
 
     # Iterate over all the stock dataframes
     for stock_df, meta_df, stock_name in zip(stock_dfs, stock_meta_dfs, stock_names):
-
         # Train the models for the current stock
         linear_model, linear_predictions, actuals, mse, test_indices, df1, lm_df = train_linear_model(stock_df)
         decision_tree_model, decision_mse, dt_df = train_decision_tree_model(stock_df)
         random_forest_model, X_train, X_test, rf_mse, rf_df = train_random_forest_model(stock_df)
         svm_model, svm_scaler, X_train_df, X_test_df, mse_svm, svm_df = train_svm_model(stock_df)
-        lstm_model, lstm_scaler, lstm_sequence_length, lstm_mse, lstm_df = train_lstm_model(stock_df)
 
-        save_lstm_to_db(request, stock_name, lstm_model, lstm_scaler)
-        lstm_modell, lstm_scalerr, sequence_length = load_lstm_from_db(request, stock_name)
-        if lstm_modell is None:
-            lstm_modell, lstm_scalerr, seq_len = train_lstm_model(stock_df)
-            save_lstm_to_db(stock_name, lstm_modell, lstm_scalerr)
+        # lstm_model, lstm_scaler, lstm_sequence_length, lstm_mse, lstm_df = train_lstm_model(stock_df)
+        # save_lstm_to_db(request, stock_name, lstm_model, lstm_scaler)
+        # lstm_modell, lstm_scalerr, sequence_length = load_lstm_from_db(request, stock_name)
+        # if lstm_modell is None:
+        #     lstm_modell, lstm_scalerr, seq_len = train_lstm_model(stock_df)
+        #     save_lstm_to_db(stock_name, lstm_modell, lstm_scalerr)
 
-        next_day_prediction_lstm_model = predict_next_day_lstm(lstm_modell, lstm_scalerr, stock_df,
-                                                               lstm_sequence_length)
+        # next_day_prediction_lstm_model = predict_next_day_lstm(lstm_modell, lstm_scalerr, stock_df,
+        #                                                        lstm_sequence_length)
 
         # Predict the next day's value using the trained models
         next_day_prediction_linear_model = predict_next_day(linear_model, stock_df.iloc[1])
@@ -1236,9 +1237,9 @@ def predict_df(request):
         directional_success_rate_svm = calculate_directional_success_rate(svm_df, 'SVM_Model')
         avg_error_svm = calculate_avg_error(svm_df, 'SVM_Model')
 
-        success_rate_lstm = calculate_success_rate(lstm_df, 'LSTM_Model')
-        directional_success_rate_lstm = calculate_directional_success_rate(lstm_df, 'LSTM_Model')
-        avg_error_lstm = calculate_avg_error(lstm_df, 'LSTM_Model')
+        # success_rate_lstm = calculate_success_rate(lstm_df, 'LSTM_Model')
+        # directional_success_rate_lstm = calculate_directional_success_rate(lstm_df, 'LSTM_Model')
+        # avg_error_lstm = calculate_avg_error(lstm_df, 'LSTM_Model')
 
         # Only keep the necessary columns in the metadata DataFrame
         meta_df = meta_df[['Symbol', 'Last Refreshed']]
@@ -1255,7 +1256,7 @@ def predict_df(request):
         merged_df['Decision_Tree_Model'] = next_day_prediction_decision_tree_model
         merged_df['Random_Forest_Model'] = next_day_prediction_random_forest_model
         merged_df['SVM_Model'] = next_day_prediction_svm_model
-        merged_df['LSTM_Model'] = next_day_prediction_lstm_model
+        # merged_df['LSTM_Model'] = next_day_prediction_lstm_model
         merged_df['Stock_Name'] = stock_name
 
         # Add both success rate, directional success rate, and average error columns for each model
@@ -1275,9 +1276,9 @@ def predict_df(request):
         merged_df['SVM_Model_Directional_Success_Rate'] = directional_success_rate_svm
         merged_df['SVM_Model_Avg_Error'] = avg_error_svm
 
-        merged_df['LSTM_Model_Success_Rate'] = success_rate_lstm
-        merged_df['LSTM_Model_Directional_Success_Rate'] = directional_success_rate_lstm
-        merged_df['LSTM_Model_Avg_Error'] = avg_error_lstm
+        # merged_df['LSTM_Model_Success_Rate'] = success_rate_lstm
+        # merged_df['LSTM_Model_Directional_Success_Rate'] = directional_success_rate_lstm
+        # merged_df['LSTM_Model_Avg_Error'] = avg_error_lstm
 
         # Append the merged dataframe to the list
         merged_dfs.append(merged_df)
@@ -1294,8 +1295,8 @@ def predict_df(request):
         'Linear_Model',
         'Decision_Tree_Model',
         'Random_Forest_Model',
-        'SVM_Model',
-        'LSTM_Model'
+        'SVM_Model'
+        # ,'LSTM_Model'
     ]
     final_merged_df[round_columns] = final_merged_df[round_columns].round(2)
     # Drop the 'index' column
@@ -1313,7 +1314,7 @@ def predict_df(request):
 def generate_stock_visualizations_view(request):
     records = StockPrediction.objects.all().values(
         'stock_name', 'symbol', 'last_refreshed', 'date', 'low', 'open', 'high', 'close',
-        'linear_model', 'lstm_model', 'decision_tree_model', 'random_forest_model'
+        'linear_model', 'svm_model', 'decision_tree_model', 'random_forest_model'
     )
 
     if not records:
@@ -1329,7 +1330,7 @@ def generate_stock_visualizations_view(request):
         bar_fig = go.Figure(data=[
             go.Bar(name='Actual Close', x=['Actual'], y=[df_stock['close']]),
             go.Bar(name='Linear', x=['Linear'], y=[df_stock['linear_model']]),
-            go.Bar(name='LSTM', x=['LSTM'], y=[df_stock['lstm_model']]),
+            go.Bar(name='SVM Model', x=['SVM'], y=[df_stock['svm_model']]),
             go.Bar(name='Decision Tree', x=['Decision Tree'], y=[df_stock['decision_tree_model']]),
             go.Bar(name='Random Forest', x=['Random Forest'], y=[df_stock['random_forest_model']])
         ])
@@ -1346,7 +1347,7 @@ def generate_stock_visualizations_view(request):
             'stock_name': stock,
             'chart': bar_div,
             'linear_model': df_stock['linear_model'],
-            'lstm_model': df_stock['lstm_model'],
+            'svm_model': df_stock['svm_model'],
             'decision_tree_model': df_stock['decision_tree_model'],
             'random_forest_model': df_stock['random_forest_model'],
             'actual_close': df_stock['close']
@@ -1361,11 +1362,8 @@ from django.shortcuts import render
 from auth_app.forms import HyperparameterForm
 from auth_app.aiml.custom_model import train_test_data, \
     linear_model_hyper_tuning_chart, decision_tree_hyper_tuning_chart, random_forest_hyper_tuning_chart, \
-    svm_hyper_tuning_chart, lstm_hyper_tuning_chart
+    svm_hyper_tuning_chart
 
-
-# train_decision_tree_hyper_tuning, train_random_forest_hyper_tuning, train_svm_hyper_tuning, train_lstm_hyper_tuning, \
-# save_predictions_to_db_hyper_tuning
 
 def train_models_with_hyperparameters(request, hyperparams):
     symbol = hyperparams['stock_symbol']
@@ -1376,16 +1374,11 @@ def train_models_with_hyperparameters(request, hyperparams):
 
     # Extract decision tree specific hyperparameters
 
-    # min_samples_split = int(hyperparams.get('min_samples_split', 2))  # Default to 2
-    # min_samples_split = int(hyperparams.get('min_samples_split') or 2)
     criterion = hyperparams['criterion']
     raw_max_depth = hyperparams.get('max_depth')
     raw_min_samples_split = hyperparams.get('min_samples_split')
     max_depth = int(raw_max_depth) if raw_max_depth not in [None, '', 'None'] else None
     min_samples_split = int(raw_min_samples_split) if raw_min_samples_split not in [None, '', 'None'] else None
-
-    # max_depth = int(hyperparams.get('max_depth')) if hyperparams.get('max_depth') and hyperparams.get(
-    #     'max_depth').isdigit() else 5
 
     # Extract random forest specific hyperparameters
     criterion_rf = hyperparams['criterion_rf']
@@ -1405,17 +1398,17 @@ def train_models_with_hyperparameters(request, hyperparams):
 
     # Extract LSTM specific hyperparameters
 
-    lstm_units = int(hyperparams.get('lstm_units', 32))
-    epochs = int(hyperparams.get('epochs', 20))
-    batch_size = int(hyperparams.get('batch_size', 32))
-    num_layers = int(hyperparams.get('num_layers', 1))  # from dropdown
-
-    learning_rate = float(hyperparams.get('learning_rate', 0.001))  # from dropdown (stringified)
-    dropout = float(hyperparams.get('dropout', 0.2))  # from dropdown (stringified)
-
-    optimizer = hyperparams.get('optimizer', 'adam')
-    loss_function = hyperparams.get('loss_function', 'mse')
-    activation_function = hyperparams.get('activation_function', 'linear')
+    # lstm_units = int(hyperparams.get('lstm_units', 32))
+    # epochs = int(hyperparams.get('epochs', 20))
+    # batch_size = int(hyperparams.get('batch_size', 32))
+    # num_layers = int(hyperparams.get('num_layers', 1))  # from dropdown
+    #
+    # learning_rate = float(hyperparams.get('learning_rate', 0.001))  # from dropdown (stringified)
+    # dropout = float(hyperparams.get('dropout', 0.2))  # from dropdown (stringified)
+    #
+    # optimizer = hyperparams.get('optimizer', 'adam')
+    # loss_function = hyperparams.get('loss_function', 'mse')
+    # activation_function = hyperparams.get('activation_function', 'linear')
 
     # Fetch stock data using request
     (bhartiartl_df, bhartiartl_meta_df,
@@ -1446,7 +1439,6 @@ def train_models_with_hyperparameters(request, hyperparams):
         regularization=regularization_type,
         alpha=alpha, fit_intercept=fit_intercept
     )
-    # print(summary_lm_df.to_string())
 
     dt_chart, dt_importance_chart, summary_dt_df = decision_tree_hyper_tuning_chart(
         X_train=X_train, X_test=X_test, y_train=y_train, y_test=y_test, stock_name=symbol,
@@ -1473,25 +1465,25 @@ def train_models_with_hyperparameters(request, hyperparams):
         coef0=coef0
 
     )
-    main_chart_lstm, summary_lstm_df = lstm_hyper_tuning_chart(
-        X_train=X_train, X_test=X_test, y_train=y_train, y_test=y_test, stock_name=symbol,
-        lstm_units=lstm_units,
-        epochs=epochs,
-        batch_size=batch_size,
-        num_layers=num_layers,
-        learning_rate=learning_rate,
-        dropout=dropout,
-        optimizer=optimizer,
-        loss_function=loss_function,
-        activation_function=activation_function
+    # main_chart_lstm, summary_lstm_df = lstm_hyper_tuning_chart(
+    #     X_train=X_train, X_test=X_test, y_train=y_train, y_test=y_test, stock_name=symbol,
+    #     lstm_units=lstm_units,
+    #     epochs=epochs,
+    #     batch_size=batch_size,
+    #     num_layers=num_layers,
+    #     learning_rate=learning_rate,
+    #     dropout=dropout,
+    #     optimizer=optimizer,
+    #     loss_function=loss_function,
+    #     activation_function=activation_function
+    # )
 
-    )
     # After generating summary DataFrames
     all_summaries.append(summary_lm_df)
     all_summaries.append(summary_dt_df)
     all_summaries.append(summary_rf_df)
     all_summaries.append(summary_svm_df)
-    all_summaries.append(summary_lstm_df)
+    # all_summaries.append(summary_lstm_df)
     # Combine all summaries into one DataFrame
     final_summary_df = pd.concat(all_summaries, ignore_index=True)
 
@@ -1502,7 +1494,7 @@ def train_models_with_hyperparameters(request, hyperparams):
     summary_df = final_summary_df.round(3).to_dict(orient='records')
     # print(summary_df.to_string())
 
-    return chart_html, dt_chart, dt_importance_chart, main_chart, importance_chart, main_chart_svm, importance_chart_svm, main_chart_lstm, summary_df, latest_record
+    return chart_html, dt_chart, dt_importance_chart, main_chart, importance_chart, main_chart_svm, importance_chart_svm, summary_df, latest_record
 
 
 def hyperparameter_training_view(request):
@@ -1513,7 +1505,7 @@ def hyperparameter_training_view(request):
     importance_chart = None
     main_chart_svm = None
     importance_chart_svm = None
-    main_chart_lstm = None
+    # main_chart_lstm = None
     summary_df = None
     latest_record = None
 
@@ -1521,7 +1513,7 @@ def hyperparameter_training_view(request):
         form = HyperparameterForm(request.POST)
         if form.is_valid():
             hyperparams = form.cleaned_data
-            chart_html, dt_chart, dt_importance_chart, main_chart, importance_chart, main_chart_svm, importance_chart_svm, main_chart_lstm, summary_df, latest_record = train_models_with_hyperparameters(
+            chart_html, dt_chart, dt_importance_chart, main_chart, importance_chart, main_chart_svm, importance_chart_svm, summary_df, latest_record = train_models_with_hyperparameters(
                 request,
                 hyperparams)  # Custom logic
     else:
@@ -1536,7 +1528,7 @@ def hyperparameter_training_view(request):
                    'importance_chart': importance_chart,
                    'main_chart_svm': main_chart_svm,
                    'importance_chart_svm': importance_chart_svm,
-                   'main_chart_lstm': main_chart_lstm,
+                   # 'main_chart_lstm': main_chart_lstm,
                    'summary_df': summary_df,
                    'latest_record': latest_record
                    })
