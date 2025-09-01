@@ -33,12 +33,12 @@ services:
       DB_PASSWORD: berlin@123
       DB_NAME: user_platform_db
       DJANGO_SECRET_KEY: "django-insecure-4j-q2^gpu9&%imydt@@vq*h0i#9#(yv0)&q5ewvaftj(eocs2="
-      TF_CPP_MIN_LOG_LEVEL: 2
-      TF_ENABLE_ONEDNN_OPTS: 0
-      TF_NUM_INTRAOP_THREADS: 1
-      TF_NUM_INTEROP_THREADS: 1
-      OMP_NUM_THREADS: 1
-      KMP_AFFINITY: disabled
+#      TF_CPP_MIN_LOG_LEVEL: 2
+#      TF_ENABLE_ONEDNN_OPTS: 0
+#      TF_NUM_INTRAOP_THREADS: 1
+#      TF_NUM_INTEROP_THREADS: 1
+#      OMP_NUM_THREADS: 1
+#      KMP_AFFINITY: disabled
     command: > 
       sh -c "
         python wait_for_db.py &&
