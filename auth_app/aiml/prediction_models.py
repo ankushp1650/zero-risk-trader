@@ -9,12 +9,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error
 import numpy as np
-import matplotlib
-
-matplotlib.use('Agg')  # must be set before importing pyplot
-import matplotlib.pyplot as plt
 from auth_app.models import LSTMModelStorage
-from tensorflow.keras import backend as K
 
 
 def train_linear_model(df):
@@ -108,6 +103,7 @@ def train_svm_model(stock_df):
     return model, scaler, X_train_df, X_test_df, mse_svm, stock_df
 
 
+
 def train_lstm_model(stock_df):
     sequence_length = 60
     import numpy as np
@@ -147,9 +143,17 @@ def train_lstm_model(stock_df):
     x_train, x_test = x[:split_index], x[split_index:]
     y_train, y_test = y[:split_index], y[split_index:]
 
+    if len(x_train) < 2:
+        raise ValueError("Too few training samples for LSTM.")
+
     # Adjust LSTM units and batch size based on dataset size
     units = min(50, max(10, len(x_train) // 2))
-    batch_size = min(32, len(x_train))
+
+    # 🔑 NEW: safer batch size handling
+    if len(x_train) < 10:
+        batch_size = 1   # force small batches
+    else:
+        batch_size = min(16, len(x_train))
 
     # Step 3: Build LSTM model
     model = Sequential()
@@ -179,6 +183,7 @@ def train_lstm_model(stock_df):
     K.clear_session()
 
     return model, scaler, sequence_length, mse, stock_df
+
 
 
 # STEP 2: Save to DB
