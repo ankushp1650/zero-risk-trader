@@ -103,7 +103,9 @@ def train_svm_model(stock_df):
     return model, scaler, X_train_df, X_test_df, mse_svm, stock_df
 
 
-def train_lstm_model(stock_df, sequence_length=10): 
+
+def train_lstm_model(stock_df):
+    sequence_length = 60
     import numpy as np
     from sklearn.preprocessing import MinMaxScaler
     from sklearn.metrics import mean_squared_error
