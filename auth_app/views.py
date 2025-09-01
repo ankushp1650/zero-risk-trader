@@ -1138,14 +1138,14 @@ def model_explainability_view(request):
         svm_model, svm_scaler, X_train_svm_df, X_test_svm_df, mse_svm, _ = train_svm_model(df)
 
         # LSTM
-        lstm_model, _, _, lstm_mse, _ = train_lstm_model(df)
+        # lstm_model, _, _, lstm_mse, _ = train_lstm_model(df)
 
         mse_dict = {
             'Linear_Model': linear_mse,
             'Decision_Tree_Model': decision_mse,
             'Random_Forest_Model': rf_mse,
-            'SVM_Model': mse_svm,
-            'LSTM_Model': lstm_mse
+            'SVM_Model': mse_svm
+            # 'LSTM_Model': lstm_mse
         }
 
         best_model = min(mse_dict, key=mse_dict.get)
@@ -1190,7 +1190,7 @@ def predict_df(request):
     # List of stock dataframes and their corresponding metadata
     stock_dfs = [bhartiartl_df, icicibank_df, reliance_df, tcs_df, hdfcbank_df]
     stock_meta_dfs = [bhartiartl_meta_df, icicibank_meta_df, reliance_meta_df, tcs_meta_df, hdfcbank_meta_df]
-    stock_names = ['Bharti Airtel', 'ICICI Bank', 'Reliance', 'TCS', 'HDFC Bank']
+    stock_names = ['BHARTIARTL_BSE', 'ICICIBANK_BSE', 'RELIANCE_BSE', 'TCS_BSE', 'HDFCBANK_BSE']
 
     # Initialize an empty list to store merged dataframes
     merged_dfs = []
@@ -1203,7 +1203,7 @@ def predict_df(request):
         decision_tree_model, decision_mse, dt_df = train_decision_tree_model(stock_df)
         random_forest_model, X_train, X_test, rf_mse, rf_df = train_random_forest_model(stock_df)
         svm_model, svm_scaler, X_train_df, X_test_df, mse_svm, svm_df = train_svm_model(stock_df)
-        lstm_model, lstm_scaler, lstm_sequence_length, lstm_mse, lstm_df = train_lstm_model(stock_df,
+        lstm_model, lstm_scaler, lstm_sequence_length, lstm_mse, lstm_df = train_lstm_model(stock_df, stock_name,
                                                                                             sequence_length=60)
 
         save_lstm_to_db(request, stock_name, lstm_model, lstm_scaler)
