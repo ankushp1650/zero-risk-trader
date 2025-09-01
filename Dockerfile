@@ -24,6 +24,14 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 COPY .env .env
 
+# TensorFlow performance/logging settings
+ENV TF_CPP_MIN_LOG_LEVEL=2 \
+    TF_ENABLE_ONEDNN_OPTS=0 \
+    TF_NUM_INTRAOP_THREADS=1 \
+    TF_NUM_INTEROP_THREADS=1 \
+    OMP_NUM_THREADS=1 \
+    KMP_AFFINITY=disabled
+
 # Expose port 8000 (Django default port)
 EXPOSE 8000
 
