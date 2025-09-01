@@ -4,7 +4,7 @@ import pandas as pd
 from pathlib import Path
 import time
 
-# API_KEY = "1LBPCJCSQWU7YAKN"  # Replace with UserProfile.api_key if needed
+
 BASE_URL = "https://www.alphavantage.co/query"
 DATA_DIR = Path("data")
 DATA_DIR.mkdir(exist_ok=True)
