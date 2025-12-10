@@ -1,11 +1,8 @@
 from datetime import datetime, date
 from decimal import Decimal
-import pandas as pd
 import matplotlib
 
 matplotlib.use('Agg')  # must be set before importing pyplot
-import matplotlib.pyplot as plt
-
 from django.utils.timezone import now
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
@@ -25,7 +22,7 @@ from .forms import RegisterForm
 from .models import Portfolio, Transaction, UserProfile, Final_holding, StockJason, CurrentPrice, StockPrediction, \
     StockPerformance, BestModelRecord \
     # , StockPrediction, \
-# BestStockRecommendation
+
 from django.contrib.auth import login
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
@@ -45,17 +42,15 @@ from django.contrib.auth.tokens import default_token_generator
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.contrib.auth.models import User
-from django.http import HttpResponseBadRequest, HttpResponse
-# from django.shortcuts import render
-# from .models import UserTrade
-# from .utils import recommend_stocks_total_based, transfer_transactions_to_user_trade, parse_iso_datetime
-from django.shortcuts import render
+from django.http import HttpResponseBadRequest
 from .models import StockPrediction
 import pandas as pd
 import plotly.graph_objects as go
 from plotly.offline import plot
 import logging
 import warnings
+from django.shortcuts import render
+from auth_app.forms import HyperparameterForm
 
 warnings.filterwarnings("ignore")
 logger = logging.getLogger(__name__)
@@ -1357,14 +1352,10 @@ def generate_stock_visualizations_view(request):
     })
 
 
-from django.shortcuts import render
-from auth_app.forms import HyperparameterForm
-from auth_app.aiml.custom_model import train_test_data, \
-    linear_model_hyper_tuning_chart, decision_tree_hyper_tuning_chart, random_forest_hyper_tuning_chart, \
-    svm_hyper_tuning_chart
-
-
 def train_models_with_hyperparameters(request, hyperparams):
+    from auth_app.aiml.custom_model import train_test_data, \
+        linear_model_hyper_tuning_chart, decision_tree_hyper_tuning_chart, random_forest_hyper_tuning_chart, \
+        svm_hyper_tuning_chart
     symbol = hyperparams['stock_symbol']
     # Extract linear specific hyperparameters
     fit_intercept = str(hyperparams['fit_intercept']).lower() == 'true'

@@ -1,9 +1,7 @@
-from keras import Sequential
-from keras.src.layers import LSTM, Dense
+
 from sklearn.ensemble import RandomForestRegressor
 from auth_app.custom_utils.graphs import fig_to_base64
 from sklearn.linear_model import LinearRegression, Ridge, Lasso
-from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.svm import SVR
 from sklearn.preprocessing import StandardScaler
@@ -11,16 +9,21 @@ from io import BytesIO
 import base64
 import pandas as pd
 import matplotlib
+import numpy as np
 matplotlib.use('Agg')  # must be set before importing pyplot
 import matplotlib.pyplot as plt
 from sklearn.metrics import r2_score, mean_squared_error
-from keras.models import Sequential
-from keras.layers import LSTM, Dense, Dropout
-from keras.optimizers import Adam, SGD, RMSprop
-from keras.callbacks import EarlyStopping
-from keras.losses import MeanSquaredError, MeanAbsoluteError
 
-import numpy as np
+# from sklearn.model_selection import train_test_split
+# from keras.models import Sequential
+# from keras.layers import LSTM, Dense, Dropout
+# from keras.optimizers import Adam, SGD, RMSprop
+# from keras.callbacks import EarlyStopping
+# from keras.losses import MeanSquaredError, MeanAbsoluteError
+# from keras import Sequential
+# from keras.src.layers import LSTM, Dense
+
+
 
 
 # def train_test_data(df):
