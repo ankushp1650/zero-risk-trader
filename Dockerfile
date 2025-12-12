@@ -1,39 +1,55 @@
-# Use a more complete Python 3.11 image
-FROM python:3.11-bullseye
+# Use an official, slim Python 3.11 image (Debian bullseye)
+FROM python:3.11-slim-bullseye
 
-# Install system dependencies using MariaDB packages instead
-RUN apt-get update -y && apt-get install -y \
+# metadata
+LABEL maintainer="Ankush Patil"
+
+# prevent Python from writing .pyc files and ensure stdout/stderr are not buffered
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
+
+# set workdir
+WORKDIR /app
+
+# install system deps + add CA cert in one layer (small & efficient)
+# install system deps + CA cert + pkg-config + mysql client dev headers
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    pkg-config \
+    python3-dev \
+    default-libmysqlclient-dev \
     libmariadb-dev-compat \
     libmariadb-dev \
-    build-essential \
     ca-certificates \
     libssl-dev \
     libffi-dev \
-    && rm -rf /var/lib/apt/lists/*
+    curl \
+ && mkdir -p /usr/local/share/ca-certificates/extra \
+ && rm -rf /var/lib/apt/lists/*
 
-# Set working directory
-WORKDIR /app
 
-# Copy the requirements file to the container
-COPY requirements.txt .
+# copy the certificate from repo and add to system trust store
+# make sure you have certificate/DigiCertGlobalRootCA.crt.pem in your repo
+COPY certificate/DigiCertGlobalRootCA.crt.pem /usr/local/share/ca-certificates/extra/DigiCertGlobalRootCA.crt.pem
+RUN update-ca-certificates
 
-# Install the Python dependencies from requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+# copy only requirements first for better layer caching
+COPY requirements.txt /app/requirements.txt
 
-# Copy all project files
-COPY . .
-COPY .env .env
+# install python dependencies
+RUN python -m pip install --upgrade pip
+RUN pip install --no-cache-dir -r /app/requirements.txt
 
-## TensorFlow performance/logging settings
-#ENV TF_CPP_MIN_LOG_LEVEL=2 \
-#    TF_ENABLE_ONEDNN_OPTS=0 \
-#    TF_NUM_INTRAOP_THREADS=1 \
-#    TF_NUM_INTEROP_THREADS=1 \
-#    OMP_NUM_THREADS=1 \
-#    KMP_AFFINITY=disabled
+# copy project files (but DO NOT copy .env into image)
+COPY . /app
 
-# Expose port 8000 (Django default port)
+# create a non-root user and give ownership of app dir
+RUN useradd --create-home --shell /bin/bash appuser \
+    && chown -R appuser:appuser /app
+
+USER appuser
+
+# expose port and set CMD (gunicorn)
 EXPOSE 8000
 
-# Command to run your application
-CMD ["gunicorn", "auth_project.wsgi:application", "--workers=1", "--threads=1", "--timeout=120", "--bind", "0.0.0.0:8000"]
+CMD ["gunicorn", "auth_project.wsgi:application", "--workers", "1", "--threads", "2", "--timeout", "120", "--bind", "0.0.0.0:8000"]
