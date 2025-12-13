@@ -59,9 +59,18 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 SECRET_KEY = env('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env('DJANGO_DEBUG')
+# DEBUG = env('DJANGO_DEBUG')
 
-ALLOWED_HOSTS = env('DJANGO_ALLOWED_HOSTS').split(',')
+# ALLOWED_HOSTS = env('DJANGO_ALLOWED_HOSTS').split(',')
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = env.bool("DEBUG", default=False)
+
+# Allow all hosts (required for Docker + Azure + Nginx)
+ALLOWED_HOSTS = ["*"]
+
+# Trust reverse proxy headers (Nginx / Azure)
+USE_X_FORWARDED_HOST = True
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 # Database configuration
 DATABASES = {
