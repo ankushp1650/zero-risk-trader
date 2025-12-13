@@ -1,7 +1,7 @@
 # Use official Python image
 FROM python:3.11-slim-bullseye
 
-LABEL maintainer="Ankush Patil"
+LABEL maintainer="Ankush Patil" 
 
 # Environment settings
 ENV PYTHONDONTWRITEBYTECODE=1 \
