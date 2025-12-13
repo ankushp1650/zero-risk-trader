@@ -73,12 +73,20 @@ DATABASES = {
         'HOST': env('DB_HOST'),
         'PORT': '3306',
         'OPTIONS': {
-            # 'ssl': {'ssl_disabled': True},
-            # 'ssl': {'ca': os.path.join(BASE_DIR, 'certificate', 'DigiCertGlobalRootCA.crt.pem')},
-           # 'ssl': {'ca': '/home/site/wwwroot/certificate/DigiCertGlobalRootCA.crt.pem'},
-            'ssl': {'ca': '/usr/local/share/ca-certificates/extra/DigiCertGlobalRootCA.crt.pem',}
-            
-        },
+            'ssl': {
+                # ❌ Disable SSL (DO NOT use in production)
+                # 'ssl_disabled': True,
+
+                # ❌ Repo-local path (not recommended for Azure)
+                # 'ca': os.path.join(BASE_DIR, 'certificate', 'DigiCertGlobalRootCA.crt.pem'),
+
+                # ❌ Azure App Service path (varies by runtime)
+                # 'ca': '/home/site/wwwroot/certificate/DigiCertGlobalRootCA.crt.pem',
+
+                # ✅ Production (Azure MySQL Flexible Server)
+                'ca': '/usr/local/share/ca-certificates/extra/DigiCertGlobalRootCA.crt.pem',
+            }
+        }
     }
 }
 
