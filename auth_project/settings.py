@@ -20,50 +20,38 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 SECRET_KEY = env('DJANGO_SECRET_KEY')
 DEBUG = env.bool("DEBUG", default=False)
-USE_AZURE_MYSQL = env.bool("USE_AZURE_MYSQL", default=False)
 
-# Allow all hosts (required for Docker + Azure + Nginx)
+# IMPORTANT: Azure App Service sometimes passes env vars as strings
+USE_AZURE_MYSQL = env("USE_AZURE_MYSQL", default="false").lower() == "true"
+
 ALLOWED_HOSTS = ["*"]
 
-# Trust reverse proxy headers (Nginx / Azure)
+# Trust reverse proxy headers (Azure / Nginx)
 USE_X_FORWARDED_HOST = True
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': env('DB_NAME'),
-        'USER': env('DB_USER'),
-        'PASSWORD': env('DB_PASSWORD'),
-        'HOST': env('DB_HOST'),
-        'PORT': '3306',
+    "default": {
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": env("DB_NAME"),
+        "USER": env("DB_USER"),
+        "PASSWORD": env("DB_PASSWORD"),
+        "HOST": env("DB_HOST"),
+        "PORT": "3306",
     }
 }
 
 if USE_AZURE_MYSQL:
     # ✅ Azure MySQL Flexible Server (SSL REQUIRED)
-    DATABASES['default']['OPTIONS'] = {
-        'ssl': {
-            # ❌ Disable SSL (DO NOT use in production)
-            # 'ssl_disabled': True,
-
-            # ❌ Repo-local path (not recommended for Azure)
-            # 'ca': os.path.join(BASE_DIR, 'certificate', 'DigiCertGlobalRootCA.crt.pem'),
-
-            # ❌ Azure App Service path (varies by runtime)
-            # 'ca': '/home/site/wwwroot/certificate/DigiCertGlobalRootCA.crt.pem',
-
-            # ✅ Production (Azure MySQL Flexible Server)
-            'ca': '/usr/local/share/ca-certificates/extra/DigiCertGlobalRootCA.crt.pem',
+    DATABASES["default"]["OPTIONS"] = {
+        "ssl": {
+            "ca": "/usr/local/share/ca-certificates/extra/DigiCertGlobalRootCA.crt.pem",
+            "check_hostname": False,   # REQUIRED for Azure MySQL
         }
     }
 else:
-    # ✅ Local Docker MySQL (NO SSL)
-    DATABASES['default']['OPTIONS'] = {
-        'ssl': {
-            'ssl_disabled': True
-        }
-    }
+    # ✅ Local Docker / Local MySQL (NO SSL)
+    DATABASES["default"]["OPTIONS"] = {}
 
 
 # Email configuration
