@@ -1,4 +1,4 @@
-import shap
+
 import numpy as np
 
 from sklearn.svm import SVR
@@ -9,6 +9,7 @@ import matplotlib.pyplot as plt
 
 
 def generate_model_explainability(model, X_train, X_test, stock_name):
+    import shap
     # Enhanced SHAP summary plot for tree models or models supporting SHAP natively
     try:
         explainer = shap.Explainer(model, X_train)
