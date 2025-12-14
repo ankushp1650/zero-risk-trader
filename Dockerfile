@@ -38,4 +38,5 @@ COPY . .
 EXPOSE 8000
 
 # Run Django with Gunicorn
-CMD ["gunicorn", "auth_project.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "2"]
+CMD ["gunicorn", "auth_project.wsgi:application", "--workers", "1", "--threads", "1", "--timeout", "300", "--preload", "--bind", "0.0.0.0:8000", "--access-logfile", "-", "--error-logfile", "-", "--log-level", "info"]
+
