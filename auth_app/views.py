@@ -10,17 +10,14 @@ from django.db.models import Max, Sum, OuterRef
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout
 from auth_project.settings import EMAIL_HOST_USER
-from .aiml.prediction_models import train_linear_model, predict_next_day, train_decision_tree_model, \
-    train_random_forest_model, train_svm_model, predict_next_day_svm, calculate_model_scores, calculate_success_rate, \
-    calculate_directional_success_rate, calculate_avg_error
-# , train_lstm_model, predict_next_day_lstm, save_lstm_to_db, load_lstm_from_db,
+
 from .custom_utils.explainability import generate_model_explainability
 from .custom_utils.fetching import get_daily_time_series
 from .custom_utils.graphs import generate_graphs, bar_chart_view, pie_chart_view, line_chart_view, quantity_bar_graph, \
     pnl_bar_chart_view
 from .forms import RegisterForm
 from .models import Portfolio, Transaction, UserProfile, Final_holding, StockJason, CurrentPrice, StockPrediction, \
-    StockPerformance, BestModelRecord \
+    StockPerformance, BestModelRecord 
     # , StockPrediction, \
 
 from django.contrib.auth import login
@@ -57,7 +54,6 @@ logger = logging.getLogger(__name__)
 
 User = get_user_model()  # Get the user model in case you're using a custom user model
 
-
 # @guest
 # def login_view(request):
 #     if request.method == 'POST':
@@ -77,19 +73,19 @@ User = get_user_model()  # Get the user model in case you're using a custom user
 #     if request.user.is_authenticated:
 #         print("👤 User already authenticated, redirecting to dashboard.")
 #         return redirect('dashboard')
-
+#
 #     if request.method == 'POST':
 #         form = AuthenticationForm(request, data=request.POST)
 #         if form.is_valid():
 #             user = form.get_user()
 #             print(f"✅ User '{user.username}' logged in Successfully ")
-
+#
 #             login(request, user)
-
+#
 #             # 👇 Check if API key exists in UserProfile
 #             try:
 #                 user_profile, created = UserProfile.objects.get_or_create(user=user)
-
+#
 #                 # ✨ Check if today’s data has already been fetched
 #                 today = now().date()
 #                 if user_profile.last_data_fetch_date != today:
@@ -101,27 +97,27 @@ User = get_user_model()  # Get the user model in case you're using a custom user
 #                     user_profile.save()
 #                 else:
 #                     print("✅ Data already fetched today. Skipping fetch.")
-
+#
 #                 # 🚀 API key already exists → go to dashboard
 #                 if user_profile.api_key:
 #                     print("🔑 API Key found. Redirecting to dashboard.")
 #                     return redirect('dashboard')
-
+#
 #             except UserProfile.DoesNotExist:
 #                 # Should not normally happen because of get_or_create
 #                 print("❗ UserProfile not found. Redirecting to Save API Key form.")
-
+#
 #             # API key missing → redirect to save_api_key
 #             print("🚫 No API Key. Redirecting to Save API Key form.")
 #             return redirect('save_api_key')
-
+#
 #         else:
 #             print("❌ Invalid credentials")
 #             messages.error(request, "Invalid username or password.")
-
+#
 #     else:
 #         form = AuthenticationForm()
-
+#
 #     return render(request, 'auth/login.html', {'form': form})
 
 import traceback
@@ -1163,6 +1159,11 @@ def recommendations_view(request):
 
 
 def model_explainability_view(request):
+    from .aiml.prediction_models import train_linear_model, train_decision_tree_model, \
+        train_random_forest_model, train_svm_model
+    # predict_next_day_svm, calculate_model_scores, calculate_success_rate, predict_next_day,
+    # calculate_directional_success_rate, calculate_avg_error
+    # , train_lstm_model, predict_next_day_lstm, save_lstm_to_db, load_lstm_from_db,
     (bhartiartl_df, bhartiartl_meta_df,
      icicibank_df, icicibank_meta_df,
      reliance_df, reliance_meta_df,
@@ -1238,6 +1239,8 @@ def model_explainability_view(request):
 
 
 def predict_df(request):
+    from .aiml.prediction_models import train_linear_model, predict_next_day, train_decision_tree_model, train_random_forest_model, train_svm_model, predict_next_day_svm, calculate_model_scores, calculate_success_rate, calculate_directional_success_rate, calculate_avg_error
+    # , train_lstm_model, predict_next_day_lstm, save_lstm_to_db, load_lstm_from_db,
     # Fetch stock data and metadata for all stocks
     (bhartiartl_df, bhartiartl_meta_df,
      icicibank_df, icicibank_meta_df,
