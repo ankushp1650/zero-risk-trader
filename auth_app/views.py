@@ -72,57 +72,119 @@ User = get_user_model()  # Get the user model in case you're using a custom user
 #     return render(request, 'auth/login.html', {'form': form})
 
 
+# def login_view(request):
+#     print("Login view triggered!")
+#     if request.user.is_authenticated:
+#         print("👤 User already authenticated, redirecting to dashboard.")
+#         return redirect('dashboard')
+
+#     if request.method == 'POST':
+#         form = AuthenticationForm(request, data=request.POST)
+#         if form.is_valid():
+#             user = form.get_user()
+#             print(f"✅ User '{user.username}' logged in Successfully ")
+
+#             login(request, user)
+
+#             # 👇 Check if API key exists in UserProfile
+#             try:
+#                 user_profile, created = UserProfile.objects.get_or_create(user=user)
+
+#                 # ✨ Check if today’s data has already been fetched
+#                 today = now().date()
+#                 if user_profile.last_data_fetch_date != today:
+#                     # 🛠️ Fetch fresh data
+#                     print("📥 Fetching new data for user...")
+#                     fetch_and_save_user_data(request)
+#                     # Update last_data_fetch_date
+#                     user_profile.last_data_fetch_date = today
+#                     user_profile.save()
+#                 else:
+#                     print("✅ Data already fetched today. Skipping fetch.")
+
+#                 # 🚀 API key already exists → go to dashboard
+#                 if user_profile.api_key:
+#                     print("🔑 API Key found. Redirecting to dashboard.")
+#                     return redirect('dashboard')
+
+#             except UserProfile.DoesNotExist:
+#                 # Should not normally happen because of get_or_create
+#                 print("❗ UserProfile not found. Redirecting to Save API Key form.")
+
+#             # API key missing → redirect to save_api_key
+#             print("🚫 No API Key. Redirecting to Save API Key form.")
+#             return redirect('save_api_key')
+
+#         else:
+#             print("❌ Invalid credentials")
+#             messages.error(request, "Invalid username or password.")
+
+#     else:
+#         form = AuthenticationForm()
+
+#     return render(request, 'auth/login.html', {'form': form})
+
+import traceback
+from django.http import HttpResponseServerError
+
+
 def login_view(request):
-    print("Login view triggered!")
-    if request.user.is_authenticated:
-        print("👤 User already authenticated, redirecting to dashboard.")
-        return redirect('dashboard')
+    try:
+        print("Login view triggered!")
 
-    if request.method == 'POST':
-        form = AuthenticationForm(request, data=request.POST)
-        if form.is_valid():
-            user = form.get_user()
-            print(f"✅ User '{user.username}' logged in Successfully ")
+        if request.user.is_authenticated:
+            print("👤 User already authenticated, redirecting to dashboard.")
+            return redirect('dashboard')
 
-            login(request, user)
+        if request.method == 'POST':
+            form = AuthenticationForm(request, data=request.POST)
 
-            # 👇 Check if API key exists in UserProfile
-            try:
+            if form.is_valid():
+                user = form.get_user()
+                print(f"✅ User '{user.username}' logged in successfully")
+
+                login(request, user)
+
                 user_profile, created = UserProfile.objects.get_or_create(user=user)
 
-                # ✨ Check if today’s data has already been fetched
                 today = now().date()
-                if user_profile.last_data_fetch_date != today:
-                    # 🛠️ Fetch fresh data
-                    print("📥 Fetching new data for user...")
-                    fetch_and_save_user_data(request)
-                    # Update last_data_fetch_date
-                    user_profile.last_data_fetch_date = today
-                    user_profile.save()
-                else:
-                    print("✅ Data already fetched today. Skipping fetch.")
 
-                # 🚀 API key already exists → go to dashboard
+                # ⛔ SAFETY: isolate risky external call
+                if user_profile.last_data_fetch_date != today:
+                    try:
+                        print("📥 Fetching new data for user...")
+                        fetch_and_save_user_data(request)
+                        user_profile.last_data_fetch_date = today
+                        user_profile.save()
+                    except Exception:
+                        print("🔥 ERROR inside fetch_and_save_user_data")
+                        print(traceback.format_exc())
+                        # DO NOT crash login
+                        messages.warning(
+                            request,
+                            "Logged in, but data fetch failed. Try again later."
+                        )
+
                 if user_profile.api_key:
                     print("🔑 API Key found. Redirecting to dashboard.")
                     return redirect('dashboard')
 
-            except UserProfile.DoesNotExist:
-                # Should not normally happen because of get_or_create
-                print("❗ UserProfile not found. Redirecting to Save API Key form.")
+                print("🚫 No API Key. Redirecting to Save API Key form.")
+                return redirect('save_api_key')
 
-            # API key missing → redirect to save_api_key
-            print("🚫 No API Key. Redirecting to Save API Key form.")
-            return redirect('save_api_key')
+            else:
+                print("❌ Invalid credentials")
+                messages.error(request, "Invalid username or password.")
 
         else:
-            print("❌ Invalid credentials")
-            messages.error(request, "Invalid username or password.")
+            form = AuthenticationForm()
 
-    else:
-        form = AuthenticationForm()
+        return render(request, 'auth/login.html', {'form': form})
 
-    return render(request, 'auth/login.html', {'form': form})
+    except Exception:
+        print("🔥 FATAL LOGIN ERROR")
+        print(traceback.format_exc())
+        return HttpResponseServerError("Internal Server Error")
 
 
 # Registration view
