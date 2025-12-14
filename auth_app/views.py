@@ -10,8 +10,6 @@ from django.db.models import Max, Sum, OuterRef
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout
 from auth_project.settings import EMAIL_HOST_USER
-
-from .custom_utils.explainability import generate_model_explainability
 from .custom_utils.fetching import get_daily_time_series
 from .custom_utils.graphs import generate_graphs, bar_chart_view, pie_chart_view, line_chart_view, quantity_bar_graph, \
     pnl_bar_chart_view
@@ -1159,11 +1157,8 @@ def recommendations_view(request):
 
 
 def model_explainability_view(request):
-    from .aiml.prediction_models import train_linear_model, train_decision_tree_model, \
-        train_random_forest_model, train_svm_model
-    # predict_next_day_svm, calculate_model_scores, calculate_success_rate, predict_next_day,
-    # calculate_directional_success_rate, calculate_avg_error
-    # , train_lstm_model, predict_next_day_lstm, save_lstm_to_db, load_lstm_from_db,
+    from .aiml.prediction_models import train_linear_model, train_decision_tree_model, train_random_forest_model, train_svm_model
+    from .custom_utils.explainability import generate_model_explainability
     (bhartiartl_df, bhartiartl_meta_df,
      icicibank_df, icicibank_meta_df,
      reliance_df, reliance_meta_df,
