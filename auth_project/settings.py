@@ -17,9 +17,9 @@ env = environ.Env(DEBUG=(bool, False))
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # SECURITY WARNING: keep the secret key used in production secret!
-
 SECRET_KEY = env('DJANGO_SECRET_KEY')
 DEBUG = env.bool("DEBUG", default=False)
+IN_DOCKER = os.path.exists("/.dockerenv")
 
 # IMPORTANT: Azure App Service sometimes passes env vars as strings
 USE_AZURE_MYSQL = env("USE_AZURE_MYSQL", default="false").lower() == "true"
@@ -40,17 +40,13 @@ DATABASES = {
         "PORT": "3306",
     }
 }
-
 if USE_AZURE_MYSQL:
-    # ✅ Azure MySQL Flexible Server (SSL REQUIRED)
     DATABASES["default"]["OPTIONS"] = {
         "ssl": {
-            "ca": "/usr/local/share/ca-certificates/extra/DigiCertGlobalRootCA.crt.pem",
-            "check_hostname": False,   # REQUIRED for Azure MySQL
+            "ca": str(BASE_DIR / "certificate" / "DigiCertGlobalRootG2.crt.pem"),
         }
     }
 else:
-    # ✅ Local Docker / Local MySQL (NO SSL)
     DATABASES["default"]["OPTIONS"] = {}
 
 
@@ -189,3 +185,5 @@ else:
     SESSION_COOKIE_SECURE = False
     CSRF_COOKIE_SECURE = False
 
+# print("CA PATH USED =", DATABASES["default"]["OPTIONS"]["ssl"]["ca"])
+# print("EXISTS =", os.path.exists(DATABASES["default"]["OPTIONS"]["ssl"]["ca"]))
